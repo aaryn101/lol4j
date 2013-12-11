@@ -3,6 +3,8 @@ lol4j
 
 League of Legends Riot Games API Java wrapper
 
+Example Usage
+-------------
 ```java
 
 Lol4JClient client = new Lol4JClientImpl("apiKey", "http://prod.api.pvp.net/api/lol");
