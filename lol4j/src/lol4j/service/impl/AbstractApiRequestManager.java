@@ -1,6 +1,7 @@
 package lol4j.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 import lol4j.util.Regions;
 
 import javax.ws.rs.client.Client;
@@ -43,6 +44,29 @@ public abstract class AbstractApiRequestManager {
 
         try {
             returnObj = objectMapper.readValue(json, clazz);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return returnObj;
+    }
+
+    <K, V> Map<K, V> get(String path, List<Map.Entry<String, Object>> queryParams, Class<K> keyClass, Class<V> valueClass) {
+        WebTarget webTarget = getBaseWebTarget().path(path).queryParam("api_key", apiKey);
+        if (queryParams != null) {
+            for (Map.Entry<String, Object> queryParam : queryParams) {
+                webTarget = webTarget.queryParam(queryParam.getKey(), queryParam.getValue());
+            }
+        }
+        Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON).acceptEncoding("UTF-8");
+        Response response = invocationBuilder.get();
+        Map<K, V> returnObj = null;
+        ObjectMapper objectMapper = new ObjectMapper();
+        TypeFactory typeFactory = TypeFactory.defaultInstance();
+        String json = response.readEntity(String.class);
+
+        try {
+            returnObj = objectMapper.readValue(json, typeFactory.constructMapType(Map.class, keyClass, valueClass));
         } catch (IOException e) {
             e.printStackTrace();
         }

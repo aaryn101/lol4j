@@ -7,12 +7,12 @@ Example Usage
 -------------
 ```java
 
-Lol4JClient client = new Lol4JClientImpl("apiKey", "http://prod.api.pvp.net/api/lol");
+Lol4JClient client = new Lol4JClientImpl("apiKey");
 
 System.out.println("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
 System.out.println("CHAMPION RESOURCE");
 System.out.println("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
-ChampionListDto championList = client.getChampionResource().getAllChampions("na", false);
+ChampionListDto championList = client.getChampionResource().getAllChampions("na", true);
 for (ChampionDto champ : championList.getChampions()) {
     System.out.println(champ.getName());
 }
@@ -20,9 +20,17 @@ for (ChampionDto champ : championList.getChampions()) {
 System.out.println("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
 System.out.println("GAME RESOURCE");
 System.out.println("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
-RecentGamesDto recentGames = client.getGameResource().getRecentGames("na", 19163557);
+RecentGamesDto recentGames = client.getGameResource().getRecentGames("na", summonerId);
 for (GameDto game : recentGames.getGames()) {
     System.out.println(getChampionById(game.getChampionId(), championList).getName());
+}
+
+System.out.println("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
+System.out.println("LEAGUE RESOURCE");
+System.out.println("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
+Map<String, LeagueDto> leaguesData = client.getLeagueResource().getLeaguesData("na", summonerId);
+for (Map.Entry<String, LeagueDto> entry : leaguesData.entrySet()) {
+    System.out.println(entry.getKey() + ": " + entry.getValue().getName());
 }
 ```
 
