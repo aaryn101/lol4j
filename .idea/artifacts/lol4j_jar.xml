@@ -1,0 +1,31 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="lol4j:jar">
+    <output-path>$PROJECT_DIR$/lol4j/build/artifacts</output-path>
+    <root id="archive" name="lol4j.jar">
+      <element id="module-output" name="lol4j" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lol4j/lib/jackson/jackson-core-2.2.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lol4j/lib/jackson/jackson-databind-2.2.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lol4j/lib/jackson/jackson-annotations-2.2.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lol4j/lib/jersey/guava-14.0.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lol4j/lib/jersey/jersey-client.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lol4j/lib/jersey/jersey-common.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lol4j/lib/jersey/jersey-server.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lol4j/lib/jersey/jaxb-api-2.2.7.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lol4j/lib/jersey/cglib-2.2.0-b21.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lol4j/lib/jersey/hk2-api-2.2.0-b21.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lol4j/lib/jersey/hk2-utils-2.2.0-b21.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lol4j/lib/jersey/javax.ws.rs-api-2.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lol4j/lib/jersey/org.osgi.core-4.2.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lol4j/lib/jersey/persistence-api-1.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lol4j/lib/jersey/hk2-locator-2.2.0-b21.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lol4j/lib/jersey/javax.inject-2.2.0-b21.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lol4j/lib/jersey/javax.servlet-api-3.0.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lol4j/lib/jersey/javax.annotation-api-1.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lol4j/lib/jersey/jersey-container-servlet.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lol4j/lib/jersey/validation-api-1.1.0.Final.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lol4j/lib/jersey/osgi-resource-locator-1.0.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lol4j/lib/jersey/asm-all-repackaged-2.2.0-b21.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lol4j/lib/jersey/jersey-container-servlet-core.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
