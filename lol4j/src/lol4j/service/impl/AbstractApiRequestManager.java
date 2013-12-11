@@ -12,6 +12,7 @@ import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Aaryn101 on 12/10/13.
@@ -27,8 +28,13 @@ public abstract class AbstractApiRequestManager {
         this.client = ClientBuilder.newClient();
     }
 
-    <T> T get(String path, Class<T> clazz) {
+    <T> T get(String path, List<Map.Entry<String, Object>> queryParams, Class<T> clazz) {
         WebTarget webTarget = getBaseWebTarget().path(path).queryParam("api_key", apiKey);
+        if (queryParams != null) {
+            for (Map.Entry<String, Object> queryParam : queryParams) {
+                webTarget = webTarget.queryParam(queryParam.getKey(), queryParam.getValue());
+            }
+        }
         Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON).acceptEncoding("UTF-8");
         Response response = invocationBuilder.get();
         T returnObj = null;

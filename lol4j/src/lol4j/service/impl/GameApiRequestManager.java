@@ -23,7 +23,7 @@ public class GameApiRequestManager extends AbstractApiRequestManager implements 
     @Override
     public RecentGamesDto getRecentGames(String region, long summonerId) throws InvalidRegionException {
         if (isSupportedRegion(region)) {
-            return get(buildPath(region, summonerId), RecentGamesDto.class);
+            return get(buildPath(region, summonerId), null, RecentGamesDto.class);
         }
         else {
             throw new InvalidRegionException(region);

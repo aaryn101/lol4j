@@ -5,6 +5,11 @@ import lol4j.protocol.dto.champion.ChampionListDto;
 import lol4j.protocol.resource.ChampionResource;
 import lol4j.util.Regions;
 
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Created by Aaryn101 on 12/10/13.
  */
@@ -22,7 +27,19 @@ public class ChampionApiRequestManager extends AbstractApiRequestManager impleme
 
     @Override
     public ChampionListDto getAllChampions(String region, boolean freeToPlay) throws InvalidRegionException {
-        return get(buildPath(region), ChampionListDto.class);
+        if (isSupportedRegion(region)) {
+            return get(buildPath(region), buildQueryParams(freeToPlay), ChampionListDto.class);
+        }
+        else {
+            throw new InvalidRegionException(region);
+        }
+    }
+
+    private List<Map.Entry<String, Object>> buildQueryParams(boolean freeToPlay) {
+        List<Map.Entry<String, Object>> queryParams = new ArrayList<>();
+        queryParams.add(new AbstractMap.SimpleEntry("freeToPlay", Boolean.valueOf(freeToPlay)));
+
+        return queryParams;
     }
 
     private String buildPath(String region) {
