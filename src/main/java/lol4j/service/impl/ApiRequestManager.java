@@ -2,7 +2,6 @@ package lol4j.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
-import lol4j.util.Regions;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -11,28 +10,24 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 /**
  * Created by Aaryn101 on 12/10/13.
  */
-public abstract class AbstractApiRequestManager {
+public class ApiRequestManager {
     private String apiKey;
-    private String baseUri;
     private Client client;
-    private List<Regions> supportedRegions = new ArrayList<>();
-    private WebTarget baseWebTarget;
     private ObjectMapper objectMapper;
 
-    protected AbstractApiRequestManager() {
+    public ApiRequestManager() {
         client = ClientBuilder.newClient();
         objectMapper = new ObjectMapper();
     }
 
-    <T> T get(String path, List<Map.Entry<String, Object>> queryParams, Class<T> clazz) {
-        String json = getJson(path, queryParams);
+    public <T> T get(String baseUri, String path, List<Map.Entry<String, Object>> queryParams, Class<T> clazz) {
+        String json = getJson(baseUri, path, queryParams);
         T returnObj = null;
 
         try {
@@ -44,8 +39,8 @@ public abstract class AbstractApiRequestManager {
         return returnObj;
     }
 
-    <K, V> Map<K, V> get(String path, List<Map.Entry<String, Object>> queryParams, Class<K> keyClass, Class<V> valueClass) {
-        String json = getJson(path, queryParams);
+    public <K, V> Map<K, V> get(String baseUri, String path, List<Map.Entry<String, Object>> queryParams, Class<K> keyClass, Class<V> valueClass) {
+        String json = getJson(baseUri, path, queryParams);
         TypeFactory typeFactory = TypeFactory.defaultInstance();
         Map<K, V> returnObj = null;
 
@@ -58,8 +53,8 @@ public abstract class AbstractApiRequestManager {
         return returnObj;
     }
 
-    private String getJson(String path, List<Map.Entry<String, Object>> queryParams) {
-        WebTarget webTarget = getBaseWebTarget().path(path).queryParam("api_key", apiKey);
+    private String getJson(String baseUri, String path, List<Map.Entry<String, Object>> queryParams) {
+        WebTarget webTarget = client.target(baseUri).path(path).queryParam("api_key", apiKey);
         if (queryParams != null) {
             for (Map.Entry<String, Object> queryParam : queryParams) {
                 webTarget = webTarget.queryParam(queryParam.getKey(), queryParam.getValue());
@@ -75,25 +70,6 @@ public abstract class AbstractApiRequestManager {
     protected void finalize() throws Throwable {
         client.close();
         super.finalize();
-    }
-
-    private WebTarget getBaseWebTarget() {
-        if (baseWebTarget == null) {
-            baseWebTarget = client.target(baseUri);
-        }
-        return baseWebTarget;
-    }
-
-    public boolean isSupportedRegion(String region) {
-        return supportedRegions.contains(Regions.valueOf(region.toUpperCase()));
-    }
-
-    public void setBaseUri(String baseUri) {
-        this.baseUri = baseUri;
-    }
-
-    public List<Regions> getSupportedRegions() {
-        return supportedRegions;
     }
 
     public void setApiKey(String apiKey) {

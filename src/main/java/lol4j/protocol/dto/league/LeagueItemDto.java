@@ -1,12 +1,10 @@
 package lol4j.protocol.dto.league;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Created by Aaryn101 on 12/11/13.
  */
-@JsonIgnoreProperties(ignoreUnknown=true)
 public class LeagueItemDto {
     @JsonProperty("isFreshBlood")
     private boolean freshBlood;
