@@ -26,7 +26,7 @@ public class ApiRequestManager {
         objectMapper = new ObjectMapper();
     }
 
-    public <T> T get(String baseUri, String path, List<Map.Entry<String, Object>> queryParams, Class<T> clazz) {
+    public <T> T get(String baseUri, String path, Map<String, Object> queryParams, Class<T> clazz) {
         String json = getJson(baseUri, path, queryParams);
         T returnObj = null;
 
@@ -39,7 +39,7 @@ public class ApiRequestManager {
         return returnObj;
     }
 
-    public <K, V> Map<K, V> get(String baseUri, String path, List<Map.Entry<String, Object>> queryParams, Class<K> keyClass, Class<V> valueClass) {
+    public <K, V> Map<K, V> get(String baseUri, String path,  Map<String, Object> queryParams, Class<K> keyClass, Class<V> valueClass) {
         String json = getJson(baseUri, path, queryParams);
         TypeFactory typeFactory = TypeFactory.defaultInstance();
         Map<K, V> returnObj = null;
@@ -53,10 +53,10 @@ public class ApiRequestManager {
         return returnObj;
     }
 
-    private String getJson(String baseUri, String path, List<Map.Entry<String, Object>> queryParams) {
+    private String getJson(String baseUri, String path,  Map<String, Object> queryParams) {
         WebTarget webTarget = client.target(baseUri).path(path).queryParam("api_key", apiKey);
         if (queryParams != null) {
-            for (Map.Entry<String, Object> queryParam : queryParams) {
+            for (Map.Entry<String, Object> queryParam : queryParams.entrySet()) {
                 webTarget = webTarget.queryParam(queryParam.getKey(), queryParam.getValue());
             }
         }

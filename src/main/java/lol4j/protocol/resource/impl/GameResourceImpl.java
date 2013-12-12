@@ -23,8 +23,9 @@ public class GameResourceImpl extends AbstractResourceImpl implements GameResour
     @Override
     public RecentGamesDto getRecentGames(String region, long summonerId) throws InvalidRegionException {
         if (isSupportedRegion(region)) {
-            return getApiRequestManager()
-                    .get(getBaseUri(), buildPath(region, summonerId), null, RecentGamesDto.class);
+            String path = region + SLASH + RESOURCE_URI + SLASH + summonerId + SLASH + "recent";
+
+            return getApiRequestManager().get(getBaseUri(), path, null, RecentGamesDto.class);
         }
         else {
             throw new InvalidRegionException(region);

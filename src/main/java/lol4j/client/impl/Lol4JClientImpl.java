@@ -4,6 +4,7 @@ import lol4j.client.Lol4JClient;
 import lol4j.protocol.resource.ChampionResource;
 import lol4j.protocol.resource.GameResource;
 import lol4j.protocol.resource.LeagueResource;
+import lol4j.protocol.resource.StatsResource;
 import lol4j.protocol.resource.impl.ResourceFactory;
 
 /**
@@ -14,6 +15,7 @@ public class Lol4JClientImpl implements Lol4JClient {
     private ChampionResource championResource;
     private GameResource gameResource;
     private LeagueResource leagueResource;
+    private StatsResource statsResource;
 
     public Lol4JClientImpl(String apiKey) {
         resourceFactory = new ResourceFactory(apiKey);
@@ -21,6 +23,7 @@ public class Lol4JClientImpl implements Lol4JClient {
         championResource = resourceFactory.createChampionResource();
         gameResource = resourceFactory.createGameResource();
         leagueResource = resourceFactory.createLeagueResource();
+        statsResource = resourceFactory.createStatsResource();
     }
 
     @Override
@@ -36,5 +39,10 @@ public class Lol4JClientImpl implements Lol4JClient {
     @Override
     public LeagueResource getLeagueResource() {
         return leagueResource;
+    }
+
+    @Override
+    public StatsResource getStatsResource() {
+        return statsResource;
     }
 }
