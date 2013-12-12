@@ -24,23 +24,16 @@ public abstract class AbstractApiRequestManager {
     private Client client;
     private List<Regions> supportedRegions = new ArrayList<>();
     private WebTarget baseWebTarget;
+    private ObjectMapper objectMapper;
 
     protected AbstractApiRequestManager() {
-        this.client = ClientBuilder.newClient();
+        client = ClientBuilder.newClient();
+        objectMapper = new ObjectMapper();
     }
 
     <T> T get(String path, List<Map.Entry<String, Object>> queryParams, Class<T> clazz) {
-        WebTarget webTarget = getBaseWebTarget().path(path).queryParam("api_key", apiKey);
-        if (queryParams != null) {
-            for (Map.Entry<String, Object> queryParam : queryParams) {
-                webTarget = webTarget.queryParam(queryParam.getKey(), queryParam.getValue());
-            }
-        }
-        Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON).acceptEncoding("UTF-8");
-        Response response = invocationBuilder.get();
+        String json = getJson(path, queryParams);
         T returnObj = null;
-        ObjectMapper objectMapper = new ObjectMapper();
-        String json = response.readEntity(String.class);
 
         try {
             returnObj = objectMapper.readValue(json, clazz);
@@ -52,18 +45,9 @@ public abstract class AbstractApiRequestManager {
     }
 
     <K, V> Map<K, V> get(String path, List<Map.Entry<String, Object>> queryParams, Class<K> keyClass, Class<V> valueClass) {
-        WebTarget webTarget = getBaseWebTarget().path(path).queryParam("api_key", apiKey);
-        if (queryParams != null) {
-            for (Map.Entry<String, Object> queryParam : queryParams) {
-                webTarget = webTarget.queryParam(queryParam.getKey(), queryParam.getValue());
-            }
-        }
-        Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON).acceptEncoding("UTF-8");
-        Response response = invocationBuilder.get();
-        Map<K, V> returnObj = null;
-        ObjectMapper objectMapper = new ObjectMapper();
+        String json = getJson(path, queryParams);
         TypeFactory typeFactory = TypeFactory.defaultInstance();
-        String json = response.readEntity(String.class);
+        Map<K, V> returnObj = null;
 
         try {
             returnObj = objectMapper.readValue(json, typeFactory.constructMapType(Map.class, keyClass, valueClass));
@@ -72,6 +56,19 @@ public abstract class AbstractApiRequestManager {
         }
 
         return returnObj;
+    }
+
+    private String getJson(String path, List<Map.Entry<String, Object>> queryParams) {
+        WebTarget webTarget = getBaseWebTarget().path(path).queryParam("api_key", apiKey);
+        if (queryParams != null) {
+            for (Map.Entry<String, Object> queryParam : queryParams) {
+                webTarget = webTarget.queryParam(queryParam.getKey(), queryParam.getValue());
+            }
+        }
+        Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON).acceptEncoding("UTF-8");
+        Response response = invocationBuilder.get();
+
+        return response.readEntity(String.class);
     }
 
     @Override
