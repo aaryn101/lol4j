@@ -1,8 +1,11 @@
 package lol4j.protocol.dto.champion;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * Created by Aaryn101 on 12/10/13.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ChampionDto {
     private boolean active;
     private int attackRank;

@@ -1,8 +1,11 @@
 package lol4j.protocol.dto.league;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * Created by Aaryn101 on 12/11/13.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class MiniSeriesDto {
     private int losses;
     private char[] progress;

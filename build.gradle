@@ -4,16 +4,16 @@ sourceCompatibility = 1.5
 version = '1.0'
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.3.0'
-	compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.3.0'
-	compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.3.0'
-	compile group: 'org.glassfish.jersey.core', name: 'jersey-client', version: '2.4.1'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.3.0'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.3.0'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.3.0'
+    compile group: 'org.glassfish.jersey.core', name: 'jersey-client', version: '2.4.1'
 }
 
 jar {
-   from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
 }

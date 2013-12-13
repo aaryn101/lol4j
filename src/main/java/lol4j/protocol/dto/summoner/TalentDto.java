@@ -1,15 +1,15 @@
-package lol4j.protocol.dto.game;
+package lol4j.protocol.dto.summoner;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
- * Created by Aaryn101 on 12/10/13.
+ * Created by Aaryn101 on 12/12/13.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class RawStatDto {
+public class TalentDto {
     private int id;
     private String name;
-    private int value;
+    private int rank;
 
     public int getId() {
         return id;
@@ -27,11 +27,11 @@ public class RawStatDto {
         this.name = name;
     }
 
-    public int getValue() {
-        return value;
+    public int getRank() {
+        return rank;
     }
 
-    public void setValue(int value) {
-        this.value = value;
+    public void setRank(int rank) {
+        this.rank = rank;
     }
 }

@@ -1,9 +1,6 @@
 package lol4j.protocol.resource.impl;
 
-import lol4j.protocol.resource.ChampionResource;
-import lol4j.protocol.resource.GameResource;
-import lol4j.protocol.resource.LeagueResource;
-import lol4j.protocol.resource.StatsResource;
+import lol4j.protocol.resource.*;
 import lol4j.service.impl.ApiRequestManager;
 
 /**
@@ -49,5 +46,13 @@ public class ResourceFactory {
         statsResource.setBaseUri(LOL_BASE);
 
         return statsResource;
+    }
+
+    public SummonerResource createSummonerResource() {
+        SummonerResourceImpl summonerResource = new SummonerResourceImpl();
+        summonerResource.setApiRequestManager(apiRequestManager);
+        summonerResource.setBaseUri(LOL_BASE);
+
+        return summonerResource;
     }
 }

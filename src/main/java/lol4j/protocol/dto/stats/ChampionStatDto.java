@@ -1,15 +1,24 @@
-package lol4j.protocol.dto.game;
+package lol4j.protocol.dto.stats;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
- * Created by Aaryn101 on 12/10/13.
+ * Created by Aaryn101 on 12/12/13.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class RawStatDto {
+public class ChampionStatDto {
+    private int count;
     private int id;
     private String name;
     private int value;
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
 
     public int getId() {
         return id;

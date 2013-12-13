@@ -2,7 +2,12 @@ package lol4j.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
+import lol4j.exception.TooManyRequestsException;
 
+import javax.ws.rs.BadRequestException;
+import javax.ws.rs.InternalServerErrorException;
+import javax.ws.rs.NotAuthorizedException;
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Invocation;
@@ -10,7 +15,6 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -62,6 +66,16 @@ public class ApiRequestManager {
         }
         Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON).acceptEncoding("UTF-8");
         Response response = invocationBuilder.get();
+
+        if (response.getStatus() != 200) {
+            switch(response.getStatus()) {
+                case 400: throw new BadRequestException();
+                case 401: throw new NotAuthorizedException("Unauthorized: bad api key or bad request uri");
+                case 404: throw new NotFoundException();
+                case 429: throw new TooManyRequestsException();
+                case 500: throw new InternalServerErrorException();
+            }
+        }
 
         return response.readEntity(String.class);
     }

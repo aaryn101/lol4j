@@ -1,7 +1,7 @@
 package lol4j.protocol.resource.impl;
 
 import lol4j.service.impl.ApiRequestManager;
-import lol4j.util.Regions;
+import lol4j.util.Region;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,15 +10,15 @@ import java.util.List;
  * Created by Aaryn101 on 12/11/13.
  */
 public class AbstractResourceImpl {
-    private List<Regions> supportedRegions = new ArrayList<>();
+    private List<Region> supportedRegions = new ArrayList<>();
     private ApiRequestManager apiRequestManager;
     private String baseUri;
 
-    public boolean isSupportedRegion(String region) {
-        return supportedRegions.contains(Regions.valueOf(region.toUpperCase()));
+    public boolean isSupportedRegion(Region region) {
+        return supportedRegions.contains(region);
     }
 
-    public List<Regions> getSupportedRegions() {
+    public List<Region> getSupportedRegions() {
         return supportedRegions;
     }
 

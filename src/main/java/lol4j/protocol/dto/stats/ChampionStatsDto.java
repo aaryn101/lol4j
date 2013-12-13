@@ -1,15 +1,22 @@
-package lol4j.protocol.dto.game;
+package lol4j.protocol.dto.stats;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * Created by Aaryn101 on 12/10/13.
+ * Created by Aaryn101 on 12/12/13.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class RawStatDto {
+public class ChampionStatsDto {
     private int id;
     private String name;
-    private int value;
+    private List<ChampionStatDto> stats = new ArrayList<>();
+
+    public List<ChampionStatDto> getStats() {
+        return stats;
+    }
 
     public int getId() {
         return id;
@@ -25,13 +32,5 @@ public class RawStatDto {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getValue() {
-        return value;
-    }
-
-    public void setValue(int value) {
-        this.value = value;
     }
 }

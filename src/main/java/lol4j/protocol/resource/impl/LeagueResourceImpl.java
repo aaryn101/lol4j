@@ -3,7 +3,7 @@ package lol4j.protocol.resource.impl;
 import lol4j.exception.InvalidRegionException;
 import lol4j.protocol.dto.league.LeagueDto;
 import lol4j.protocol.resource.LeagueResource;
-import lol4j.util.Regions;
+import lol4j.util.Region;
 
 import java.util.Map;
 
@@ -17,25 +17,23 @@ public class LeagueResourceImpl extends AbstractResourceImpl implements LeagueRe
     private static final String RESOURCE_URI = RESOURCE_VERSION + SLASH + RESOURCE_PATH;
 
     public LeagueResourceImpl() {
-        getSupportedRegions().add(Regions.EUW);
-        getSupportedRegions().add(Regions.BR);
-        getSupportedRegions().add(Regions.NA);
-        getSupportedRegions().add(Regions.TR);
-        getSupportedRegions().add(Regions.EUNE);
+        getSupportedRegions().add(Region.EUW);
+        getSupportedRegions().add(Region.BR);
+        getSupportedRegions().add(Region.NA);
+        getSupportedRegions().add(Region.TR);
+        getSupportedRegions().add(Region.EUNE);
     }
 
     @Override
-    public Map<String, LeagueDto> getLeaguesData(String region, long summonerId) throws InvalidRegionException {
+    public Map<String, LeagueDto> getLeaguesData(Region region, long summonerId) {
         if (isSupportedRegion(region)) {
+            String path = region.getName() + SLASH + RESOURCE_URI + SLASH + summonerId;
+
             return getApiRequestManager()
-                    .get(getBaseUri(), buildPath(region, summonerId), null, String.class, LeagueDto.class);
+                    .get(getBaseUri(), path, null, String.class, LeagueDto.class);
         }
         else {
             throw new InvalidRegionException(region);
         }
-    }
-
-    private String buildPath(String region, long summonerId) {
-        return region + SLASH + RESOURCE_URI + SLASH + summonerId;
     }
 }

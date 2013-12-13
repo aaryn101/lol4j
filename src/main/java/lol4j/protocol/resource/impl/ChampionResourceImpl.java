@@ -3,9 +3,10 @@ package lol4j.protocol.resource.impl;
 import lol4j.exception.InvalidRegionException;
 import lol4j.protocol.dto.champion.ChampionListDto;
 import lol4j.protocol.resource.ChampionResource;
-import lol4j.util.Regions;
+import lol4j.util.Region;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Aaryn101 on 12/10/13.
@@ -17,15 +18,15 @@ public class ChampionResourceImpl extends AbstractResourceImpl implements Champi
     private static final String RESOURCE_URI = RESOURCE_VERSION + SLASH + RESOURCE_PATH;
 
     public ChampionResourceImpl() {
-        getSupportedRegions().add(Regions.EUW);
-        getSupportedRegions().add(Regions.EUNE);
-        getSupportedRegions().add(Regions.NA);
+        getSupportedRegions().add(Region.EUW);
+        getSupportedRegions().add(Region.EUNE);
+        getSupportedRegions().add(Region.NA);
     }
 
     @Override
-    public ChampionListDto getAllChampions(String region, boolean freeToPlay) throws InvalidRegionException {
+    public ChampionListDto getAllChampions(Region region, boolean freeToPlay) {
         if (isSupportedRegion(region)) {
-            String path = region + SLASH + RESOURCE_URI;
+            String path = region.getName() + SLASH + RESOURCE_URI;
             Map<String, Object> queryParams = new HashMap<>();
             queryParams.put("freeToPlay", freeToPlay);
 

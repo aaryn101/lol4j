@@ -1,5 +1,7 @@
 package lol4j.protocol.dto.game;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -7,6 +9,7 @@ import java.util.List;
 /**
  * Created by Aaryn101 on 12/10/13.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class GameDto {
     private int championId;
     private long createDate;
