@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by Aaryn101 on 12/11/13.
  */
-public class AbstractResourceImpl {
+public abstract class AbstractResourceImpl {
     private List<Region> supportedRegions = new ArrayList<>();
     private ApiRequestManager apiRequestManager;
     private String baseUri;
