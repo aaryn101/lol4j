@@ -1,9 +1,11 @@
 lol4j
 =====
 
-lol4j is a Java wrapper for the Riot Games LoL beta API. It is easy to use and provides the developer with easy access
-to all of the resources provided by Riot. lol4j is very fast and will handle all of the JSON unmarshalling so
-developers only work with Plain Old Java Objects.
+lol4j is a Java wrapper for the Riot Games LoL beta API. It is easy to use and provides the developer with complete
+access to all of the resources provided by Riot. lol4j is very fast and handles all of the JSON unmarshalling so
+devs only work with Plain Old Java Objects.
+
+Gradle is used to handle dependencies and orchestrate the build process.
 
 Example Usage
 -------------
