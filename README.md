@@ -5,7 +5,8 @@ lol4j is a Java wrapper for the Riot Games LoL beta API. It is easy to use and p
 access to all of the resources provided by Riot. lol4j is very fast and handles all of the JSON unmarshalling so
 devs only work with Plain Old Java Objects.
 
-Gradle is used to handle dependencies and orchestrate the build process.
+Gradle is used to handle dependencies and orchestrate the build process. To run JUnit tests through Gradle, create a
+junit.properties file in the root of the project.
 
 Example Usage
 -------------
