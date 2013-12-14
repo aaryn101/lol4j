@@ -7,6 +7,6 @@ import lol4j.util.Region;
  */
 public class InvalidRegionException extends RuntimeException {
     public InvalidRegionException(Region region) {
-        super("\"" + region.getName() + "\" is not a valid region");
+        super("\"" +  (region == null ? "null" : region.getName()) + "\" is not a valid region");
     }
 }

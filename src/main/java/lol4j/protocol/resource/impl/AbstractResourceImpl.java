@@ -16,7 +16,7 @@ public abstract class AbstractResourceImpl {
     private String baseUri;
 
     public void doSupportedRegionCheck(Region region) {
-        if (!supportedRegions.contains(region)) {
+        if (region == null || !supportedRegions.contains(region)) {
             throw new InvalidRegionException(region);
         }
     }
