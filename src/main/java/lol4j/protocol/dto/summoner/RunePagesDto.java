@@ -2,20 +2,16 @@ package lol4j.protocol.dto.summoner;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by Aaryn101 on 12/12/13.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class MasteryPagesDto {
-    private List<MasteryPageDto> pages = new ArrayList<>();
+public class RunePagesDto {
+    private Set<RunePageDto> pages = new HashSet<>();
     private long summonerId;
-
-    public List<MasteryPageDto> getPages() {
-        return pages;
-    }
 
     public long getSummonerId() {
         return summonerId;
@@ -23,5 +19,10 @@ public class MasteryPagesDto {
 
     public void setSummonerId(long summonerId) {
         this.summonerId = summonerId;
+    }
+
+    public Set<RunePageDto> getPages() {
+
+        return pages;
     }
 }

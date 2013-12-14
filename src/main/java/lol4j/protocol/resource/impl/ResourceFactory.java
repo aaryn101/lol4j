@@ -8,7 +8,7 @@ import lol4j.service.impl.ApiRequestManager;
  */
 public class ResourceFactory {
     private static final String LOL_BASE = "http://prod.api.pvp.net/api/lol";
-    private static final String PVP_NET_BASE = "http://prod.api.pvp.net/api";
+    private static final String API_BASE = "http://prod.api.pvp.net/api";
     private ApiRequestManager apiRequestManager;
 
     public ResourceFactory(String apiKey) {
@@ -35,7 +35,7 @@ public class ResourceFactory {
     public LeagueResource createLeagueResource() {
         LeagueResourceImpl leagueResource = new LeagueResourceImpl();
         leagueResource.setApiRequestManager(apiRequestManager);
-        leagueResource.setBaseUri(PVP_NET_BASE);
+        leagueResource.setBaseUri(API_BASE);
 
         return leagueResource;
     }
@@ -54,5 +54,13 @@ public class ResourceFactory {
         summonerResource.setBaseUri(LOL_BASE);
 
         return summonerResource;
+    }
+
+    public TeamResource createTeamResource() {
+        TeamResourceImpl teamResource = new TeamResourceImpl();
+        teamResource.setApiRequestManager(apiRequestManager);
+        teamResource.setBaseUri(API_BASE);
+
+        return teamResource;
     }
 }

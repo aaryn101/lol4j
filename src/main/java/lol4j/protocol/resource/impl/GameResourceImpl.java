@@ -1,6 +1,5 @@
 package lol4j.protocol.resource.impl;
 
-import lol4j.exception.InvalidRegionException;
 import lol4j.protocol.dto.game.RecentGamesDto;
 import lol4j.protocol.resource.GameResource;
 import lol4j.util.Region;
@@ -22,13 +21,9 @@ public class GameResourceImpl extends AbstractResourceImpl implements GameResour
 
     @Override
     public RecentGamesDto getRecentGames(Region region, long summonerId) {
-        if (isSupportedRegion(region)) {
-            String path = region.getName() + SLASH + RESOURCE_URI + SLASH + summonerId + SLASH + "recent";
+        doSupportedRegionCheck(region);
+        String path = region.getName() + SLASH + RESOURCE_URI + SLASH + summonerId + SLASH + "recent";
 
-            return getApiRequestManager().get(getBaseUri(), path, null, RecentGamesDto.class);
-        }
-        else {
-            throw new InvalidRegionException(region);
-        }
+        return getApiRequestManager().get(getBaseUri(), path, null, RecentGamesDto.class);
     }
 }

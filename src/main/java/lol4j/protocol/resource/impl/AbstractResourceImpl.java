@@ -1,5 +1,6 @@
 package lol4j.protocol.resource.impl;
 
+import lol4j.exception.InvalidRegionException;
 import lol4j.service.impl.ApiRequestManager;
 import lol4j.util.Region;
 
@@ -14,8 +15,10 @@ public abstract class AbstractResourceImpl {
     private ApiRequestManager apiRequestManager;
     private String baseUri;
 
-    public boolean isSupportedRegion(Region region) {
-        return supportedRegions.contains(region);
+    public void doSupportedRegionCheck(Region region) {
+        if (!supportedRegions.contains(region)) {
+            throw new InvalidRegionException(region);
+        }
     }
 
     public List<Region> getSupportedRegions() {

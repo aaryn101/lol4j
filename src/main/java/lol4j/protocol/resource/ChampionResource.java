@@ -1,6 +1,5 @@
 package lol4j.protocol.resource;
 
-import lol4j.exception.InvalidRegionException;
 import lol4j.protocol.dto.champion.ChampionListDto;
 import lol4j.util.Region;
 
@@ -16,5 +15,5 @@ public interface ChampionResource {
      * @return champions
      * @if region specified is invalid
      */
-    ChampionListDto getAllChampions(Region region, boolean freeToPlay) throws InvalidRegionException;
+    ChampionListDto getAllChampions(Region region, boolean freeToPlay);
 }

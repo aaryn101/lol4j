@@ -1,6 +1,5 @@
 package lol4j.protocol.resource.impl;
 
-import lol4j.exception.InvalidRegionException;
 import lol4j.protocol.dto.league.LeagueDto;
 import lol4j.protocol.resource.LeagueResource;
 import lol4j.util.Region;
@@ -26,14 +25,10 @@ public class LeagueResourceImpl extends AbstractResourceImpl implements LeagueRe
 
     @Override
     public Map<String, LeagueDto> getLeaguesData(Region region, long summonerId) {
-        if (isSupportedRegion(region)) {
-            String path = region.getName() + SLASH + RESOURCE_URI + SLASH + summonerId;
+        doSupportedRegionCheck(region);
+        String path = region.getName() + SLASH + RESOURCE_URI + SLASH + summonerId;
 
-            return getApiRequestManager()
-                    .get(getBaseUri(), path, null, String.class, LeagueDto.class);
-        }
-        else {
-            throw new InvalidRegionException(region);
-        }
+        return getApiRequestManager()
+                .getMap(getBaseUri(), path, null, String.class, LeagueDto.class);
     }
 }
