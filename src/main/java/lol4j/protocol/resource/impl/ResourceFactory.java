@@ -11,9 +11,8 @@ public class ResourceFactory {
     private static final String API_BASE = "http://prod.api.pvp.net/api";
     private ApiRequestManager apiRequestManager;
 
-    public ResourceFactory(String apiKey) {
-        apiRequestManager = new ApiRequestManager();
-        apiRequestManager.setApiKey(apiKey);
+    public ResourceFactory(ApiRequestManager apiRequestManager) {
+        this.apiRequestManager = apiRequestManager;
     }
 
     public ChampionResource createChampionResource() {

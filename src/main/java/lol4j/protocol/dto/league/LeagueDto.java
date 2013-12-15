@@ -1,6 +1,8 @@
 package lol4j.protocol.dto.league;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lol4j.util.Queue;
+import lol4j.util.Tier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +14,8 @@ import java.util.List;
 public class LeagueDto {
     private List<LeagueItemDto> entries = new ArrayList<>();
     private String name;
-    private String queue;
-    private String tier;
+    private Queue queue;
+    private Tier tier;
     private long timestamp;
 
     public List<LeagueItemDto> getEntries() {
@@ -28,19 +30,19 @@ public class LeagueDto {
         this.name = name;
     }
 
-    public String getQueue() {
+    public Queue getQueue() {
         return queue;
     }
 
-    public void setQueue(String queue) {
+    public void setQueue(Queue queue) {
         this.queue = queue;
     }
 
-    public String getTier() {
+    public Tier getTier() {
         return tier;
     }
 
-    public void setTier(String tier) {
+    public void setTier(Tier tier) {
         this.tier = tier;
     }
 

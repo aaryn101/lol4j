@@ -7,4 +7,5 @@ import lol4j.protocol.resource.*;
  */
 public interface Lol4JClient extends GameResource, ChampionResource, LeagueResource, StatsResource, SummonerResource,
         TeamResource {
+    public void setRateLimit(int perTenSeconds, int perTenMinutes);
 }

@@ -13,6 +13,7 @@ import lol4j.protocol.dto.summoner.SummonerNameListDto;
 import lol4j.protocol.dto.team.TeamDto;
 import lol4j.protocol.resource.*;
 import lol4j.protocol.resource.impl.ResourceFactory;
+import lol4j.service.impl.ApiRequestManager;
 import lol4j.util.Region;
 import lol4j.util.Season;
 
@@ -29,9 +30,11 @@ public class Lol4JClientImpl implements Lol4JClient {
     private StatsResource statsResource;
     private SummonerResource summonerResource;
     private TeamResource teamResource;
+    private ApiRequestManager apiRequestManager;
 
     public Lol4JClientImpl(String apiKey) {
-        ResourceFactory resourceFactory = new ResourceFactory(apiKey);
+        apiRequestManager = new ApiRequestManager(apiKey);
+        ResourceFactory resourceFactory = new ResourceFactory(apiRequestManager);
 
         championResource = resourceFactory.createChampionResource();
         gameResource = resourceFactory.createGameResource();
@@ -94,5 +97,10 @@ public class Lol4JClientImpl implements Lol4JClient {
     @Override
     public List<TeamDto> getTeams(Region region, long summonerId) {
         return teamResource.getTeams(region, summonerId);
+    }
+
+    @Override
+    public void setRateLimit(int perTenSeconds, int perTenMinutes) {
+        apiRequestManager.setRateLimit(perTenSeconds, perTenMinutes);
     }
 }

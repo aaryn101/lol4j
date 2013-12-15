@@ -2,3 +2,5 @@ api.key=
 summoner.name=
 summoner.id=
 region=
+rate.per10minutes=
+rate.per10seconds=

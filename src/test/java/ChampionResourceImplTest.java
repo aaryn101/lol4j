@@ -7,10 +7,10 @@ import org.junit.Assert;
 /**
  * Created by Aaryn101 on 12/13/13.
  */
-public class ChampionResourceImplTest extends AbstractResourceImplTest {
+public class ChampionResourceImplTest {
     @org.junit.Test
-    public void test_getAllChampions() {
-        ChampionListDto championList = getClient().getAllChampions(Region.NA, false);
+    public void getAllChampions() {
+        ChampionListDto championList = Lol4JTestVariables.getInstance().getClient().getAllChampions(Region.NA, false);
 
         Assert.assertNotNull(championList);
         Assert.assertNotNull(championList.getChampions());
@@ -26,11 +26,11 @@ public class ChampionResourceImplTest extends AbstractResourceImplTest {
     }
 
     @org.junit.Test
-    public void test_getAllChampionsWithUnsupportedRegion() {
+    public void getAllChampionsWithUnsupportedRegion() {
         boolean exceptionThrown = false;
 
         try {
-            getClient().getAllChampions(Region.TR, false);
+            Lol4JTestVariables.getInstance().getClient().getAllChampions(Region.TR, false);
         }
         catch(InvalidRegionException e) {
             exceptionThrown = true;
@@ -40,11 +40,11 @@ public class ChampionResourceImplTest extends AbstractResourceImplTest {
     }
 
     @org.junit.Test
-    public void test_getAllChampionsWithNullRegion() {
+    public void getAllChampionsWithNullRegion() {
         boolean exceptionThrown = false;
 
         try {
-            getClient().getAllChampions(null, false);
+            Lol4JTestVariables.getInstance().getClient().getAllChampions(null, false);
         }
         catch(InvalidRegionException e) {
             exceptionThrown = true;

@@ -17,22 +17,31 @@ import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.DelayQueue;
+import java.util.concurrent.Delayed;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Aaryn101 on 12/10/13.
  */
 public class ApiRequestManager {
+    private static final int TEN_SECONDS = 10000;
+    private static final int TEN_MINUTES = 600000;
     private String apiKey;
     private Client client;
     private ObjectMapper objectMapper;
+    private DelayQueue<Token> perSecondsBucket;
+    private DelayQueue<Token> perMinutesBucket;
+    private boolean usingRateLimiter = false;
 
-    public ApiRequestManager() {
+    public ApiRequestManager(String apiKey) {
+        this.apiKey = apiKey;
         client = ClientBuilder.newClient();
         objectMapper = new ObjectMapper();
     }
 
     public <T> T get(String baseUri, String path, Map<String, Object> queryParams, Class<T> clazz) {
-        String json = getJson(baseUri, path, queryParams);
+        String json = doRequest(baseUri, path, queryParams);
         T returnObj = null;
 
         try {
@@ -45,7 +54,7 @@ public class ApiRequestManager {
     }
 
     public <T> List<T> getList(String baseUri, String path, Map<String, Object> queryParams, Class<T> clazz) {
-        String json = getJson(baseUri, path, queryParams);
+        String json = doRequest(baseUri, path, queryParams);
         TypeFactory typeFactory = TypeFactory.defaultInstance();
         List<T> returnObj = null;
 
@@ -59,7 +68,7 @@ public class ApiRequestManager {
     }
 
     public <K, V> Map<K, V> getMap(String baseUri, String path, Map<String, Object> queryParams, Class<K> keyClass, Class<V> valueClass) {
-        String json = getJson(baseUri, path, queryParams);
+        String json = doRequest(baseUri, path, queryParams);
         TypeFactory typeFactory = TypeFactory.defaultInstance();
         Map<K, V> returnObj = null;
 
@@ -72,7 +81,14 @@ public class ApiRequestManager {
         return returnObj;
     }
 
-    private String getJson(String baseUri, String path,  Map<String, Object> queryParams) {
+    private String doRequest(String baseUri, String path, Map<String, Object> queryParams) {
+        if (usingRateLimiter) {
+            try {
+                perSecondsBucket.take();
+                perMinutesBucket.take();
+            } catch (InterruptedException e) {
+            }
+        }
         WebTarget webTarget = client.target(baseUri).path(path).queryParam("api_key", apiKey);
         if (queryParams != null) {
             for (Map.Entry<String, Object> queryParam : queryParams.entrySet()) {
@@ -92,6 +108,9 @@ public class ApiRequestManager {
             }
         }
 
+        perSecondsBucket.put(new Token(TEN_SECONDS, false));
+        perMinutesBucket.put(new Token(TEN_MINUTES, false));
+
         return response.readEntity(String.class);
     }
 
@@ -101,7 +120,47 @@ public class ApiRequestManager {
         super.finalize();
     }
 
-    public void setApiKey(String apiKey) {
-        this.apiKey = apiKey;
+    public void setRateLimit(int perTenSeconds, int perTenMinutes) {
+        if (!usingRateLimiter) {
+            perSecondsBucket = new DelayQueue<>();
+            for (int i = 0; i < perTenSeconds; i++) {
+                perSecondsBucket.put(new Token(TEN_SECONDS, true));
+            }
+            perMinutesBucket = new DelayQueue<>();
+            for (int i = 0; i < perTenMinutes; i++) {
+                perMinutesBucket.put(new Token(TEN_MINUTES, true));
+            }
+            usingRateLimiter = true;
+        }
+        else {
+            throw new IllegalStateException("Can't set rate limit after it has already been set");
+        }
+    }
+
+    private class Token implements Delayed {
+        private int delay;
+        private long origin;
+        private boolean initial;
+
+        public Token(int delay, boolean initial) {
+            origin = System.currentTimeMillis();
+            this.delay = delay;
+            this.initial = initial;
+        }
+
+        @Override
+        public long getDelay(TimeUnit unit) {
+           return initial ? 0 : unit.convert(delay - (System.currentTimeMillis() - origin), TimeUnit.MILLISECONDS);
+        }
+
+        @Override
+        public int compareTo(Delayed delayed) {
+            if (delayed == this) {
+                return 0;
+            }
+
+            long d = (getDelay(TimeUnit.MILLISECONDS) - delayed.getDelay(TimeUnit.MILLISECONDS));
+            return ((d == 0) ? 0 : ((d < 0) ? -1 : 1));
+        }
     }
 }
