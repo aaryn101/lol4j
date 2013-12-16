@@ -36,6 +36,11 @@ For example, if you have a developer API key with the default rate limit, you'd 
 
 client.setRateLimit(10, 500);
 ```
+lol4j uses true rate limiting - rather than restrict you to X requests per second, lol4j allows you to harness the full
+power of the Riot API. lol4j doesn't ignore the "burstiness" that Riot allows - do you need to make 10 requests right
+away? No problem! lol4j handles all of the hard work for you, ensuring that you don't get errors by making more than X
+requests per 10 seconds and Y requests per 10 minutes.
+
 Rate limiting, if it is going to be used, should be enabled before any requests are made.
 
 Legalese
