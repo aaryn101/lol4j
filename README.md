@@ -22,6 +22,24 @@ RankedStatsDto rankedStats = client.getRankedStats(Region.NA, 19163557, Season.S
 MasteryPagesDto masteryPages = client.getMasteryPages(Region.NA, 19163557);
 ```
 
+Rate Limiting
+-------------
+
+A rate limiter is built in to lol4j. Enabling it is as simple as the following:
+```java
+
+Lol4JClient client = new Lol4JClientImpl("apiKey");
+client.setRateLimit(numPerTenSeconds, numPerTenMinutes);
+```
+For example, if you have a developer API key with the default rate limit, you'd make the following call:
+```java
+
+client.setRateLimit(10, 500);
+```
+Rate limiting, if it is going to be used, should be enabled before any requests are made.
+
+Legalese
+--------
 lol4j isn’t endorsed by Riot Games and doesn’t reflect the views or opinions of Riot Games or anyone officially involved
 in producing or managing League of Legends. League of Legends and Riot Games are trademarks or registered trademarks of
 Riot Games, Inc. League of Legends © Riot Games, Inc.
