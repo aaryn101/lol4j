@@ -1,5 +1,6 @@
 import lol4j.exception.InvalidRegionException;
 import lol4j.protocol.dto.league.LeagueDto;
+import lol4j.util.Region;
 import org.junit.Assert;
 
 import java.util.Map;
@@ -8,10 +9,12 @@ import java.util.Map;
  * Created by Aaryn101 on 12/14/13.
  */
 public class LeagueResourceImplTest {
+    private static final long SUMMONER_ID = 19163557;
+    private static final Region REGION = Region.NA;
+
     @org.junit.Test
     public void getLeaguesData() {
-        Lol4JTestVariables vars = Lol4JTestVariables.getInstance();
-        Map<String, LeagueDto> leaguesData = vars.getClient().getLeaguesData(vars.getRegion(), vars.getSummonerId());
+        Map<String, LeagueDto> leaguesData = Lol4JTestClient.getClient().getLeaguesData(REGION, SUMMONER_ID);
 
         Assert.assertNotNull(leaguesData);
 
@@ -32,7 +35,7 @@ public class LeagueResourceImplTest {
         boolean exceptionThrown = false;
 
         try {
-            Lol4JTestVariables.getInstance().getClient().getLeaguesData(null, 0L);
+            Lol4JTestClient.getClient().getLeaguesData(null, 0L);
         }
         catch(InvalidRegionException e) {
             exceptionThrown = true;

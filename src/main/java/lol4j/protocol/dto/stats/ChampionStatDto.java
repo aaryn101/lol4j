@@ -1,12 +1,14 @@
 package lol4j.protocol.dto.stats;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Created by Aaryn101 on 12/12/13.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ChampionStatDto {
+    @JsonProperty(value = "c")
     private int count;
     private int id;
     private String name;

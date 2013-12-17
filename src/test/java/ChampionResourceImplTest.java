@@ -8,9 +8,11 @@ import org.junit.Assert;
  * Created by Aaryn101 on 12/13/13.
  */
 public class ChampionResourceImplTest {
+    private static final Region REGION = Region.NA;
+
     @org.junit.Test
     public void getAllChampions() {
-        ChampionListDto championList = Lol4JTestVariables.getInstance().getClient().getAllChampions(Region.NA, false);
+        ChampionListDto championList = Lol4JTestClient.getClient().getAllChampions(REGION, false);
 
         Assert.assertNotNull(championList);
         Assert.assertNotNull(championList.getChampions());
@@ -30,7 +32,7 @@ public class ChampionResourceImplTest {
         boolean exceptionThrown = false;
 
         try {
-            Lol4JTestVariables.getInstance().getClient().getAllChampions(Region.TR, false);
+            Lol4JTestClient.getClient().getAllChampions(Region.TR, false);
         }
         catch(InvalidRegionException e) {
             exceptionThrown = true;
@@ -44,7 +46,7 @@ public class ChampionResourceImplTest {
         boolean exceptionThrown = false;
 
         try {
-            Lol4JTestVariables.getInstance().getClient().getAllChampions(null, false);
+            Lol4JTestClient.getClient().getAllChampions(null, false);
         }
         catch(InvalidRegionException e) {
             exceptionThrown = true;

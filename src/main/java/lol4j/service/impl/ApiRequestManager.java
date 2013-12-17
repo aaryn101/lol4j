@@ -25,6 +25,7 @@ import java.util.concurrent.TimeUnit;
  * Created by Aaryn101 on 12/10/13.
  */
 public class ApiRequestManager {
+    public static final String ENCODING = "UTF-8";
     private static final int TEN_SECONDS = 10000;
     private static final int TEN_MINUTES = 600000;
     private String apiKey;
@@ -95,7 +96,7 @@ public class ApiRequestManager {
                 webTarget = webTarget.queryParam(queryParam.getKey(), queryParam.getValue());
             }
         }
-        Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON).acceptEncoding("UTF-8");
+        Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON).acceptEncoding(ENCODING);
         Response response = invocationBuilder.get();
 
         if (response.getStatus() != 200) {
@@ -108,8 +109,10 @@ public class ApiRequestManager {
             }
         }
 
-        perSecondsBucket.put(new Token(TEN_SECONDS, false));
-        perMinutesBucket.put(new Token(TEN_MINUTES, false));
+        if (usingRateLimiter) {
+            perSecondsBucket.put(new Token(TEN_SECONDS, false));
+            perMinutesBucket.put(new Token(TEN_MINUTES, false));
+        }
 
         return response.readEntity(String.class);
     }

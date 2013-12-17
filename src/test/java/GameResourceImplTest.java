@@ -8,10 +8,12 @@ import org.junit.Assert;
  * Created by Aaryn101 on 12/14/13.
  */
 public class GameResourceImplTest {
+    private static final long SUMMONER_ID = 19163557;
+    private static final Region REGION = Region.NA;
+
     @org.junit.Test
     public void getRecentGames() {
-        Lol4JTestVariables vars = Lol4JTestVariables.getInstance();
-        RecentGamesDto recentGames = vars.getClient().getRecentGames(vars.getRegion(), vars.getSummonerId());
+        RecentGamesDto recentGames = Lol4JTestClient.getClient().getRecentGames(REGION, SUMMONER_ID);
 
         Assert.assertNotNull(recentGames);
         Assert.assertNotNull(recentGames.getGames());
@@ -36,7 +38,7 @@ public class GameResourceImplTest {
         boolean exceptionThrown = false;
 
         try {
-            Lol4JTestVariables.getInstance().getClient().getRecentGames(Region.TR, 0L);
+            Lol4JTestClient.getClient().getRecentGames(Region.TR, 0L);
         }
         catch(InvalidRegionException e) {
             exceptionThrown = true;
@@ -50,7 +52,7 @@ public class GameResourceImplTest {
         boolean exceptionThrown = false;
 
         try {
-            Lol4JTestVariables.getInstance().getClient().getRecentGames(null, 0L);
+            Lol4JTestClient.getClient().getRecentGames(null, 0L);
         }
         catch(InvalidRegionException e) {
             exceptionThrown = true;

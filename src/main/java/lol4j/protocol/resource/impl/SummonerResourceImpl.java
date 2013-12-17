@@ -5,8 +5,11 @@ import lol4j.protocol.dto.summoner.RunePagesDto;
 import lol4j.protocol.dto.summoner.SummonerDto;
 import lol4j.protocol.dto.summoner.SummonerNameListDto;
 import lol4j.protocol.resource.SummonerResource;
+import lol4j.service.impl.ApiRequestManager;
 import lol4j.util.Region;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 /**
@@ -52,7 +55,13 @@ public class SummonerResourceImpl extends AbstractResourceImpl implements Summon
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("Invalid summoner name");
         }
-        String path = region.getName() + SLASH + RESOURCE_URI + SLASH + BY_NAME + SLASH + name;
+        String path = null;
+        try {
+            path = region.getName() + SLASH + RESOURCE_URI + SLASH + BY_NAME + SLASH +
+                    URLEncoder.encode(name, ApiRequestManager.ENCODING);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException("Unsupported encoding: " + ApiRequestManager.ENCODING);
+        }
 
         return getApiRequestManager().get(getBaseUri(), path, null, SummonerDto.class);
     }
