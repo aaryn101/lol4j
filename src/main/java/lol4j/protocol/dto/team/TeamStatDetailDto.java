@@ -8,11 +8,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TeamStatDetailDto {
     private int averageGamesPlayed;
+    private String fullId;
     private int losses;
-    private int maxRating;
-    private int rating;
-    private int seedRating;
-    private TeamIdDto teamId;
     private String teamStatType;
     private int wins;
 
@@ -32,36 +29,12 @@ public class TeamStatDetailDto {
         this.losses = losses;
     }
 
-    public int getMaxRating() {
-        return maxRating;
+    public String getFullId() {
+        return fullId;
     }
 
-    public void setMaxRating(int maxRating) {
-        this.maxRating = maxRating;
-    }
-
-    public int getRating() {
-        return rating;
-    }
-
-    public void setRating(int rating) {
-        this.rating = rating;
-    }
-
-    public int getSeedRating() {
-        return seedRating;
-    }
-
-    public void setSeedRating(int seedRating) {
-        this.seedRating = seedRating;
-    }
-
-    public TeamIdDto getTeamId() {
-        return teamId;
-    }
-
-    public void setTeamId(TeamIdDto teamId) {
-        this.teamId = teamId;
+    public void setFullId(String fullId) {
+        this.fullId = fullId;
     }
 
     public String getTeamStatType() {

@@ -10,19 +10,18 @@ import java.util.Set;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TeamStatSummaryDto {
-    private TeamIdDto teamId;
+    private String fullId;
     private Set<TeamStatDetailDto> teamStatDetails = new HashSet<>();
 
     public Set<TeamStatDetailDto> getTeamStatDetails() {
         return teamStatDetails;
     }
 
-    public TeamIdDto getTeamId() {
-
-        return teamId;
+    public String getFullId() {
+        return fullId;
     }
 
-    public void setTeamId(TeamIdDto teamId) {
-        this.teamId = teamId;
+    public void setFullId(String fullId) {
+        this.fullId = fullId;
     }
 }

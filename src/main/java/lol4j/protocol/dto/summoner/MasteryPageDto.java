@@ -11,6 +11,7 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MasteryPageDto {
     private boolean current;
+    private long id;
     private String name;
     private List<TalentDto> talents = new ArrayList<>();
 
@@ -21,6 +22,14 @@ public class MasteryPageDto {
     public boolean isCurrent() {
 
         return current;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public void setCurrent(boolean current) {

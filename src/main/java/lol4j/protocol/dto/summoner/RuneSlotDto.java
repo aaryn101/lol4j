@@ -1,6 +1,8 @@
 package lol4j.protocol.dto.summoner;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lol4j.util.RuneSlot;
 
 /**
  * Created by Aaryn101 on 12/12/13.
@@ -8,7 +10,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RuneSlotDto {
     private RuneDto rune;
-    private int runeSlotId;
+    @JsonProperty("runeSlotId")
+    private RuneSlot runeSlot;
 
     public RuneDto getRune() {
         return rune;
@@ -18,11 +21,11 @@ public class RuneSlotDto {
         this.rune = rune;
     }
 
-    public int getRuneSlotId() {
-        return runeSlotId;
+    public RuneSlot getRuneSlot() {
+        return runeSlot;
     }
 
-    public void setRuneSlotId(int runeSlotId) {
-        this.runeSlotId = runeSlotId;
+    public void setRuneSlot(RuneSlot runeSlot) {
+        this.runeSlot = runeSlot;
     }
 }

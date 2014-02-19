@@ -10,7 +10,7 @@ import java.util.List;
  * Created by Aaryn101 on 12/13/13.
  */
 public class TeamResourceImpl extends AbstractResourceImpl implements TeamResource {
-    private static final String RESOURCE_VERSION = "v2.1";
+    private static final String RESOURCE_VERSION = "v2.2";
     private static final String RESOURCE_PATH = "team";
     private static final String SLASH = "/";
     private static final String RESOURCE_URI = RESOURCE_VERSION + SLASH + RESOURCE_PATH;

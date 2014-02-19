@@ -10,17 +10,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Aaryn101 on 12/11/13.
+ * Compatible with stats-v1.2
  */
 public class StatsResourceImpl extends AbstractResourceImpl implements StatsResource {
     private static final String SLASH = "/";
-    private static final String RESOURCE_VERSION = "v1.1";
+    private static final String RESOURCE_VERSION = "v1.2";
     private static final String RESOURCE_PATH = "stats" + SLASH + "by-summoner";
     private static final String RESOURCE_URI = RESOURCE_VERSION + SLASH + RESOURCE_PATH;
 
     public StatsResourceImpl() {
-        getSupportedRegions().add(Region.EUW);
+        getSupportedRegions().add(Region.BR);
         getSupportedRegions().add(Region.EUNE);
+        getSupportedRegions().add(Region.EUW);
+        getSupportedRegions().add(Region.LAN);
+        getSupportedRegions().add(Region.LAS);
         getSupportedRegions().add(Region.NA);
     }
 

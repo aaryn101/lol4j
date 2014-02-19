@@ -1,6 +1,9 @@
 package lol4j.protocol.dto.team;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lol4j.util.GameMap;
+import lol4j.util.GameMode;
 
 /**
  * Created by Aaryn101 on 12/13/13.
@@ -8,13 +11,13 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MatchHistorySummaryDto {
     private int assists;
-    private long date;
     private int deaths;
     private long gameId;
-    private String gameMode;
+    private GameMode gameMode;
     private boolean invalid;
     private int kills;
-    private int mapId;
+    @JsonProperty("mapId")
+    private GameMap map;
     private int opposingTeamKills;
     private String opposingTeamName;
     private boolean win;
@@ -25,14 +28,6 @@ public class MatchHistorySummaryDto {
 
     public void setAssists(int assists) {
         this.assists = assists;
-    }
-
-    public long getDate() {
-        return date;
-    }
-
-    public void setDate(long date) {
-        this.date = date;
     }
 
     public int getDeaths() {
@@ -51,11 +46,11 @@ public class MatchHistorySummaryDto {
         this.gameId = gameId;
     }
 
-    public String getGameMode() {
+    public GameMode getGameMode() {
         return gameMode;
     }
 
-    public void setGameMode(String gameMode) {
+    public void setGameMode(GameMode gameMode) {
         this.gameMode = gameMode;
     }
 
@@ -75,12 +70,12 @@ public class MatchHistorySummaryDto {
         this.kills = kills;
     }
 
-    public int getMapId() {
-        return mapId;
+    public GameMap getMap() {
+        return map;
     }
 
-    public void setMapId(int mapId) {
-        this.mapId = mapId;
+    public void setMap(GameMap map) {
+        this.map = map;
     }
 
     public int getOpposingTeamKills() {

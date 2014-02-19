@@ -12,6 +12,7 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TeamDto {
     private Date createDate;
+    private String fullId;
     private Date lastGameDate;
     private Date lastJoinDate;
     private Date lastJoinedRankedTeamQueueDate;
@@ -22,10 +23,29 @@ public class TeamDto {
     private RosterDto roster;
     private Date secondLastJoinDate;
     private String status;
-    private TeamIdDto teamId;
+    private String tag;
     private TeamStatSummaryDto teamStatSummary;
     private Date thirdLastJoinDate;
-    private long timestamp;
+
+    public String getFullId() {
+        return fullId;
+    }
+
+    public void setFullId(String fullId) {
+        this.fullId = fullId;
+    }
+
+    public void setMatchHistory(List<MatchHistorySummaryDto> matchHistory) {
+        this.matchHistory = matchHistory;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
 
     public List<MatchHistorySummaryDto> getMatchHistory() {
         return matchHistory;
@@ -79,15 +99,6 @@ public class TeamDto {
     public void setStatus(String status) {
         this.status = status;
     }
-
-    public TeamIdDto getTeamId() {
-        return teamId;
-    }
-
-    public void setTeamId(TeamIdDto teamId) {
-        this.teamId = teamId;
-    }
-
     public TeamStatSummaryDto getTeamStatSummary() {
         return teamStatSummary;
     }
@@ -102,14 +113,6 @@ public class TeamDto {
 
     public void setThirdLastJoinDate(Date thirdLastJoinDate) {
         this.thirdLastJoinDate = thirdLastJoinDate;
-    }
-
-    public long getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
     }
 
     public Date getLastJoinDate() {

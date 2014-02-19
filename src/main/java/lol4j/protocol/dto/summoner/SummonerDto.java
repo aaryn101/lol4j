@@ -2,8 +2,6 @@ package lol4j.protocol.dto.summoner;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import java.util.Date;
-
 /**
  * Created by Aaryn101 on 12/13/13.
  */
@@ -13,7 +11,6 @@ public class SummonerDto {
     private String name;
     private int profileIconId;
     private long revisionDate;
-    private Date revisionDateStr;
     private long summonerLevel;
 
     public long getId() {
@@ -46,14 +43,6 @@ public class SummonerDto {
 
     public void setRevisionDate(long revisionDate) {
         this.revisionDate = revisionDate;
-    }
-
-    public Date getRevisionDateStr() {
-        return revisionDateStr;
-    }
-
-    public void setRevisionDateStr(Date revisionDateStr) {
-        this.revisionDateStr = revisionDateStr;
     }
 
     public long getSummonerLevel() {

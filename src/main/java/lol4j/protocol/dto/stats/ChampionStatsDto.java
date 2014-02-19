@@ -2,9 +2,6 @@ package lol4j.protocol.dto.stats;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by Aaryn101 on 12/12/13.
  */
@@ -12,10 +9,14 @@ import java.util.List;
 public class ChampionStatsDto {
     private int id;
     private String name;
-    private List<ChampionStatDto> stats = new ArrayList<>();
+    private AggregatedStatDto stats;
 
-    public List<ChampionStatDto> getStats() {
+    public AggregatedStatDto getStats() {
         return stats;
+    }
+
+    public void setStats(AggregatedStatDto stats) {
+        this.stats = stats;
     }
 
     public int getId() {

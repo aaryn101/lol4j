@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Aaryn101 on 12/10/13.
+ * Compatible with champion-v1.1
  */
 public class ChampionResourceImpl extends AbstractResourceImpl implements ChampionResource {
     private static final String RESOURCE_VERSION = "v1.1";
@@ -17,8 +17,11 @@ public class ChampionResourceImpl extends AbstractResourceImpl implements Champi
     private static final String RESOURCE_URI = RESOURCE_VERSION + SLASH + RESOURCE_PATH;
 
     public ChampionResourceImpl() {
+        getSupportedRegions().add(Region.BR);
         getSupportedRegions().add(Region.EUW);
         getSupportedRegions().add(Region.EUNE);
+        getSupportedRegions().add(Region.LAN);
+        getSupportedRegions().add(Region.LAS);
         getSupportedRegions().add(Region.NA);
     }
 

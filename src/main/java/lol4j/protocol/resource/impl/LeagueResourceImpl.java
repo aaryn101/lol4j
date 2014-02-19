@@ -1,34 +1,61 @@
 package lol4j.protocol.resource.impl;
 
+import lol4j.exception.SubTypeMismatchException;
 import lol4j.protocol.dto.league.LeagueDto;
+import lol4j.protocol.dto.league.LeagueItemDto;
 import lol4j.protocol.resource.LeagueResource;
 import lol4j.util.Region;
+import lol4j.util.SubType;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Aaryn101 on 12/11/13.
+ * Compatible with league-v2.3
  */
 public class LeagueResourceImpl extends AbstractResourceImpl implements LeagueResource {
     private static final String SLASH = "/";
-    private static final String RESOURCE_VERSION = "v2.1";
-    private static final String RESOURCE_PATH = "league" + SLASH + "by-summoner";
-    private static final String RESOURCE_URI = RESOURCE_VERSION + SLASH + RESOURCE_PATH;
+    private static final String RESOURCE_VERSION = "v2.3";
+    private static final String CHALLENGER_URI = RESOURCE_VERSION + SLASH + "league" + SLASH + "challenger";
+    private static final String LEAGUE = "league" + SLASH + "by-summoner";
+    private static final String LEAGUE_URI = RESOURCE_VERSION + SLASH + LEAGUE;
+    private static final String ENTRY = "entry";
 
     public LeagueResourceImpl() {
-        getSupportedRegions().add(Region.EUW);
         getSupportedRegions().add(Region.BR);
+        getSupportedRegions().add(Region.EUNE);
+        getSupportedRegions().add(Region.EUW);
         getSupportedRegions().add(Region.NA);
         getSupportedRegions().add(Region.TR);
-        getSupportedRegions().add(Region.EUNE);
     }
 
     @Override
-    public Map<String, LeagueDto> getLeaguesData(Region region, long summonerId) {
+    public LeagueDto getChallengerLeague(Region region, SubType gameType) {
         doSupportedRegionCheck(region);
-        String path = region.getName() + SLASH + RESOURCE_URI + SLASH + summonerId;
+        if (gameType == null || !SubType.getChallengerSubTypes().contains(gameType)) {
+            throw new SubTypeMismatchException(gameType);
+        }
+        String path = region.getName() + SLASH + CHALLENGER_URI;
+        Map<String, Object> queryParams = new HashMap<>();
+        queryParams.put("type", gameType.name());
 
-        return getApiRequestManager()
-                .getMap(getBaseUri(), path, null, String.class, LeagueDto.class);
+        return getApiRequestManager().get(getBaseUri(), path, queryParams, LeagueDto.class);
+    }
+
+    @Override
+    public List<LeagueDto> getLeaguesData(Region region, long summonerId) {
+        doSupportedRegionCheck(region);
+        String path = region.getName() + SLASH + LEAGUE_URI + SLASH + summonerId;
+
+        return getApiRequestManager().getList(getBaseUri(), path, null, LeagueDto.class);
+    }
+
+    @Override
+    public List<LeagueItemDto> getLeaguesEntryData(Region region, long summonerId) {
+        doSupportedRegionCheck(region);
+        String path = region.getName() + SLASH + LEAGUE_URI + SLASH + summonerId + SLASH + ENTRY;
+
+        return getApiRequestManager().getList(getBaseUri(), path, null, LeagueItemDto.class);
     }
 }

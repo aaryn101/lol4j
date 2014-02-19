@@ -22,11 +22,10 @@ public class GameResourceImplTest {
         if (recentGames.getGames().size() > 0) {
             GameDto game = recentGames.getGames().get(0);
 
-            Assert.assertNotNull(game.getCreateDateStr());
             Assert.assertNotNull(game.getGameMode());
             Assert.assertNotNull(game.getGameType());
-            Assert.assertNotNull(game.getStatistics());
-            Assert.assertNotEquals(game.getStatistics().size(), 0);
+            Assert.assertNotNull(game.getGameMap());
+            Assert.assertNotNull(game.getStats());
             Assert.assertNotNull(game.getSubType());
             Assert.assertNotNull(game.getFellowPlayers());
             Assert.assertNotEquals(game.getFellowPlayers().size(), 0);

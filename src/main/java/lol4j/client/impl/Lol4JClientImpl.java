@@ -4,18 +4,19 @@ import lol4j.client.Lol4JClient;
 import lol4j.protocol.dto.champion.ChampionListDto;
 import lol4j.protocol.dto.game.RecentGamesDto;
 import lol4j.protocol.dto.league.LeagueDto;
+import lol4j.protocol.dto.league.LeagueItemDto;
 import lol4j.protocol.dto.stats.PlayerStatsSummaryListDto;
 import lol4j.protocol.dto.stats.RankedStatsDto;
 import lol4j.protocol.dto.summoner.MasteryPagesDto;
 import lol4j.protocol.dto.summoner.RunePagesDto;
 import lol4j.protocol.dto.summoner.SummonerDto;
-import lol4j.protocol.dto.summoner.SummonerNameListDto;
 import lol4j.protocol.dto.team.TeamDto;
 import lol4j.protocol.resource.*;
 import lol4j.protocol.resource.impl.ResourceFactory;
 import lol4j.service.impl.ApiRequestManager;
 import lol4j.util.Region;
 import lol4j.util.Season;
+import lol4j.util.SubType;
 
 import java.util.List;
 import java.util.Map;
@@ -55,8 +56,18 @@ public class Lol4JClientImpl implements Lol4JClient {
     }
 
     @Override
-    public Map<String, LeagueDto> getLeaguesData(Region region, long summonerId) {
+    public LeagueDto getChallengerLeague(Region region, SubType gameType) {
+        return leagueResource.getChallengerLeague(region, gameType);
+    }
+
+    @Override
+    public List<LeagueDto> getLeaguesData(Region region, long summonerId) {
         return leagueResource.getLeaguesData(region, summonerId);
+    }
+
+    @Override
+    public List<LeagueItemDto> getLeaguesEntryData(Region region, long summonerId) {
+        return leagueResource.getLeaguesEntryData(region, summonerId);
     }
 
     @Override
@@ -70,27 +81,27 @@ public class Lol4JClientImpl implements Lol4JClient {
     }
 
     @Override
-    public MasteryPagesDto getMasteryPages(Region region, long summonerId) {
-        return summonerResource.getMasteryPages(region, summonerId);
+    public MasteryPagesDto getMasteryPages(Region region, List<Long> summonerIds) {
+        return summonerResource.getMasteryPages(region, summonerIds);
     }
 
     @Override
-    public RunePagesDto getRunePages(Region region, long summonerId) {
-        return summonerResource.getRunePages(region, summonerId);
+    public Map<String, RunePagesDto> getRunePages(Region region, List<Long> summonerIds) {
+        return summonerResource.getRunePages(region, summonerIds);
     }
 
     @Override
-    public SummonerDto getSummoner(Region region, String name) {
-        return summonerResource.getSummoner(region, name);
+    public Map<String, SummonerDto> getSummonersByName(Region region, List<String> names) {
+        return summonerResource.getSummonersByName(region, names);
     }
 
     @Override
-    public SummonerDto getSummoner(Region region, long summonerId) {
-        return summonerResource.getSummoner(region, summonerId);
+    public Map<String, SummonerDto> getSummoners(Region region, List<Long> summonerIds) {
+        return summonerResource.getSummoners(region, summonerIds);
     }
 
     @Override
-    public SummonerNameListDto getSummonerNames(Region region, List<Long> summonerIds) {
+    public Map<String, String> getSummonerNames(Region region, List<Long> summonerIds) {
         return summonerResource.getSummonerNames(region, summonerIds);
     }
 

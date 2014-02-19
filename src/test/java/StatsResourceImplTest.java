@@ -1,5 +1,8 @@
 import lol4j.exception.InvalidRegionException;
-import lol4j.protocol.dto.stats.*;
+import lol4j.protocol.dto.stats.ChampionStatsDto;
+import lol4j.protocol.dto.stats.PlayerStatsSummaryDto;
+import lol4j.protocol.dto.stats.PlayerStatsSummaryListDto;
+import lol4j.protocol.dto.stats.RankedStatsDto;
 import lol4j.util.Region;
 import lol4j.util.Season;
 import org.junit.Assert;
@@ -25,7 +28,6 @@ public class StatsResourceImplTest {
         for (PlayerStatsSummaryDto statSummary : playerStatsSummaryList.getPlayerStatSummaries()) {
             Assert.assertNotNull(statSummary);
             Assert.assertNotNull(statSummary.getAggregatedStats());
-            Assert.assertNotNull(statSummary.getModifyDateStr());
             Assert.assertNotNull(statSummary.getPlayerStatSummaryType());
             Assert.assertTrue(statSummary.getLosses() >= 0);
             Assert.assertTrue(statSummary.getWins() >= 0);
@@ -41,7 +43,6 @@ public class StatsResourceImplTest {
         for (PlayerStatsSummaryDto statSummary : playerStatsSummaryList.getPlayerStatSummaries()) {
             Assert.assertNotNull(statSummary);
             Assert.assertNotNull(statSummary.getAggregatedStats());
-            Assert.assertNotNull(statSummary.getModifyDateStr());
             Assert.assertNotNull(statSummary.getPlayerStatSummaryType());
             Assert.assertTrue(statSummary.getLosses() >= 0);
             Assert.assertTrue(statSummary.getWins() >= 0);
@@ -54,7 +55,6 @@ public class StatsResourceImplTest {
 
         Assert.assertNotNull(rankedStats);
         Assert.assertNotNull(rankedStats.getChampions());
-        Assert.assertNotNull(rankedStats.getModifyDateStr());
         Assert.assertTrue(rankedStats.getSummonerId() == SUMMONER_ID);
         Assert.assertTrue(rankedStats.getChampions().size() > 0);
 
@@ -62,18 +62,12 @@ public class StatsResourceImplTest {
             Assert.assertTrue(championStats.getName() != null || championStats.getId() == 0);
             Assert.assertTrue(championStats.getId() >= 0);
             Assert.assertNotNull(championStats.getStats());
-            Assert.assertTrue(championStats.getStats().size() > 0);
-
-            for (ChampionStatDto championStat : championStats.getStats()) {
-                Assert.assertNotNull(championStat.getName());
-            }
         }
 
         rankedStats = Lol4JTestClient.getClient().getRankedStats(REGION, SUMMONER_ID, null);
 
         Assert.assertNotNull(rankedStats);
         Assert.assertNotNull(rankedStats.getChampions());
-        Assert.assertNotNull(rankedStats.getModifyDateStr());
         Assert.assertTrue(rankedStats.getSummonerId() == SUMMONER_ID);
         Assert.assertTrue(rankedStats.getChampions().size() >= 0);
 

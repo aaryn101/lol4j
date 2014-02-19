@@ -19,14 +19,12 @@ public class LeagueItemDto {
     private long lastPlayed;
     private String leagueName;
     private int leaguePoints;
-    private int losses;
     private MiniSeriesDto miniSeries;
     private String playerOrTeamId;
     private String playerOrTeamName;
     private String queueType;
     private String rank;
     private String tier;
-    private long timeUntilDecay;
     private int wins;
 
     public boolean isFreshBlood() {
@@ -85,14 +83,6 @@ public class LeagueItemDto {
         this.leaguePoints = leaguePoints;
     }
 
-    public int getLosses() {
-        return losses;
-    }
-
-    public void setLosses(int losses) {
-        this.losses = losses;
-    }
-
     public MiniSeriesDto getMiniSeries() {
         return miniSeries;
     }
@@ -139,14 +129,6 @@ public class LeagueItemDto {
 
     public void setTier(String tier) {
         this.tier = tier;
-    }
-
-    public long getTimeUntilDecay() {
-        return timeUntilDecay;
-    }
-
-    public void setTimeUntilDecay(long timeUntilDecay) {
-        this.timeUntilDecay = timeUntilDecay;
     }
 
     public int getWins() {
