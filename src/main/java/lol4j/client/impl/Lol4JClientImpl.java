@@ -81,8 +81,13 @@ public class Lol4JClientImpl implements Lol4JClient {
     }
 
     @Override
-    public MasteryPagesDto getMasteryPages(Region region, List<Long> summonerIds) {
+    public Map<String, MasteryPagesDto> getMasteryPages(Region region, List<Long> summonerIds) {
         return summonerResource.getMasteryPages(region, summonerIds);
+    }
+
+    @Override
+    public MasteryPagesDto getMasteryPages(Region region, long summonerId) {
+        return summonerResource.getMasteryPages(region, summonerId);
     }
 
     @Override
@@ -91,8 +96,18 @@ public class Lol4JClientImpl implements Lol4JClient {
     }
 
     @Override
+    public RunePagesDto getRunePages(Region region, long summonerId) {
+        return summonerResource.getRunePages(region, summonerId);
+    }
+
+    @Override
     public Map<String, SummonerDto> getSummonersByName(Region region, List<String> names) {
         return summonerResource.getSummonersByName(region, names);
+    }
+
+    @Override
+    public SummonerDto getSummonerByName(Region region, String name) {
+        return summonerResource.getSummonerByName(region, name);
     }
 
     @Override
@@ -101,13 +116,33 @@ public class Lol4JClientImpl implements Lol4JClient {
     }
 
     @Override
+    public SummonerDto getSummoner(Region region, long summonerId) {
+        return summonerResource.getSummoner(region, summonerId);
+    }
+
+    @Override
     public Map<String, String> getSummonerNames(Region region, List<Long> summonerIds) {
         return summonerResource.getSummonerNames(region, summonerIds);
     }
 
     @Override
+    public String getSummonerName(Region region, long summonerId) {
+        return summonerResource.getSummonerName(region, summonerId);
+    }
+
+    @Override
     public List<TeamDto> getTeams(Region region, long summonerId) {
         return teamResource.getTeams(region, summonerId);
+    }
+
+    @Override
+    public TeamDto getTeam(Region region, String teamId) {
+        return teamResource.getTeam(region, teamId);
+    }
+
+    @Override
+    public Map<String, TeamDto> getTeams(Region region, List<String> teamIds) {
+        return teamResource.getTeams(region, teamIds);
     }
 
     @Override

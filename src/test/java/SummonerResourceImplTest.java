@@ -17,11 +17,13 @@ public class SummonerResourceImplTest {
     private static final List<Long> SUMMONER_IDS = new ArrayList<>();
     private static final List<String> SUMMONER_NAMES = new ArrayList<>();
     private static final Region REGION = Region.NA;
+    private static final long SUMMONER_ID = 19163557L;
+    private static final String SUMMONER_NAME = "Aaryn";
 
     @BeforeClass
     public static void initializeTest() {
-        SUMMONER_IDS.add(19163557L);
-        SUMMONER_NAMES.add("Aaryn");
+        SUMMONER_IDS.add(SUMMONER_ID);
+        SUMMONER_NAMES.add(SUMMONER_NAME);
     }
 
     @Test
@@ -87,7 +89,7 @@ public class SummonerResourceImplTest {
         List<Long> big = new ArrayList<>();
 
         for (int i = 0; i < SummonerResourceImpl.MAX_LIST_SIZE + 1; i++) {
-            big.add(19163557L);
+            big.add(SUMMONER_ID);
         }
 
         try {
@@ -102,9 +104,60 @@ public class SummonerResourceImplTest {
 
     @Test
     public void getMasteryPages() {
-        MasteryPagesDto masteryPages = Lol4JTestClient.getClient().getMasteryPages(REGION, SUMMONER_IDS);
+        Map<String, MasteryPagesDto> masteryPages = Lol4JTestClient.getClient().getMasteryPages(REGION, SUMMONER_IDS);
 
-        for (MasteryPageDto page : masteryPages.getPages()) {
+        Assert.assertNotNull(masteryPages);
+
+        for (Map.Entry<String, MasteryPagesDto> entry: masteryPages.entrySet()) {
+            MasteryPagesDto pages = entry.getValue();
+
+            Assert.assertNotNull(pages);
+            for (MasteryPageDto page : pages.getPages()) {
+                Assert.assertNotNull(page.getName());
+                Assert.assertNotNull(page.getTalents());
+
+                for (TalentDto talent : page.getTalents()) {
+                    Assert.assertNotNull(talent.getName());
+                }
+            }
+        }
+    }
+
+    @Test
+    public void getMasteryPagesSingleWithUnsupportedRegion() {
+        boolean exceptionThrown = false;
+
+        try {
+            Lol4JTestClient.getClient().getMasteryPages(Region.TR, SUMMONER_ID);
+        }
+        catch (InvalidRegionException e) {
+            exceptionThrown = true;
+        }
+
+        Assert.assertTrue(exceptionThrown);
+    }
+
+    @Test
+    public void getMasteryPagesSingleWithNullRegion() {
+        boolean exceptionThrown = false;
+
+        try {
+            Lol4JTestClient.getClient().getMasteryPages(null, SUMMONER_ID);
+        }
+        catch (InvalidRegionException e) {
+            exceptionThrown = true;
+        }
+
+        Assert.assertTrue(exceptionThrown);
+    }
+
+    @Test
+    public void getMasteryPagesSingle() {
+        MasteryPagesDto pages = Lol4JTestClient.getClient().getMasteryPages(REGION, SUMMONER_ID);
+
+        Assert.assertNotNull(pages);
+
+        for (MasteryPageDto page : pages.getPages()) {
             Assert.assertNotNull(page.getName());
             Assert.assertNotNull(page.getTalents());
 
@@ -177,7 +230,7 @@ public class SummonerResourceImplTest {
         List<Long> big = new ArrayList<>();
 
         for (int i = 0; i < SummonerResourceImpl.MAX_LIST_SIZE + 1; i++) {
-            big.add(19163557L);
+            big.add(SUMMONER_ID);
         }
 
         try {
@@ -210,6 +263,53 @@ public class SummonerResourceImplTest {
                     Assert.assertNotNull(runeSlot.getRune().getDescription());
                     Assert.assertNotNull(runeSlot.getRuneSlot());
                 }
+            }
+        }
+    }
+
+    @Test
+    public void getRunePagesSingleWithUnsupportedRegion() {
+        boolean exceptionThrown = false;
+
+        try {
+            Lol4JTestClient.getClient().getRunePages(Region.TR, SUMMONER_ID);
+        }
+        catch (InvalidRegionException e) {
+            exceptionThrown = true;
+        }
+
+        Assert.assertTrue(exceptionThrown);
+    }
+
+    @Test
+    public void getRunePagesSingleWithNullRegion() {
+        boolean exceptionThrown = false;
+
+        try {
+            Lol4JTestClient.getClient().getRunePages(null, SUMMONER_ID);
+        }
+        catch (InvalidRegionException e) {
+            exceptionThrown = true;
+        }
+
+        Assert.assertTrue(exceptionThrown);
+    }
+
+    @Test
+    public void getRunePagesSingle() {
+        RunePagesDto pages = Lol4JTestClient.getClient().getRunePages(REGION, SUMMONER_ID);
+
+        Assert.assertNotNull(pages);
+
+        for (RunePageDto runePage : pages.getPages()) {
+            Assert.assertNotNull(runePage.getName());
+            Assert.assertNotNull(runePage.getSlots());
+
+            for (RuneSlotDto runeSlot : runePage.getSlots()) {
+                Assert.assertNotNull(runeSlot.getRune());
+                Assert.assertNotNull(runeSlot.getRune().getName());
+                Assert.assertNotNull(runeSlot.getRune().getDescription());
+                Assert.assertNotNull(runeSlot.getRuneSlot());
             }
         }
     }
@@ -304,6 +404,42 @@ public class SummonerResourceImplTest {
     }
 
     @Test
+    public void getSummonerByNameWithUnsupportedRegion() {
+        boolean exceptionThrown = false;
+
+        try {
+            Lol4JTestClient.getClient().getSummonerByName(Region.TR, SUMMONER_NAME);
+        }
+        catch (InvalidRegionException e) {
+            exceptionThrown = true;
+        }
+
+        Assert.assertTrue(exceptionThrown);
+    }
+
+    @Test
+    public void getSummonerByNameWithNullRegion() {
+        boolean exceptionThrown = false;
+
+        try {
+            Lol4JTestClient.getClient().getSummonerByName(null, SUMMONER_NAME);
+        }
+        catch (InvalidRegionException e) {
+            exceptionThrown = true;
+        }
+
+        Assert.assertTrue(exceptionThrown);
+    }
+
+    @Test
+    public void getSummonerByName() {
+        SummonerDto summoner = Lol4JTestClient.getClient().getSummonerByName(REGION, SUMMONER_NAME);
+
+        Assert.assertNotNull(summoner);
+        Assert.assertNotNull(summoner.getName());
+    }
+
+    @Test
     public void getSummonersWithUnsupportedRegion() {
         boolean exceptionThrown = false;
 
@@ -366,7 +502,7 @@ public class SummonerResourceImplTest {
         List<Long> big = new ArrayList<>();
 
         for (int i = 0; i < SummonerResourceImpl.MAX_LIST_SIZE + 1; i++) {
-            big.add(19163557L);
+            big.add(SUMMONER_ID);
         }
 
         try {
@@ -390,6 +526,42 @@ public class SummonerResourceImplTest {
             Assert.assertNotNull(entry.getValue());
             Assert.assertNotNull(entry.getValue().getName());
         }
+    }
+
+    @Test
+    public void getSummonerWithUnsupportedRegion() {
+        boolean exceptionThrown = false;
+
+        try {
+            Lol4JTestClient.getClient().getSummoner(Region.TR, SUMMONER_ID);
+        }
+        catch (InvalidRegionException e) {
+            exceptionThrown = true;
+        }
+
+        Assert.assertTrue(exceptionThrown);
+    }
+
+    @Test
+    public void getSummonerWithNullRegion() {
+        boolean exceptionThrown = false;
+
+        try {
+            Lol4JTestClient.getClient().getSummoner(null, SUMMONER_ID);
+        }
+        catch (InvalidRegionException e) {
+            exceptionThrown = true;
+        }
+
+        Assert.assertTrue(exceptionThrown);
+    }
+
+    @Test
+    public void getSummoner() {
+        SummonerDto summoner = Lol4JTestClient.getClient().getSummoner(REGION, SUMMONER_ID);
+
+        Assert.assertNotNull(summoner);
+        Assert.assertNotNull(summoner.getName());
     }
 
     @Test
@@ -455,7 +627,7 @@ public class SummonerResourceImplTest {
         List<Long> big = new ArrayList<>();
 
         for (int i = 0; i < SummonerResourceImpl.MAX_LIST_SIZE + 1; i++) {
-            big.add(19163557L);
+            big.add(SUMMONER_ID);
         }
 
         try {
@@ -478,5 +650,40 @@ public class SummonerResourceImplTest {
             Assert.assertNotNull(entry.getKey());
             Assert.assertNotNull(entry.getValue());
         }
+    }
+
+    @Test
+    public void getSummonerNameWithUnsupportedRegion() {
+        boolean exceptionThrown = false;
+
+        try {
+            Lol4JTestClient.getClient().getSummonerName(Region.TR, SUMMONER_ID);
+        }
+        catch (InvalidRegionException e) {
+            exceptionThrown = true;
+        }
+
+        Assert.assertTrue(exceptionThrown);
+    }
+
+    @Test
+    public void getSummonerNameWithNullRegion() {
+        boolean exceptionThrown = false;
+
+        try {
+            Lol4JTestClient.getClient().getSummonerName(null, SUMMONER_ID);
+        }
+        catch (InvalidRegionException e) {
+            exceptionThrown = true;
+        }
+
+        Assert.assertTrue(exceptionThrown);
+    }
+
+    @Test
+    public void getSummonerName() {
+        String summonerName = Lol4JTestClient.getClient().getSummonerName(REGION, SUMMONER_ID);
+
+        Assert.assertNotNull(summonerName);
     }
 }

@@ -12,13 +12,23 @@ import java.util.Map;
  * Created by Aaryn101 on 12/12/13.
  */
 public interface SummonerResource {
-    MasteryPagesDto getMasteryPages(Region region, List<Long> summonerIds);
+    Map<String, MasteryPagesDto> getMasteryPages(Region region, List<Long> summonerIds);
+
+    MasteryPagesDto getMasteryPages(Region region, long summonerId);
 
     Map<String, RunePagesDto> getRunePages(Region region, List<Long> summonerIds);
 
+    RunePagesDto getRunePages(Region region, long summonerId);
+
     Map<String, SummonerDto> getSummonersByName(Region region, List<String> names);
+
+    SummonerDto getSummonerByName(Region region, String name);
 
     Map<String, SummonerDto> getSummoners(Region region, List<Long> summonerIds);
 
+    SummonerDto getSummoner(Region region, long summonerId);
+
     Map<String, String> getSummonerNames(Region region, List<Long> summonerIds);
+
+    String getSummonerName(Region region, long summonerId);
 }

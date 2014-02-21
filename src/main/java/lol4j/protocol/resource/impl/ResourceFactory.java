@@ -7,7 +7,7 @@ import lol4j.service.impl.ApiRequestManager;
  * Created by Aaryn101 on 12/10/13.
  */
 public class ResourceFactory {
-    private static final String LOL_BASE = "http://prod.api.pvp.net/api/lol";
+    private static final String LOL_BASE = "https://prod.api.pvp.net/api/lol";
     private ApiRequestManager apiRequestManager;
 
     public ResourceFactory(ApiRequestManager apiRequestManager) {

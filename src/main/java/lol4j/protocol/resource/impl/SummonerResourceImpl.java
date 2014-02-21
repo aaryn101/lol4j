@@ -37,7 +37,7 @@ public class SummonerResourceImpl extends AbstractResourceImpl implements Summon
     }
 
     @Override
-    public MasteryPagesDto getMasteryPages(Region region, List<Long> summonerIds) {
+    public Map<String, MasteryPagesDto> getMasteryPages(Region region, List<Long> summonerIds) {
         doSupportedRegionCheck(region);
         if (summonerIds == null || summonerIds.size() > MAX_LIST_SIZE || summonerIds.size() == 0) {
             throw new IllegalArgumentException("summonerIds list must have at least one entry and no more than " +
@@ -46,7 +46,17 @@ public class SummonerResourceImpl extends AbstractResourceImpl implements Summon
         String summonerIdList = StringUtils.join(summonerIds, ",");
         String path = region.getName() + SLASH + RESOURCE_URI + SLASH + summonerIdList + SLASH + MASTERIES;
 
-        return getApiRequestManager().get(getBaseUri(), path, null, MasteryPagesDto.class);
+        return getApiRequestManager().getMap(getBaseUri(), path, null, String.class, MasteryPagesDto.class);
+    }
+
+    @Override
+    public MasteryPagesDto getMasteryPages(Region region, long summonerId) {
+        doSupportedRegionCheck(region);
+        String path = region.getName() + SLASH + RESOURCE_URI + SLASH + summonerId + SLASH + MASTERIES;
+        Map<String, MasteryPagesDto> result =
+                getApiRequestManager().getMap(getBaseUri(), path, null, String.class, MasteryPagesDto.class);
+
+        return result.get(Long.toString(summonerId));
     }
 
     @Override
@@ -60,6 +70,16 @@ public class SummonerResourceImpl extends AbstractResourceImpl implements Summon
         String path = region.getName() + SLASH + RESOURCE_URI + SLASH + summonerIdList + SLASH + RUNES;
 
         return getApiRequestManager().getMap(getBaseUri(), path, null, String.class, RunePagesDto.class);
+    }
+
+    @Override
+    public RunePagesDto getRunePages(Region region, long summonerId) {
+        doSupportedRegionCheck(region);
+        String path = region.getName() + SLASH + RESOURCE_URI + SLASH + summonerId + SLASH + RUNES;
+        Map<String, RunePagesDto> result =
+                getApiRequestManager().getMap(getBaseUri(), path, null, String.class, RunePagesDto.class);
+
+        return result.get(Long.toString(summonerId));
     }
 
     @Override
@@ -82,6 +102,22 @@ public class SummonerResourceImpl extends AbstractResourceImpl implements Summon
     }
 
     @Override
+    public SummonerDto getSummonerByName(Region region, String name) {
+        doSupportedRegionCheck(region);
+        String path;
+        try {
+            path = region.getName() + SLASH + RESOURCE_URI + SLASH + BY_NAME + SLASH +
+                    URLEncoder.encode(name, ApiRequestManager.ENCODING);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException("Unsupported encoding: " + ApiRequestManager.ENCODING);
+        }
+        Map<String, SummonerDto> result =
+                getApiRequestManager().getMap(getBaseUri(), path, null, String.class, SummonerDto.class);
+
+        return result.get(name.toLowerCase());
+    }
+
+    @Override
     public Map<String, SummonerDto> getSummoners(Region region, List<Long> summonerIds) {
         doSupportedRegionCheck(region);
         if (summonerIds == null || summonerIds.size() > MAX_LIST_SIZE || summonerIds.size() == 0) {
@@ -95,6 +131,16 @@ public class SummonerResourceImpl extends AbstractResourceImpl implements Summon
     }
 
     @Override
+    public SummonerDto getSummoner(Region region, long summonerId) {
+        doSupportedRegionCheck(region);
+        String path = region.getName() + SLASH + RESOURCE_URI + SLASH + summonerId;
+        Map<String, SummonerDto> result =
+                getApiRequestManager().getMap(getBaseUri(), path, null, String.class, SummonerDto.class);
+
+        return result.get(Long.toString(summonerId));
+    }
+
+    @Override
     public Map<String, String> getSummonerNames(Region region, List<Long> summonerIds) {
         doSupportedRegionCheck(region);
         if (summonerIds == null || summonerIds.size() > MAX_LIST_SIZE || summonerIds.size() == 0) {
@@ -105,5 +151,14 @@ public class SummonerResourceImpl extends AbstractResourceImpl implements Summon
         String path = region.getName() + SLASH + RESOURCE_URI + SLASH + summonerIdList + SLASH + NAME;
 
         return getApiRequestManager().getMap(getBaseUri(), path, null, String.class, String.class);
+    }
+
+    @Override
+    public String getSummonerName(Region region, long summonerId) {
+        doSupportedRegionCheck(region);
+        String path = region.getName() + SLASH + RESOURCE_URI + SLASH + summonerId + SLASH + NAME;
+        Map<String, String> result = getApiRequestManager().getMap(getBaseUri(), path, null, String.class, String.class);
+
+        return result.get(Long.toString(summonerId));
     }
 }
