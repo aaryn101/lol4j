@@ -5,7 +5,7 @@ import lol4j.util.Region;
 import org.junit.Assert;
 
 /**
- * Created by Aaryn101 on 12/13/13.
+ * Created by Aaron Corley on 12/13/13.
  */
 public class ChampionResourceImplTest {
     private static final Region REGION = Region.NA;
@@ -32,7 +32,7 @@ public class ChampionResourceImplTest {
         boolean exceptionThrown = false;
 
         try {
-            Lol4JTestClient.getClient().getAllChampions(Region.TR, false);
+            Lol4JTestClient.getClient().getAllChampions(Region.UNKNOWN, false);
         }
         catch(InvalidRegionException e) {
             exceptionThrown = true;

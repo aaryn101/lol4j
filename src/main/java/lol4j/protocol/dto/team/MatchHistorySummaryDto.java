@@ -2,11 +2,11 @@ package lol4j.protocol.dto.team;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lol4j.util.GameMap;
-import lol4j.util.GameMode;
+import lol4j.util.game.GameMap;
+import lol4j.util.game.GameMode;
 
 /**
- * Created by Aaryn101 on 12/13/13.
+ * Created by Aaron Corley on 12/13/13.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MatchHistorySummaryDto {

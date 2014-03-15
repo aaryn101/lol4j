@@ -3,7 +3,7 @@ import lol4j.util.Region;
 import org.junit.Assert;
 
 /**
- * Created by Aaryn101 on 12/14/13.
+ * Created by Aaron Corley on 12/14/13.
  */
 public class ApiRequestManagerTest {
     private static final Region REGION = Region.NA;

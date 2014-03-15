@@ -5,7 +5,7 @@ import lol4j.util.Region;
 import org.junit.Assert;
 
 /**
- * Created by Aaryn101 on 12/14/13.
+ * Created by Aaron Corley on 12/14/13.
  */
 public class GameResourceImplTest {
     private static final long SUMMONER_ID = 19163557;
@@ -37,7 +37,7 @@ public class GameResourceImplTest {
         boolean exceptionThrown = false;
 
         try {
-            Lol4JTestClient.getClient().getRecentGames(Region.TR, 0L);
+            Lol4JTestClient.getClient().getRecentGames(Region.UNKNOWN, 0L);
         }
         catch(InvalidRegionException e) {
             exceptionThrown = true;

@@ -9,26 +9,26 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Aaryn101 on 12/12/13.
+ * Created by Aaron Corley on 12/12/13.
  */
 public interface SummonerResource {
-    Map<String, MasteryPagesDto> getMasteryPages(Region region, List<Long> summonerIds);
+    Map<String, MasteryPagesDto> getMasteryPages(List<Long> summonerIds, Region region);
 
-    MasteryPagesDto getMasteryPages(Region region, long summonerId);
+    MasteryPagesDto getMasteryPages(long summonerId, Region region);
 
-    Map<String, RunePagesDto> getRunePages(Region region, List<Long> summonerIds);
+    Map<String, RunePagesDto> getRunePages(List<Long> summonerIds, Region region);
 
-    RunePagesDto getRunePages(Region region, long summonerId);
+    RunePagesDto getRunePages(long summonerId, Region region);
 
-    Map<String, SummonerDto> getSummonersByName(Region region, List<String> names);
+    Map<String, SummonerDto> getSummonersByName(List<String> names, Region region);
 
-    SummonerDto getSummonerByName(Region region, String name);
+    SummonerDto getSummonerByName(String name, Region region);
 
-    Map<String, SummonerDto> getSummoners(Region region, List<Long> summonerIds);
+    Map<String, SummonerDto> getSummoners(List<Long> summonerIds, Region region);
 
-    SummonerDto getSummoner(Region region, long summonerId);
+    SummonerDto getSummoner(long summonerId, Region region);
 
-    Map<String, String> getSummonerNames(Region region, List<Long> summonerIds);
+    Map<String, String> getSummonerNames(List<Long> summonerIds, Region region);
 
-    String getSummonerName(Region region, long summonerId);
+    String getSummonerName(long summonerId, Region region);
 }

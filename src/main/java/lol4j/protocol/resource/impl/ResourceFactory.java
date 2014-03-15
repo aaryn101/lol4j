@@ -4,10 +4,9 @@ import lol4j.protocol.resource.*;
 import lol4j.service.impl.ApiRequestManager;
 
 /**
- * Created by Aaryn101 on 12/10/13.
+ * Created by Aaron Corley on 12/10/13.
  */
 public class ResourceFactory {
-    private static final String LOL_BASE = "https://prod.api.pvp.net/api/lol";
     private ApiRequestManager apiRequestManager;
 
     public ResourceFactory(ApiRequestManager apiRequestManager) {
@@ -17,7 +16,6 @@ public class ResourceFactory {
     public ChampionResource createChampionResource() {
         ChampionResourceImpl championResource = new ChampionResourceImpl();
         championResource.setApiRequestManager(apiRequestManager);
-        championResource.setBaseUri(LOL_BASE);
 
         return championResource;
     }
@@ -25,7 +23,6 @@ public class ResourceFactory {
     public GameResource createGameResource() {
         GameResourceImpl gameResource = new GameResourceImpl();
         gameResource.setApiRequestManager(apiRequestManager);
-        gameResource.setBaseUri(LOL_BASE);
 
         return gameResource;
     }
@@ -33,7 +30,6 @@ public class ResourceFactory {
     public LeagueResource createLeagueResource() {
         LeagueResourceImpl leagueResource = new LeagueResourceImpl();
         leagueResource.setApiRequestManager(apiRequestManager);
-        leagueResource.setBaseUri(LOL_BASE);
 
         return leagueResource;
     }
@@ -41,7 +37,6 @@ public class ResourceFactory {
     public StatsResource createStatsResource() {
         StatsResourceImpl statsResource = new StatsResourceImpl();
         statsResource.setApiRequestManager(apiRequestManager);
-        statsResource.setBaseUri(LOL_BASE);
 
         return statsResource;
     }
@@ -49,7 +44,6 @@ public class ResourceFactory {
     public SummonerResource createSummonerResource() {
         SummonerResourceImpl summonerResource = new SummonerResourceImpl();
         summonerResource.setApiRequestManager(apiRequestManager);
-        summonerResource.setBaseUri(LOL_BASE);
 
         return summonerResource;
     }
@@ -57,8 +51,14 @@ public class ResourceFactory {
     public TeamResource createTeamResource() {
         TeamResourceImpl teamResource = new TeamResourceImpl();
         teamResource.setApiRequestManager(apiRequestManager);
-        teamResource.setBaseUri(LOL_BASE);
 
         return teamResource;
+    }
+
+    public LolStaticDataResource createLolStaticDataResource() {
+        LolStaticDataResourceImpl lolStaticDataResource = new LolStaticDataResourceImpl();
+        lolStaticDataResource.setApiRequestManager(apiRequestManager);
+
+        return lolStaticDataResource;
     }
 }

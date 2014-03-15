@@ -8,12 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Aaryn101 on 12/11/13.
+ * Created by Aaron Corley on 12/11/13.
  */
 public abstract class AbstractResourceImpl {
     private List<Region> supportedRegions = new ArrayList<>();
     private ApiRequestManager apiRequestManager;
-    private String baseUri;
 
     public void doSupportedRegionCheck(Region region) {
         if (region == null || !supportedRegions.contains(region)) {
@@ -31,13 +30,5 @@ public abstract class AbstractResourceImpl {
 
     public void setApiRequestManager(ApiRequestManager apiRequestManager) {
         this.apiRequestManager = apiRequestManager;
-    }
-
-    public String getBaseUri() {
-        return baseUri;
-    }
-
-    public void setBaseUri(String baseUri) {
-        this.baseUri = baseUri;
     }
 }

@@ -3,7 +3,7 @@ package lol4j.protocol.dto.game;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
- * Created by Aaryn101 on 2/10/14.
+ * Created by Aaron Corley on 2/10/14.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RawStatsDto {

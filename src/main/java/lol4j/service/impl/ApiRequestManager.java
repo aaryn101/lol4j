@@ -22,7 +22,7 @@ import java.util.concurrent.Delayed;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by Aaryn101 on 12/10/13.
+ * Created by Aaron Corley on 12/10/13.
  */
 public class ApiRequestManager {
     public static final String ENCODING = "UTF-8";
@@ -34,15 +34,17 @@ public class ApiRequestManager {
     private DelayQueue<Token> perSecondsBucket;
     private DelayQueue<Token> perMinutesBucket;
     private boolean usingRateLimiter = false;
+    private String baseUri;
 
-    public ApiRequestManager(String apiKey) {
+    public ApiRequestManager(String apiKey, String baseUri) {
         this.apiKey = apiKey;
+        this.baseUri = baseUri;
         client = ClientBuilder.newClient();
         objectMapper = new ObjectMapper();
     }
 
-    public <T> T get(String baseUri, String path, Map<String, Object> queryParams, Class<T> clazz) {
-        String json = doRequest(baseUri, path, queryParams);
+    public <T> T get(String path, Map<String, Object> queryParams, boolean ignoreRateLimiter, Class<T> clazz) {
+        String json = doRequest(path, queryParams, ignoreRateLimiter);
         T returnObj = null;
 
         try {
@@ -54,8 +56,8 @@ public class ApiRequestManager {
         return returnObj;
     }
 
-    public <T> List<T> getList(String baseUri, String path, Map<String, Object> queryParams, Class<T> clazz) {
-        String json = doRequest(baseUri, path, queryParams);
+    public <T> List<T> getList(String path, Map<String, Object> queryParams, boolean ignoreRateLimiter, Class<T> clazz) {
+        String json = doRequest(path, queryParams, ignoreRateLimiter);
         TypeFactory typeFactory = TypeFactory.defaultInstance();
         List<T> returnObj = null;
 
@@ -68,8 +70,8 @@ public class ApiRequestManager {
         return returnObj;
     }
 
-    public <K, V> Map<K, V> getMap(String baseUri, String path, Map<String, Object> queryParams, Class<K> keyClass, Class<V> valueClass) {
-        String json = doRequest(baseUri, path, queryParams);
+    public <K, V> Map<K, V> getMap(String path, Map<String, Object> queryParams, boolean ignoreRateLimiter, Class<K> keyClass, Class<V> valueClass) {
+        String json = doRequest(path, queryParams, ignoreRateLimiter);
         TypeFactory typeFactory = TypeFactory.defaultInstance();
         Map<K, V> returnObj = null;
 
@@ -82,8 +84,8 @@ public class ApiRequestManager {
         return returnObj;
     }
 
-    private String doRequest(String baseUri, String path, Map<String, Object> queryParams) {
-        if (usingRateLimiter) {
+    private String doRequest(String path, Map<String, Object> queryParams, boolean ignoreRateLimiter) {
+        if (usingRateLimiter && !ignoreRateLimiter) {
             try {
                 perSecondsBucket.take();
                 perMinutesBucket.take();
@@ -99,6 +101,11 @@ public class ApiRequestManager {
         Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON).acceptEncoding(ENCODING);
         Response response = invocationBuilder.get();
 
+        if (usingRateLimiter && !ignoreRateLimiter) {
+            perSecondsBucket.put(new Token(TEN_SECONDS, false));
+            perMinutesBucket.put(new Token(TEN_MINUTES, false));
+        }
+
         if (response.getStatus() != 200) {
             switch(response.getStatus()) {
                 case 400: throw new BadRequestException();
@@ -109,12 +116,15 @@ public class ApiRequestManager {
             }
         }
 
-        if (usingRateLimiter) {
-            perSecondsBucket.put(new Token(TEN_SECONDS, false));
-            perMinutesBucket.put(new Token(TEN_MINUTES, false));
-        }
-
         return response.readEntity(String.class);
+    }
+
+    public String getBaseUri() {
+        return baseUri;
+    }
+
+    public void setBaseUri(String baseUri) {
+        this.baseUri = baseUri;
     }
 
     @Override

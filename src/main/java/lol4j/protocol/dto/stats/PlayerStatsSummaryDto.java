@@ -1,10 +1,10 @@
 package lol4j.protocol.dto.stats;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lol4j.util.StatSummaryType;
+import lol4j.util.stats.StatSummaryType;
 
 /**
- * Created by Aaryn101 on 12/11/13.
+ * Created by Aaron Corley on 12/11/13.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PlayerStatsSummaryDto {

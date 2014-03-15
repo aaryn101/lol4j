@@ -2,10 +2,10 @@ package lol4j.protocol.dto.summoner;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lol4j.util.RuneSlot;
+import lol4j.util.summoner.RuneSlot;
 
 /**
- * Created by Aaryn101 on 12/12/13.
+ * Created by Aaron Corley on 12/12/13.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RuneSlotDto {

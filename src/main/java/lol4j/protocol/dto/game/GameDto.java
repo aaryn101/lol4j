@@ -2,16 +2,16 @@ package lol4j.protocol.dto.game;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lol4j.util.GameMap;
-import lol4j.util.GameMode;
-import lol4j.util.GameType;
-import lol4j.util.SubType;
+import lol4j.util.game.GameMap;
+import lol4j.util.game.GameMode;
+import lol4j.util.game.GameType;
+import lol4j.util.game.SubType;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Aaryn101 on 12/10/13.
+ * Created by Aaron Corley on 12/10/13.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class GameDto {

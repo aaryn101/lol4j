@@ -28,25 +28,28 @@ public class TeamResourceImpl extends AbstractResourceImpl implements TeamResour
     }
 
     @Override
-    public List<TeamDto> getTeams(Region region, long summonerId) {
+    public List<TeamDto> getTeams(long summonerId, Region region) {
         doSupportedRegionCheck(region);
         String path = region.getName() + SLASH + RESOURCE_URI + SLASH + BY_SUMMONER + SLASH + summonerId;
 
-        return getApiRequestManager().getList(getBaseUri(), path, null, TeamDto.class);
+        return getApiRequestManager().getList(path, null, false, TeamDto.class);
     }
 
     @Override
-    public TeamDto getTeam(Region region, String teamId) {
+    public TeamDto getTeam(String teamId, Region region) {
         doSupportedRegionCheck(region);
+        if (teamId == null || teamId.isEmpty()) {
+            throw new IllegalArgumentException("team must not be null or empty");
+        }
         String path = region.getName() + SLASH + RESOURCE_URI + SLASH + teamId;
         Map<String, TeamDto> result =
-                getApiRequestManager().getMap(getBaseUri(), path, null, String.class, TeamDto.class);
+                getApiRequestManager().getMap(path, null, false, String.class, TeamDto.class);
 
         return result.get(teamId);
     }
 
     @Override
-    public Map<String, TeamDto> getTeams(Region region, List<String> teamIds) {
+    public Map<String, TeamDto> getTeams(List<String> teamIds, Region region) {
         doSupportedRegionCheck(region);
         if (teamIds == null || teamIds.size() > MAX_LIST_SIZE || teamIds.size() == 0) {
             throw new IllegalArgumentException("teamIds list must have at least one entry and no more than " +
@@ -54,6 +57,6 @@ public class TeamResourceImpl extends AbstractResourceImpl implements TeamResour
         }
         String path = region.getName() + SLASH + RESOURCE_URI + SLASH + StringUtils.join(teamIds, ',');
 
-        return getApiRequestManager().getMap(getBaseUri(), path, null, String.class, TeamDto.class);
+        return getApiRequestManager().getMap(path, null, false, String.class, TeamDto.class);
     }
 }

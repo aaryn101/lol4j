@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Aaryn101 on 12/16/13.
+ * Created by Aaron Corley on 12/16/13.
  */
 public class TeamResourceImplTest {
     private static final long SUMMONER_ID = 19163557;
@@ -28,8 +28,36 @@ public class TeamResourceImplTest {
     }
 
     @Test
+    public void getTeamsBySummonerWithUnsupportedRegion() {
+        boolean exceptionThrown = false;
+
+        try {
+            Lol4JTestClient.getClient().getTeams(SUMMONER_ID, Region.UNKNOWN);
+        }
+        catch(InvalidRegionException e) {
+            exceptionThrown = true;
+        }
+
+        Assert.assertTrue(exceptionThrown);
+    }
+
+    @Test
+    public void getTeamsBySummonerWithNullRegion() {
+        boolean exceptionThrown = false;
+
+        try {
+            Lol4JTestClient.getClient().getTeams(SUMMONER_ID, null);
+        }
+        catch(InvalidRegionException e) {
+            exceptionThrown = true;
+        }
+
+        Assert.assertTrue(exceptionThrown);
+    }
+
+    @Test
     public void getTeamsBySummoner() {
-        List<TeamDto> teams = Lol4JTestClient.getClient().getTeams(REGION, SUMMONER_ID);
+        List<TeamDto> teams = Lol4JTestClient.getClient().getTeams(SUMMONER_ID, REGION);
         Assert.assertNotNull(teams);
 
         for (TeamDto team : teams) {
@@ -67,41 +95,13 @@ public class TeamResourceImplTest {
             Assert.assertNotNull(team.getThirdLastJoinDate());
         }
     }
-
-    @Test
-    public void getTeamsBySummonerWithUnsupportedRegion() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getTeams(Region.LAN, SUMMONER_ID);
-        }
-        catch(InvalidRegionException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
-    }
-
-    @Test
-    public void getTeamsBySummonerWithNullRegion() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getTeams(null, SUMMONER_ID);
-        }
-        catch(InvalidRegionException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
-    }
     
     @Test
      public void getTeamsWithUnsupportedRegion() {
         boolean exceptionThrown = false;
 
         try {
-            Lol4JTestClient.getClient().getTeams(Region.LAN, TEAM_IDS);
+            Lol4JTestClient.getClient().getTeams(TEAM_IDS, Region.UNKNOWN);
         }
         catch(InvalidRegionException e) {
             exceptionThrown = true;
@@ -115,7 +115,7 @@ public class TeamResourceImplTest {
         boolean exceptionThrown = false;
 
         try {
-            Lol4JTestClient.getClient().getTeams(null, TEAM_IDS);
+            Lol4JTestClient.getClient().getTeams(TEAM_IDS, null);
         }
         catch(InvalidRegionException e) {
             exceptionThrown = true;
@@ -129,7 +129,7 @@ public class TeamResourceImplTest {
         boolean exceptionThrown = false;
 
         try {
-            Lol4JTestClient.getClient().getTeams(REGION, null);
+            Lol4JTestClient.getClient().getTeams(null, REGION);
         }
         catch(IllegalArgumentException e) {
             exceptionThrown = true;
@@ -144,7 +144,7 @@ public class TeamResourceImplTest {
         List<String> empty = new ArrayList<>();
 
         try {
-            Lol4JTestClient.getClient().getTeams(REGION, empty);
+            Lol4JTestClient.getClient().getTeams(empty, REGION);
         }
         catch(IllegalArgumentException e) {
             exceptionThrown = true;
@@ -163,7 +163,7 @@ public class TeamResourceImplTest {
         }
 
         try {
-            Lol4JTestClient.getClient().getTeams(REGION, big);
+            Lol4JTestClient.getClient().getTeams(big, REGION);
         }
         catch(IllegalArgumentException e) {
             exceptionThrown = true;
@@ -174,7 +174,7 @@ public class TeamResourceImplTest {
 
     @Test
     public void getTeams() {
-        Map<String, TeamDto> teams = Lol4JTestClient.getClient().getTeams(REGION, TEAM_IDS);
+        Map<String, TeamDto> teams = Lol4JTestClient.getClient().getTeams(TEAM_IDS, REGION);
         Assert.assertNotNull(teams);
 
         for (Map.Entry<String, TeamDto> entry : teams.entrySet()) {
@@ -222,7 +222,7 @@ public class TeamResourceImplTest {
         boolean exceptionThrown = false;
 
         try {
-            Lol4JTestClient.getClient().getTeam(Region.LAN, TEAM_ID);
+            Lol4JTestClient.getClient().getTeam(TEAM_ID, Region.UNKNOWN);
         }
         catch(InvalidRegionException e) {
             exceptionThrown = true;
@@ -236,7 +236,7 @@ public class TeamResourceImplTest {
         boolean exceptionThrown = false;
 
         try {
-            Lol4JTestClient.getClient().getTeam(null, TEAM_ID);
+            Lol4JTestClient.getClient().getTeam(TEAM_ID, null);
         }
         catch(InvalidRegionException e) {
             exceptionThrown = true;
@@ -247,7 +247,7 @@ public class TeamResourceImplTest {
 
     @Test
     public void getTeam() {
-        TeamDto team = Lol4JTestClient.getClient().getTeam(REGION, TEAM_ID);
+        TeamDto team = Lol4JTestClient.getClient().getTeam(TEAM_ID, REGION);
         Assert.assertNotNull(team);
 
         Assert.assertNotNull(team.getCreateDate());

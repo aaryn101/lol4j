@@ -5,6 +5,10 @@ import lol4j.protocol.dto.champion.ChampionListDto;
 import lol4j.protocol.dto.game.RecentGamesDto;
 import lol4j.protocol.dto.league.LeagueDto;
 import lol4j.protocol.dto.league.LeagueItemDto;
+import lol4j.protocol.dto.lolstaticdata.ChampionDto;
+import lol4j.protocol.dto.lolstaticdata.ItemDto;
+import lol4j.protocol.dto.lolstaticdata.MasteryDto;
+import lol4j.protocol.dto.lolstaticdata.MasteryListDto;
 import lol4j.protocol.dto.stats.PlayerStatsSummaryListDto;
 import lol4j.protocol.dto.stats.RankedStatsDto;
 import lol4j.protocol.dto.summoner.MasteryPagesDto;
@@ -15,26 +19,31 @@ import lol4j.protocol.resource.*;
 import lol4j.protocol.resource.impl.ResourceFactory;
 import lol4j.service.impl.ApiRequestManager;
 import lol4j.util.Region;
-import lol4j.util.Season;
-import lol4j.util.SubType;
+import lol4j.util.game.SubType;
+import lol4j.util.lolstaticdata.ChampData;
+import lol4j.util.lolstaticdata.ItemData;
+import lol4j.util.lolstaticdata.MasteryData;
+import lol4j.util.stats.Season;
 
 import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Aaryn101 on 12/10/13.
+ * Created by Aaron Corley on 12/10/13.
  */
 public class Lol4JClientImpl implements Lol4JClient {
+    private static final String LOL_BASE = "https://prod.api.pvp.net/api/lol";
     private ChampionResource championResource;
     private GameResource gameResource;
     private LeagueResource leagueResource;
     private StatsResource statsResource;
     private SummonerResource summonerResource;
     private TeamResource teamResource;
+    private LolStaticDataResource lolStaticDataResource;
     private ApiRequestManager apiRequestManager;
 
     public Lol4JClientImpl(String apiKey) {
-        apiRequestManager = new ApiRequestManager(apiKey);
+        apiRequestManager = new ApiRequestManager(apiKey, LOL_BASE);
         ResourceFactory resourceFactory = new ResourceFactory(apiRequestManager);
 
         championResource = resourceFactory.createChampionResource();
@@ -43,6 +52,7 @@ public class Lol4JClientImpl implements Lol4JClient {
         statsResource = resourceFactory.createStatsResource();
         summonerResource = resourceFactory.createSummonerResource();
         teamResource = resourceFactory.createTeamResource();
+        lolStaticDataResource = resourceFactory.createLolStaticDataResource();
     }
 
     @Override
@@ -61,88 +71,118 @@ public class Lol4JClientImpl implements Lol4JClient {
     }
 
     @Override
-    public List<LeagueDto> getLeaguesData(Region region, long summonerId) {
-        return leagueResource.getLeaguesData(region, summonerId);
+    public List<LeagueDto> getLeaguesData(long summonerId, Region region) {
+        return leagueResource.getLeaguesData(summonerId, region);
     }
 
     @Override
-    public List<LeagueItemDto> getLeaguesEntryData(Region region, long summonerId) {
-        return leagueResource.getLeaguesEntryData(region, summonerId);
+    public List<LeagueItemDto> getLeaguesEntryData(long summonerId, Region region) {
+        return leagueResource.getLeaguesEntryData(summonerId, region);
     }
 
     @Override
-    public PlayerStatsSummaryListDto getPlayerStatsSummaries(Region region, long summonerId, Season season) {
-        return statsResource.getPlayerStatsSummaries(region, summonerId, season);
+    public PlayerStatsSummaryListDto getPlayerStatsSummaries(long summonerId, Region region, Season season) {
+        return statsResource.getPlayerStatsSummaries(summonerId, region, season);
     }
 
     @Override
-    public RankedStatsDto getRankedStats(Region region, long summonerId, Season season) {
-        return statsResource.getRankedStats(region, summonerId, season);
+    public RankedStatsDto getRankedStats(long summonerId, Region region, Season season) {
+        return statsResource.getRankedStats(summonerId, region, season);
     }
 
     @Override
-    public Map<String, MasteryPagesDto> getMasteryPages(Region region, List<Long> summonerIds) {
-        return summonerResource.getMasteryPages(region, summonerIds);
+    public Map<String, MasteryPagesDto> getMasteryPages(List<Long> summonerIds, Region region) {
+        return summonerResource.getMasteryPages(summonerIds, region);
     }
 
     @Override
-    public MasteryPagesDto getMasteryPages(Region region, long summonerId) {
-        return summonerResource.getMasteryPages(region, summonerId);
+    public MasteryPagesDto getMasteryPages(long summonerId, Region region) {
+        return summonerResource.getMasteryPages(summonerId, region);
     }
 
     @Override
-    public Map<String, RunePagesDto> getRunePages(Region region, List<Long> summonerIds) {
-        return summonerResource.getRunePages(region, summonerIds);
+    public Map<String, RunePagesDto> getRunePages(List<Long> summonerIds, Region region) {
+        return summonerResource.getRunePages(summonerIds, region);
     }
 
     @Override
-    public RunePagesDto getRunePages(Region region, long summonerId) {
-        return summonerResource.getRunePages(region, summonerId);
+    public RunePagesDto getRunePages(long summonerId, Region region) {
+        return summonerResource.getRunePages(summonerId, region);
     }
 
     @Override
-    public Map<String, SummonerDto> getSummonersByName(Region region, List<String> names) {
-        return summonerResource.getSummonersByName(region, names);
+    public Map<String, SummonerDto> getSummonersByName(List<String> names, Region region) {
+        return summonerResource.getSummonersByName(names, region);
     }
 
     @Override
-    public SummonerDto getSummonerByName(Region region, String name) {
-        return summonerResource.getSummonerByName(region, name);
+    public SummonerDto getSummonerByName(String name, Region region) {
+        return summonerResource.getSummonerByName(name, region);
     }
 
     @Override
-    public Map<String, SummonerDto> getSummoners(Region region, List<Long> summonerIds) {
-        return summonerResource.getSummoners(region, summonerIds);
+    public Map<String, SummonerDto> getSummoners(List<Long> summonerIds, Region region) {
+        return summonerResource.getSummoners(summonerIds, region);
     }
 
     @Override
-    public SummonerDto getSummoner(Region region, long summonerId) {
-        return summonerResource.getSummoner(region, summonerId);
+    public SummonerDto getSummoner(long summonerId, Region region) {
+        return summonerResource.getSummoner(summonerId, region);
     }
 
     @Override
-    public Map<String, String> getSummonerNames(Region region, List<Long> summonerIds) {
-        return summonerResource.getSummonerNames(region, summonerIds);
+    public Map<String, String> getSummonerNames(List<Long> summonerIds, Region region) {
+        return summonerResource.getSummonerNames(summonerIds, region);
     }
 
     @Override
-    public String getSummonerName(Region region, long summonerId) {
-        return summonerResource.getSummonerName(region, summonerId);
+    public String getSummonerName(long summonerId, Region region) {
+        return summonerResource.getSummonerName(summonerId, region);
     }
 
     @Override
-    public List<TeamDto> getTeams(Region region, long summonerId) {
-        return teamResource.getTeams(region, summonerId);
+    public List<TeamDto> getTeams(long summonerId, Region region) {
+        return teamResource.getTeams(summonerId, region);
     }
 
     @Override
-    public TeamDto getTeam(Region region, String teamId) {
-        return teamResource.getTeam(region, teamId);
+    public TeamDto getTeam(String teamId, Region region) {
+        return teamResource.getTeam(teamId, region);
     }
 
     @Override
-    public Map<String, TeamDto> getTeams(Region region, List<String> teamIds) {
-        return teamResource.getTeams(region, teamIds);
+    public Map<String, TeamDto> getTeams(List<String> teamIds, Region region) {
+        return teamResource.getTeams(teamIds, region);
+    }
+
+    @Override
+    public lol4j.protocol.dto.lolstaticdata.ChampionListDto getChampionList(Region region, String locale, String version, List<ChampData> requestedData) {
+        return lolStaticDataResource.getChampionList(region, locale, version, requestedData);
+    }
+
+    @Override
+    public ChampionDto getChampion(String id, Region region, String locale, String version, List<ChampData> requestedData) {
+        return lolStaticDataResource.getChampion(id, region, locale, version, requestedData);
+    }
+
+    @Override
+    public ItemDto getItem(String id, Region region, String locale, String version, List<ItemData> requestedData) {
+        return lolStaticDataResource.getItem(id, region, locale, version, requestedData);
+    }
+
+    @Override
+    public ItemListDto getItems(Region region, String locale, String version, List<ItemData> requestedData) {
+        return lolStaticDataResource.getItems(region, locale, version, requestedData);
+    }
+
+    @Override
+    public MasteryDto getMastery(String id, Region region, String locale, String version, List<MasteryData> requestedData) {
+        return lolStaticDataResource.getMastery(id, region, locale, version, requestedData);
+    }
+
+    @Override
+    public MasteryListDto getMasteries(Region region, String locale, String version, List<MasteryData> requestedData) {
+        return lolStaticDataResource.getMasteries(region, locale, version, requestedData);
     }
 
     @Override

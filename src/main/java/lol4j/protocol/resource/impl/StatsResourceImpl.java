@@ -4,7 +4,7 @@ import lol4j.protocol.dto.stats.PlayerStatsSummaryListDto;
 import lol4j.protocol.dto.stats.RankedStatsDto;
 import lol4j.protocol.resource.StatsResource;
 import lol4j.util.Region;
-import lol4j.util.Season;
+import lol4j.util.stats.Season;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,7 +28,7 @@ public class StatsResourceImpl extends AbstractResourceImpl implements StatsReso
     }
 
     @Override
-    public PlayerStatsSummaryListDto getPlayerStatsSummaries(Region region, long summonerId, Season season) {
+    public PlayerStatsSummaryListDto getPlayerStatsSummaries(long summonerId, Region region, Season season) {
         doSupportedRegionCheck(region);
         String path = region.getName() + SLASH + RESOURCE_URI + SLASH + summonerId + SLASH + "summary";
         Map<String, Object> queryParams = null;
@@ -37,11 +37,11 @@ public class StatsResourceImpl extends AbstractResourceImpl implements StatsReso
             queryParams.put("season", season.getName());
         }
 
-        return getApiRequestManager().get(getBaseUri(), path, queryParams, PlayerStatsSummaryListDto.class);
+        return getApiRequestManager().get(path, queryParams, false, PlayerStatsSummaryListDto.class);
     }
 
     @Override
-    public RankedStatsDto getRankedStats(Region region, long summonerId, Season season) {
+    public RankedStatsDto getRankedStats(long summonerId, Region region, Season season) {
         doSupportedRegionCheck(region);
         String path = region.getName() + SLASH + RESOURCE_URI + SLASH + summonerId + SLASH + "ranked";
         Map<String, Object> queryParams = null;
@@ -50,6 +50,6 @@ public class StatsResourceImpl extends AbstractResourceImpl implements StatsReso
             queryParams.put("season", season.getName());
         }
 
-        return getApiRequestManager().get(getBaseUri(), path, queryParams, RankedStatsDto.class);
+        return getApiRequestManager().get(path, queryParams, false, RankedStatsDto.class);
     }
 }

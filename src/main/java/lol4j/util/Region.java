@@ -1,7 +1,10 @@
 package lol4j.util;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 /**
- * Created by Aaryn101 on 12/10/13.
+ * Created by Aaron Corley on 12/10/13.
  */
 public enum Region {
     BR ("br"),
@@ -13,7 +16,8 @@ public enum Region {
     NA ("na"),
     OCE ("oce"),
     RU ("ru"),
-    TR ("tr");
+    TR ("tr"),
+    UNKNOWN ("unknown");
 
     private String name = null;
 
@@ -21,7 +25,19 @@ public enum Region {
         this.name = name;
     }
 
+    @JsonValue
     public String getName() {
         return name;
+    }
+
+    @JsonCreator
+    public static Region create(String val) {
+        Region[] regions = Region.values();
+        for (Region region : regions) {
+            if (region.name.equalsIgnoreCase(val)) {
+                return region;
+            }
+        }
+        return UNKNOWN;
     }
 }

@@ -32,6 +32,6 @@ public class ChampionResourceImpl extends AbstractResourceImpl implements Champi
         Map<String, Object> queryParams = new HashMap<>();
         queryParams.put("freeToPlay", freeToPlay);
 
-        return getApiRequestManager().get(getBaseUri(), path, queryParams, ChampionListDto.class);
+        return getApiRequestManager().get(path, queryParams, false, ChampionListDto.class);
     }
 }

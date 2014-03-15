@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by Aaryn101 on 12/13/13.
+ * Created by Aaron Corley on 12/13/13.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TeamDto {

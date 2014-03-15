@@ -27,6 +27,6 @@ public class GameResourceImpl extends AbstractResourceImpl implements GameResour
         doSupportedRegionCheck(region);
         String path = region.getName() + SLASH + RESOURCE_URI + SLASH + summonerId + SLASH + "recent";
 
-        return getApiRequestManager().get(getBaseUri(), path, null, RecentGamesDto.class);
+        return getApiRequestManager().get(path, null, false, RecentGamesDto.class);
     }
 }

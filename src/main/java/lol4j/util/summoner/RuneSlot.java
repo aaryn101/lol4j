@@ -1,10 +1,10 @@
-package lol4j.util;
+package lol4j.util.summoner;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
- * Created by Aaryn101 on 2/10/14.
+ * Created by Aaron Corley on 2/10/14.
  */
 public enum RuneSlot {
     MARK_1 (1),
@@ -36,7 +36,8 @@ public enum RuneSlot {
     GLYPH_9 (27),
     QUINTESSENCE_1 (28),
     QUINTESSENCE_2 (29),
-    QUINTESSENCE_3 (30);
+    QUINTESSENCE_3 (30),
+    UNKNOWN (-42);
 
     private int runeSlotId;
 
@@ -57,6 +58,6 @@ public enum RuneSlot {
                 return runeSlot;
             }
         }
-        return MARK_1;
+        return UNKNOWN;
     }
 }

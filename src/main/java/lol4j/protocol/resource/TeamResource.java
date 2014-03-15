@@ -7,12 +7,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Aaryn101 on 12/13/13.
+ * Created by Aaron Corley on 12/13/13.
  */
 public interface TeamResource {
-    List<TeamDto> getTeams(Region region, long summonerId);
+    List<TeamDto> getTeams(long summonerId, Region region);
 
-    TeamDto getTeam(Region region, String teamId);
+    TeamDto getTeam(String teamId, Region region);
 
-    Map<String, TeamDto> getTeams(Region region, List<String> teamIds);
+    Map<String, TeamDto> getTeams(List<String> teamIds, Region region);
 }

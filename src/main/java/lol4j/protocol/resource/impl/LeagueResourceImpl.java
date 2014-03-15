@@ -5,7 +5,7 @@ import lol4j.protocol.dto.league.LeagueDto;
 import lol4j.protocol.dto.league.LeagueItemDto;
 import lol4j.protocol.resource.LeagueResource;
 import lol4j.util.Region;
-import lol4j.util.SubType;
+import lol4j.util.game.SubType;
 
 import java.util.HashMap;
 import java.util.List;
@@ -38,24 +38,24 @@ public class LeagueResourceImpl extends AbstractResourceImpl implements LeagueRe
         }
         String path = region.getName() + SLASH + CHALLENGER_URI;
         Map<String, Object> queryParams = new HashMap<>();
-        queryParams.put("type", gameType.name());
+        queryParams.put("type", gameType.getSubType());
 
-        return getApiRequestManager().get(getBaseUri(), path, queryParams, LeagueDto.class);
+        return getApiRequestManager().get(path, queryParams, false, LeagueDto.class);
     }
 
     @Override
-    public List<LeagueDto> getLeaguesData(Region region, long summonerId) {
+    public List<LeagueDto> getLeaguesData(long summonerId, Region region) {
         doSupportedRegionCheck(region);
         String path = region.getName() + SLASH + LEAGUE_URI + SLASH + summonerId;
 
-        return getApiRequestManager().getList(getBaseUri(), path, null, LeagueDto.class);
+        return getApiRequestManager().getList(path, null, false, LeagueDto.class);
     }
 
     @Override
-    public List<LeagueItemDto> getLeaguesEntryData(Region region, long summonerId) {
+    public List<LeagueItemDto> getLeaguesEntryData(long summonerId, Region region) {
         doSupportedRegionCheck(region);
         String path = region.getName() + SLASH + LEAGUE_URI + SLASH + summonerId + SLASH + ENTRY;
 
-        return getApiRequestManager().getList(getBaseUri(), path, null, LeagueItemDto.class);
+        return getApiRequestManager().getList(path, null, false, LeagueItemDto.class);
     }
 }

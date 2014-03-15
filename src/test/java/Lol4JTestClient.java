@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 /**
- * Created by Aaryn101 on 12/14/13.
+ * Created by Aaron Corley on 12/14/13.
  */
 public class Lol4JTestClient {
     private static Lol4JTestClient instance;

@@ -1,14 +1,14 @@
 package lol4j.protocol.dto.league;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lol4j.util.Queue;
-import lol4j.util.Tier;
+import lol4j.util.league.Queue;
+import lol4j.util.league.Tier;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Aaryn101 on 12/11/13.
+ * Created by Aaron Corley on 12/11/13.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class LeagueDto {
