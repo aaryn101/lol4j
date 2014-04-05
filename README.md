@@ -15,11 +15,11 @@ Example Usage
 Lol4JClient client = new Lol4JClientImpl("apiKey");
 
 ChampionListDto championList = client.getAllChampions(Region.NA, true);
-RecentGamesDto recentGames = client.getRecentGames(Region.NA, 19163557);
-Map<String, LeagueDto> leaguesData = client.getLeaguesData(Region.NA, 19163557);
-PlayerStatsSummaryListDto playerStatsSummaries = client.getPlayerStatsSummaries(Region.NA, 19163557, Season.SEASON_3);
-RankedStatsDto rankedStats = client.getRankedStats(Region.NA, 19163557, Season.SEASON_3);
-MasteryPagesDto masteryPages = client.getMasteryPages(Region.NA, 19163557);
+RecentGamesDto recentGames = client.getRecentGames(19163557, Region.NA);
+Map<String, LeagueDto> leaguesData = client.getLeaguesData(19163557, Region.NA);
+PlayerStatsSummaryListDto playerStatsSummaries = client.getPlayerStatsSummaries(19163557, Region.NA, Season.SEASON_3);
+RankedStatsDto rankedStats = client.getRankedStats(19163557, Region.NA, Season.SEASON_3);
+MasteryPagesDto masteryPages = client.getMasteryPages(19163557, Region.NA);
 ```
 
 Rate Limiting

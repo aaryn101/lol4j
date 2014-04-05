@@ -34,6 +34,7 @@ public class SummonerResourceImpl extends AbstractResourceImpl implements Summon
         getSupportedRegions().add(Region.LAN);
         getSupportedRegions().add(Region.LAS);
         getSupportedRegions().add(Region.NA);
+        getSupportedRegions().add(Region.OCE);
     }
 
     @Override

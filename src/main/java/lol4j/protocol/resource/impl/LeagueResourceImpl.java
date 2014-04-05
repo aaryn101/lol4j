@@ -26,7 +26,11 @@ public class LeagueResourceImpl extends AbstractResourceImpl implements LeagueRe
         getSupportedRegions().add(Region.BR);
         getSupportedRegions().add(Region.EUNE);
         getSupportedRegions().add(Region.EUW);
+        getSupportedRegions().add(Region.LAN);
+        getSupportedRegions().add(Region.LAS);
         getSupportedRegions().add(Region.NA);
+        getSupportedRegions().add(Region.OCE);
+        getSupportedRegions().add(Region.RU);
         getSupportedRegions().add(Region.TR);
     }
 

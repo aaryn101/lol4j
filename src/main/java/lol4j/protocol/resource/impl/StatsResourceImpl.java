@@ -25,6 +25,7 @@ public class StatsResourceImpl extends AbstractResourceImpl implements StatsReso
         getSupportedRegions().add(Region.LAN);
         getSupportedRegions().add(Region.LAS);
         getSupportedRegions().add(Region.NA);
+        getSupportedRegions().add(Region.OCE);
     }
 
     @Override

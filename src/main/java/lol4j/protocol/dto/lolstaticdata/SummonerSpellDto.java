@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Aaron Corley on 3/9/14.
+ * Created by Aaron Corley on 4/5/14.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ChampionSpellDto {
+public class SummonerSpellDto {
     private List<Integer> cooldown = new ArrayList<>();
     private String cooldownBurn;
     private List<Integer> cost = new ArrayList<>();
@@ -19,15 +19,21 @@ public class ChampionSpellDto {
     private String description;
     private List<List<Integer>> effect = new ArrayList<>();
     private List<String> effectBurn = new ArrayList<>();
+    private int id;
     private ImageDto image;
-    @JsonProperty(value = "leveltip")
+    private String key;
+    @JsonProperty("leveltip")
     private LevelTipDto levelTip;
-    @JsonProperty(value = "maxrank")
+    @JsonProperty("maxrank")
     private int maxRank;
+    private List<String> modes = new ArrayList<>();
     private String name;
     private Object range;
     private String rangeBurn;
     private String resource;
+    private String sanitizedDescription;
+    private String sanitizedTooltip;
+    private int summonerLevel;
     private String tooltip;
     private List<SpellVarsDto> vars = new ArrayList<>();
 
@@ -47,11 +53,16 @@ public class ChampionSpellDto {
         return effectBurn;
     }
 
+    public List<String> getModes() {
+        return modes;
+    }
+
     public List<SpellVarsDto> getVars() {
         return vars;
     }
 
     public String getCooldownBurn() {
+
         return cooldownBurn;
     }
 
@@ -83,12 +94,36 @@ public class ChampionSpellDto {
         this.description = description;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public ImageDto getImage() {
         return image;
     }
 
     public void setImage(ImageDto image) {
         this.image = image;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public LevelTipDto getLevelTip() {
+        return levelTip;
+    }
+
+    public void setLevelTip(LevelTipDto levelTip) {
+        this.levelTip = levelTip;
     }
 
     public int getMaxRank() {
@@ -131,19 +166,35 @@ public class ChampionSpellDto {
         this.resource = resource;
     }
 
+    public String getSanitizedDescription() {
+        return sanitizedDescription;
+    }
+
+    public void setSanitizedDescription(String sanitizedDescription) {
+        this.sanitizedDescription = sanitizedDescription;
+    }
+
+    public String getSanitizedTooltip() {
+        return sanitizedTooltip;
+    }
+
+    public void setSanitizedTooltip(String sanitizedTooltip) {
+        this.sanitizedTooltip = sanitizedTooltip;
+    }
+
+    public int getSummonerLevel() {
+        return summonerLevel;
+    }
+
+    public void setSummonerLevel(int summonerLevel) {
+        this.summonerLevel = summonerLevel;
+    }
+
     public String getTooltip() {
         return tooltip;
     }
 
     public void setTooltip(String tooltip) {
         this.tooltip = tooltip;
-    }
-
-    public LevelTipDto getLevelTip() {
-        return levelTip;
-    }
-
-    public void setLevelTip(LevelTipDto levelTip) {
-        this.levelTip = levelTip;
     }
 }

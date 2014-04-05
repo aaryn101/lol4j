@@ -1,10 +1,7 @@
 import lol4j.exception.InvalidRegionException;
 import lol4j.protocol.dto.lolstaticdata.*;
-import lol4j.protocol.resource.ItemListDto;
 import lol4j.util.Region;
-import lol4j.util.lolstaticdata.ChampData;
-import lol4j.util.lolstaticdata.ItemData;
-import lol4j.util.lolstaticdata.MasteryData;
+import lol4j.util.lolstaticdata.*;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -21,15 +18,20 @@ public class LolStaticDataResourceImplTest {
     private static final String CHAMP_ID = "35";
     private static final String ITEM_ID = "1027";
     private static final String MASTERY_ID = "4353";
+    private static final String SUMMONER_SPELL_ID = "SummonerSmite";
     private static final List<ChampData> CHAMP_DATA = new ArrayList<>();
     private static final List<ItemData> ITEM_DATA = new ArrayList<>();
     private static final List<MasteryData> MASTERY_DATA = new ArrayList<>();
+    private static final List<RuneData> RUNE_DATA = new ArrayList<>();
+    private static final List<SummonerSpellData> SUMMONER_SPELL_DATA = new ArrayList<>();
 
     @BeforeClass
     public static void initializeTest() {
         CHAMP_DATA.add(ChampData.ALL);
         ITEM_DATA.add(ItemData.ALL);
         MASTERY_DATA.add(MasteryData.ALL);
+        RUNE_DATA.add(RuneData.ALL);
+        SUMMONER_SPELL_DATA.add(SummonerSpellData.ALL);
     }
 
     @Test
@@ -108,7 +110,6 @@ public class LolStaticDataResourceImplTest {
                 Assert.assertNotNull(spell.getCostBurn());
                 Assert.assertNotNull(spell.getCostType());
                 Assert.assertNotNull(spell.getDescription());
-                Assert.assertNotNull(spell.getId());
                 Assert.assertNotNull(spell.getImage());
                 Assert.assertNotNull(spell.getLevelTip());
                 Assert.assertNotNull(spell.getName());
@@ -227,7 +228,6 @@ public class LolStaticDataResourceImplTest {
             Assert.assertNotNull(spell.getCostBurn());
             Assert.assertNotNull(spell.getCostType());
             Assert.assertNotNull(spell.getDescription());
-            Assert.assertNotNull(spell.getId());
             Assert.assertNotNull(spell.getImage());
             Assert.assertNotNull(spell.getLevelTip());
             Assert.assertNotNull(spell.getName());
@@ -302,10 +302,9 @@ public class LolStaticDataResourceImplTest {
 
     @Test
     public void getItem() {
-        ItemDto item = Lol4JTestClient.getClient().getItem(ITEM_ID, REGION, "en_US", null, ITEM_DATA);
+        BasicDataDto item = Lol4JTestClient.getClient().getItem(ITEM_ID, REGION, "en_US", null, ITEM_DATA);
 
         Assert.assertNotNull(item);
-        Assert.assertNotNull(item.getColloq());
         Assert.assertNotNull(item.getDescription());
         Assert.assertNotNull(item.getGold());
         Assert.assertNotNull(item.getImage());
@@ -319,7 +318,7 @@ public class LolStaticDataResourceImplTest {
         boolean exceptionThrown = false;
 
         try {
-            Lol4JTestClient.getClient().getItems(Region.UNKNOWN, "en_US", null, ITEM_DATA);
+            Lol4JTestClient.getClient().getItemList(Region.UNKNOWN, "en_US", null, ITEM_DATA);
         }
         catch(InvalidRegionException e) {
             exceptionThrown = true;
@@ -333,7 +332,7 @@ public class LolStaticDataResourceImplTest {
         boolean exceptionThrown = false;
 
         try {
-            Lol4JTestClient.getClient().getItems(null, "en_US", null, ITEM_DATA);
+            Lol4JTestClient.getClient().getItemList(null, "en_US", null, ITEM_DATA);
         }
         catch(InvalidRegionException e) {
             exceptionThrown = true;
@@ -344,15 +343,14 @@ public class LolStaticDataResourceImplTest {
 
     @Test
     public void getItems() {
-        ItemListDto itemList = Lol4JTestClient.getClient().getItems(REGION, "en_US", null, ITEM_DATA);
+        ItemListDto itemList = Lol4JTestClient.getClient().getItemList(REGION, "en_US", null, ITEM_DATA);
 
         Assert.assertNotNull(itemList);
         Assert.assertNotNull(itemList.getType());
         Assert.assertNotNull(itemList.getVersion());
 
-        ItemDto item = itemList.getBasic();
+        BasicDataDto item = itemList.getBasic();
         Assert.assertNotNull(item);
-        Assert.assertNotNull(item.getColloq());
         Assert.assertNotNull(item.getGold());
         Assert.assertNotNull(item.getStats());
     }
@@ -426,7 +424,7 @@ public class LolStaticDataResourceImplTest {
         boolean exceptionThrown = false;
 
         try {
-            Lol4JTestClient.getClient().getMasteries(Region.UNKNOWN, "en_US", null, MASTERY_DATA);
+            Lol4JTestClient.getClient().getMasteryList(Region.UNKNOWN, "en_US", null, MASTERY_DATA);
         }
         catch(InvalidRegionException e) {
             exceptionThrown = true;
@@ -440,7 +438,7 @@ public class LolStaticDataResourceImplTest {
         boolean exceptionThrown = false;
 
         try {
-            Lol4JTestClient.getClient().getMasteries(null, "en_US", null, MASTERY_DATA);
+            Lol4JTestClient.getClient().getMasteryList(null, "en_US", null, MASTERY_DATA);
         }
         catch(InvalidRegionException e) {
             exceptionThrown = true;
@@ -451,10 +449,156 @@ public class LolStaticDataResourceImplTest {
 
     @Test
     public void getMasteries() {
-        MasteryListDto masteries = Lol4JTestClient.getClient().getMasteries(REGION, "en_US", null, MASTERY_DATA);
+        MasteryListDto masteries = Lol4JTestClient.getClient().getMasteryList(REGION, "en_US", null, MASTERY_DATA);
 
         Assert.assertNotNull(masteries);
         Assert.assertNotNull(masteries.getType());
         Assert.assertNotNull(masteries.getVersion());
+    }
+
+    @Test
+    public void getRealmWithUnsupportedRegion() {
+        boolean exceptionThrown = false;
+
+        try {
+            Lol4JTestClient.getClient().getRealm(Region.UNKNOWN);
+        }
+        catch (InvalidRegionException e) {
+            exceptionThrown = true;
+        }
+
+        Assert.assertTrue(exceptionThrown);
+    }
+
+    @Test
+    public void getRealmWithNullRegion() {
+        boolean exceptionThrown = false;
+
+        try {
+            Lol4JTestClient.getClient().getRealm(null);
+        }
+        catch (InvalidRegionException e) {
+            exceptionThrown = true;
+        }
+
+        Assert.assertTrue(exceptionThrown);
+    }
+
+    @Test
+    public void getRealm() {
+        RealmDto realm = Lol4JTestClient.getClient().getRealm(REGION);
+
+        Assert.assertNotNull(realm);
+        Assert.assertNotNull(realm.getCdnBaseUrl());
+        Assert.assertNotNull(realm.getCssVersion());
+        Assert.assertNotNull(realm.getDefaultLanguage());
+        Assert.assertNotNull(realm.getDragonMagicVersion());
+        Assert.assertNotNull(realm.getLegacyScriptMode());
+        Assert.assertNotNull(realm.getVersion());
+    }
+
+    @Test
+    public void getRunesWithUnsupportedRegion() {
+        boolean exceptionThrown = false;
+
+        try {
+            Lol4JTestClient.getClient().getRuneList(Region.UNKNOWN, null, null, RUNE_DATA);
+        }
+        catch (InvalidRegionException e) {
+            exceptionThrown = true;
+        }
+
+        Assert.assertTrue(exceptionThrown);
+    }
+
+    @Test
+    public void getRunesWithNullRegion() {
+        boolean exceptionThrown = false;
+
+        try {
+            Lol4JTestClient.getClient().getRuneList(null, null, null, RUNE_DATA);
+        }
+        catch (InvalidRegionException e) {
+            exceptionThrown = true;
+        }
+
+        Assert.assertTrue(exceptionThrown);
+    }
+
+    @Test
+    public void getRunes() {
+        RuneListDto runes = Lol4JTestClient.getClient().getRuneList(REGION, null, null, RUNE_DATA);
+
+        Assert.assertNotNull(runes);
+    }
+
+    @Test
+    public void getSummonerSpellsWithUnsupportedRegion() {
+        boolean exceptionThrown = false;
+
+        try {
+            Lol4JTestClient.getClient().getSummonerSpellList(Region.UNKNOWN, null, null, SUMMONER_SPELL_DATA);
+        }
+        catch (InvalidRegionException e) {
+            exceptionThrown = true;
+        }
+
+        Assert.assertTrue(exceptionThrown);
+    }
+
+    @Test
+    public void getSummonerSpellsWithNullRegion() {
+        boolean exceptionThrown = false;
+
+        try {
+            Lol4JTestClient.getClient().getSummonerSpellList(null, null, null, SUMMONER_SPELL_DATA);
+        }
+        catch (InvalidRegionException e) {
+            exceptionThrown = true;
+        }
+
+        Assert.assertTrue(exceptionThrown);
+    }
+
+    @Test
+    public void getSummonerSpells() {
+        SummonerSpellListDto summonerSpells = Lol4JTestClient.getClient().getSummonerSpellList(REGION, null, null, SUMMONER_SPELL_DATA);
+
+        Assert.assertNotNull(summonerSpells);
+    }
+
+    @Test
+    public void getSummonerSpellWithUnsupportedRegion() {
+        boolean exceptionThrown = false;
+
+        try {
+            Lol4JTestClient.getClient().getSummonerSpell(SUMMONER_SPELL_ID, Region.UNKNOWN, null, null, SUMMONER_SPELL_DATA);
+        }
+        catch (InvalidRegionException e) {
+            exceptionThrown = true;
+        }
+
+        Assert.assertTrue(exceptionThrown);
+    }
+
+    @Test
+    public void getSummonerSpellWithNullRegion() {
+        boolean exceptionThrown = false;
+
+        try {
+            Lol4JTestClient.getClient().getSummonerSpell(SUMMONER_SPELL_ID, null, null, null, SUMMONER_SPELL_DATA);
+        }
+        catch (InvalidRegionException e) {
+            exceptionThrown = true;
+        }
+
+        Assert.assertTrue(exceptionThrown);
+    }
+
+    @Test
+    public void getSummonerSpell() {
+        SummonerSpellDto summonerSpell = Lol4JTestClient.getClient().getSummonerSpell(SUMMONER_SPELL_ID, REGION, null, null, SUMMONER_SPELL_DATA);
+
+        Assert.assertNotNull(summonerSpell);
     }
 }

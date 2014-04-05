@@ -24,6 +24,7 @@ public class ChampionResourceImpl extends AbstractResourceImpl implements Champi
         getSupportedRegions().add(Region.LAN);
         getSupportedRegions().add(Region.LAS);
         getSupportedRegions().add(Region.NA);
+        getSupportedRegions().add(Region.OCE);
     }
 
     @Override

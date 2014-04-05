@@ -5,10 +5,7 @@ import lol4j.protocol.dto.champion.ChampionListDto;
 import lol4j.protocol.dto.game.RecentGamesDto;
 import lol4j.protocol.dto.league.LeagueDto;
 import lol4j.protocol.dto.league.LeagueItemDto;
-import lol4j.protocol.dto.lolstaticdata.ChampionDto;
-import lol4j.protocol.dto.lolstaticdata.ItemDto;
-import lol4j.protocol.dto.lolstaticdata.MasteryDto;
-import lol4j.protocol.dto.lolstaticdata.MasteryListDto;
+import lol4j.protocol.dto.lolstaticdata.*;
 import lol4j.protocol.dto.stats.PlayerStatsSummaryListDto;
 import lol4j.protocol.dto.stats.RankedStatsDto;
 import lol4j.protocol.dto.summoner.MasteryPagesDto;
@@ -20,9 +17,7 @@ import lol4j.protocol.resource.impl.ResourceFactory;
 import lol4j.service.impl.ApiRequestManager;
 import lol4j.util.Region;
 import lol4j.util.game.SubType;
-import lol4j.util.lolstaticdata.ChampData;
-import lol4j.util.lolstaticdata.ItemData;
-import lol4j.util.lolstaticdata.MasteryData;
+import lol4j.util.lolstaticdata.*;
 import lol4j.util.stats.Season;
 
 import java.util.List;
@@ -171,13 +166,13 @@ public class Lol4JClientImpl implements Lol4JClient {
     }
 
     @Override
-    public ItemDto getItem(String id, Region region, String locale, String version, List<ItemData> requestedData) {
+    public BasicDataDto getItem(String id, Region region, String locale, String version, List<ItemData> requestedData) {
         return lolStaticDataResource.getItem(id, region, locale, version, requestedData);
     }
 
     @Override
-    public ItemListDto getItems(Region region, String locale, String version, List<ItemData> requestedData) {
-        return lolStaticDataResource.getItems(region, locale, version, requestedData);
+    public ItemListDto getItemList(Region region, String locale, String version, List<ItemData> requestedData) {
+        return lolStaticDataResource.getItemList(region, locale, version, requestedData);
     }
 
     @Override
@@ -186,8 +181,33 @@ public class Lol4JClientImpl implements Lol4JClient {
     }
 
     @Override
-    public MasteryListDto getMasteries(Region region, String locale, String version, List<MasteryData> requestedData) {
-        return lolStaticDataResource.getMasteries(region, locale, version, requestedData);
+    public MasteryListDto getMasteryList(Region region, String locale, String version, List<MasteryData> requestedData) {
+        return lolStaticDataResource.getMasteryList(region, locale, version, requestedData);
+    }
+
+    @Override
+    public RealmDto getRealm(Region region) {
+        return lolStaticDataResource.getRealm(region);
+    }
+
+    @Override
+    public RuneListDto getRuneList(Region region, String locale, String version, List<RuneData> requestedData) {
+        return lolStaticDataResource.getRuneList(region, locale, version, requestedData);
+    }
+
+    @Override
+    public BasicDataDto getRune(String id, Region region, String locale, String version, List<RuneData> requestedData) {
+        return lolStaticDataResource.getRune(id, region, locale, version, requestedData);
+    }
+
+    @Override
+    public SummonerSpellListDto getSummonerSpellList(Region region, String locale, String version, List<SummonerSpellData> requestedData) {
+        return lolStaticDataResource.getSummonerSpellList(region, locale, version, requestedData);
+    }
+
+    @Override
+    public SummonerSpellDto getSummonerSpell(String id, Region region, String locale, String version, List<SummonerSpellData> requestedData) {
+        return lolStaticDataResource.getSummonerSpell(id, region, locale, version, requestedData);
     }
 
     @Override

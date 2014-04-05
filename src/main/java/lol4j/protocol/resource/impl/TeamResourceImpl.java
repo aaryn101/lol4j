@@ -20,11 +20,15 @@ public class TeamResourceImpl extends AbstractResourceImpl implements TeamResour
     public static final int MAX_LIST_SIZE = 40;
 
     public TeamResourceImpl() {
-        getSupportedRegions().add(Region.TR);
-        getSupportedRegions().add(Region.NA);
+        getSupportedRegions().add(Region.BR);
         getSupportedRegions().add(Region.EUNE);
         getSupportedRegions().add(Region.EUW);
-        getSupportedRegions().add(Region.BR);
+        getSupportedRegions().add(Region.LAN);
+        getSupportedRegions().add(Region.LAS);
+        getSupportedRegions().add(Region.NA);
+        getSupportedRegions().add(Region.OCE);
+        getSupportedRegions().add(Region.RU);
+        getSupportedRegions().add(Region.TR);
     }
 
     @Override

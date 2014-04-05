@@ -12,7 +12,7 @@ import java.util.Map;
  * Created by Aaron Corley on 3/10/14.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ItemDto {
+public class BasicDataDto {
     private String colloq;
     private boolean consumeOnFull;
     private boolean consumed;
