@@ -115,7 +115,6 @@ public class StatsResourceImplTest {
         Assert.assertTrue(rankedStats.getChampions().size() > 0);
 
         for (ChampionStatsDto championStats : rankedStats.getChampions()) {
-            Assert.assertTrue(championStats.getName() != null || championStats.getId() == 0);
             Assert.assertTrue(championStats.getId() >= 0);
             Assert.assertNotNull(championStats.getStats());
         }

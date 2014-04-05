@@ -22,6 +22,7 @@ public class GameDto {
     private GameMode gameMode;
     private GameType gameType;
     private boolean invalid;
+    private int ipEarned;
     private int level;
     @JsonProperty("mapId")
     private GameMap gameMap;
@@ -137,5 +138,13 @@ public class GameDto {
 
     public void setTeamId(int teamId) {
         this.teamId = teamId;
+    }
+
+    public int getIpEarned() {
+        return ipEarned;
+    }
+
+    public void setIpEarned(int ipEarned) {
+        this.ipEarned = ipEarned;
     }
 }

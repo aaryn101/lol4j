@@ -114,11 +114,9 @@ public class SummonerResourceImplTest {
             Assert.assertNotNull(pages);
             for (MasteryPageDto page : pages.getPages()) {
                 Assert.assertNotNull(page.getName());
-                Assert.assertNotNull(page.getTalents());
+                Assert.assertNotNull(page.getMasteries());
 
-                for (TalentDto talent : page.getTalents()) {
-                    Assert.assertNotNull(talent.getName());
-                }
+                testMasteryPage(page);
             }
         }
     }
@@ -159,11 +157,9 @@ public class SummonerResourceImplTest {
 
         for (MasteryPageDto page : pages.getPages()) {
             Assert.assertNotNull(page.getName());
-            Assert.assertNotNull(page.getTalents());
+            Assert.assertNotNull(page.getMasteries());
 
-            for (TalentDto talent : page.getTalents()) {
-                Assert.assertNotNull(talent.getName());
-            }
+            testMasteryPage(page);
         }
     }
 
@@ -253,17 +249,7 @@ public class SummonerResourceImplTest {
             Assert.assertNotNull(entry.getKey());
             Assert.assertNotNull(entry.getValue());
 
-            for (RunePageDto runePage : entry.getValue().getPages()) {
-                Assert.assertNotNull(runePage.getName());
-                Assert.assertNotNull(runePage.getSlots());
-
-                for (RuneSlotDto runeSlot : runePage.getSlots()) {
-                    Assert.assertNotNull(runeSlot.getRune());
-                    Assert.assertNotNull(runeSlot.getRune().getName());
-                    Assert.assertNotNull(runeSlot.getRune().getDescription());
-                    Assert.assertNotNull(runeSlot.getRuneSlot());
-                }
-            }
+            testRunePages(entry.getValue());
         }
     }
 
@@ -301,17 +287,7 @@ public class SummonerResourceImplTest {
 
         Assert.assertNotNull(pages);
 
-        for (RunePageDto runePage : pages.getPages()) {
-            Assert.assertNotNull(runePage.getName());
-            Assert.assertNotNull(runePage.getSlots());
-
-            for (RuneSlotDto runeSlot : runePage.getSlots()) {
-                Assert.assertNotNull(runeSlot.getRune());
-                Assert.assertNotNull(runeSlot.getRune().getName());
-                Assert.assertNotNull(runeSlot.getRune().getDescription());
-                Assert.assertNotNull(runeSlot.getRuneSlot());
-            }
-        }
+        testRunePages(pages);
     }
 
     @Test
@@ -713,5 +689,29 @@ public class SummonerResourceImplTest {
         String summonerName = Lol4JTestClient.getClient().getSummonerName(SUMMONER_ID, REGION);
 
         Assert.assertNotNull(summonerName);
+    }
+
+    // Utilities
+
+    private void testMasteryPage(MasteryPageDto page) {
+        int count = 0;
+        for (MasteryDto talent : page.getMasteries()) {
+            Assert.assertTrue(talent.getRank() > 0);
+            count += talent.getRank();
+        }
+
+        Assert.assertTrue(count >= 0 && count <= 30);
+    }
+
+    private void testRunePages(RunePagesDto runePagesDto) {
+        for (RunePageDto runePage : runePagesDto.getPages()) {
+            Assert.assertNotNull(runePage.getName());
+            Assert.assertNotNull(runePage.getSlots());
+
+            for (RuneSlotDto runeSlot : runePage.getSlots()) {
+                Assert.assertTrue(runeSlot.getRuneId() >= 0);
+                Assert.assertNotNull(runeSlot.getRuneSlot());
+            }
+        }
     }
 }

@@ -13,10 +13,10 @@ public class MasteryPageDto {
     private boolean current;
     private long id;
     private String name;
-    private List<TalentDto> talents = new ArrayList<>();
+    private List<MasteryDto> masteries = new ArrayList<>();
 
-    public List<TalentDto> getTalents() {
-        return talents;
+    public List<MasteryDto> getMasteries() {
+        return masteries;
     }
 
     public boolean isCurrent() {

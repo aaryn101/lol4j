@@ -8,7 +8,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ChampionStatsDto {
     private int id;
-    private String name;
     private AggregatedStatDto stats;
 
     public AggregatedStatDto getStats() {
@@ -25,13 +24,5 @@ public class ChampionStatsDto {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 }
