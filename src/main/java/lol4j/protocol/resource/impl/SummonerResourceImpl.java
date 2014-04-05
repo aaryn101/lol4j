@@ -14,10 +14,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Compatible with summoner-v1.3
+ * Compatible with summoner-v1.4
  */
 public class SummonerResourceImpl extends AbstractResourceImpl implements SummonerResource {
-    private static final String RESOURCE_VERSION = "v1.3";
+    private static final String RESOURCE_VERSION = "v1.4";
     private static final String RESOURCE_PATH = "summoner";
     private static final String SLASH = "/";
     private static final String RESOURCE_URI = RESOURCE_VERSION + SLASH + RESOURCE_PATH;

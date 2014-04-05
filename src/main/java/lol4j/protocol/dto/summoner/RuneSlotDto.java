@@ -9,17 +9,9 @@ import lol4j.util.summoner.RuneSlot;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RuneSlotDto {
-    private RuneDto rune;
+    private int runeId;
     @JsonProperty("runeSlotId")
     private RuneSlot runeSlot;
-
-    public RuneDto getRune() {
-        return rune;
-    }
-
-    public void setRune(RuneDto rune) {
-        this.rune = rune;
-    }
 
     public RuneSlot getRuneSlot() {
         return runeSlot;
@@ -27,5 +19,13 @@ public class RuneSlotDto {
 
     public void setRuneSlot(RuneSlot runeSlot) {
         this.runeSlot = runeSlot;
+    }
+
+    public int getRuneId() {
+        return runeId;
+    }
+
+    public void setRuneId(int runeId) {
+        this.runeId = runeId;
     }
 }
