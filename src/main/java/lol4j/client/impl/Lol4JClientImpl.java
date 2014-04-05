@@ -61,6 +61,11 @@ public class Lol4JClientImpl implements Lol4JClient {
     }
 
     @Override
+    public lol4j.protocol.dto.champion.ChampionDto getChampion(Region region, int id) {
+        return championResource.getChampion(region, id);
+    }
+
+    @Override
     public RecentGamesDto getRecentGames(Region region, long summonerId) {
         return gameResource.getRecentGames(region, summonerId);
     }

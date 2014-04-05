@@ -3,14 +3,16 @@ import lol4j.protocol.dto.champion.ChampionDto;
 import lol4j.protocol.dto.champion.ChampionListDto;
 import lol4j.util.Region;
 import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * Created by Aaron Corley on 12/13/13.
  */
 public class ChampionResourceImplTest {
     private static final Region REGION = Region.NA;
+    private static final int CHAMPION_ID = 17; // Teemo
 
-    @org.junit.Test
+    @Test
     public void getAllChampions() {
         ChampionListDto championList = Lol4JTestClient.getClient().getAllChampions(REGION, false);
 
@@ -19,39 +21,33 @@ public class ChampionResourceImplTest {
         Assert.assertNotEquals(championList.getChampions().size(), 0);
 
         ChampionDto champion = championList.getChampions().get(0);
-        Assert.assertNotNull(champion.getAttackRank());
-        Assert.assertNotNull(champion.getDefenseRank());
-        Assert.assertNotNull(champion.getDifficultyRank());
-        Assert.assertNotNull(champion.getId());
-        Assert.assertNotNull(champion.getMagicRank());
-        Assert.assertNotNull(champion.getName());
+        Assert.assertTrue(champion.getId() > 0);
     }
 
-    @org.junit.Test
+    @Test
+    public void getChampion() {
+        ChampionDto champion = Lol4JTestClient.getClient().getChampion(REGION, CHAMPION_ID);
+
+        Assert.assertEquals(CHAMPION_ID, champion.getId());
+    }
+
+    @Test(expected = InvalidRegionException.class)
+    public void getChampionWithUnsupportedRegion() {
+        Lol4JTestClient.getClient().getChampion(Region.UNKNOWN, CHAMPION_ID);
+    }
+
+    @Test(expected = InvalidRegionException.class)
+    public void getChampionWithNullRegion() {
+        Lol4JTestClient.getClient().getChampion(null, CHAMPION_ID);
+    }
+
+    @Test(expected = InvalidRegionException.class)
     public void getAllChampionsWithUnsupportedRegion() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getAllChampions(Region.UNKNOWN, false);
-        }
-        catch(InvalidRegionException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getAllChampions(Region.UNKNOWN, false);
     }
 
-    @org.junit.Test
+    @Test(expected = InvalidRegionException.class)
     public void getAllChampionsWithNullRegion() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getAllChampions(null, false);
-        }
-        catch(InvalidRegionException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getAllChampions(null, false);
     }
 }
