@@ -29,6 +29,7 @@ public class GameResourceImplTest {
             Assert.assertNotNull(game.getSubType());
             Assert.assertNotNull(game.getFellowPlayers());
             Assert.assertNotEquals(game.getFellowPlayers().size(), 0);
+            Assert.assertTrue(game.getIpEarned() >= 0);
         }
     }
 
