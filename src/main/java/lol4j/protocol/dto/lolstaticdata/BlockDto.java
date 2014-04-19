@@ -11,18 +11,30 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class BlockDto {
     private List<BlockItemDto> items = new ArrayList<>();
+    private boolean recMath;
     private String type;
 
-    public void setType(String type) {
-        this.type = type;
+    public List<BlockItemDto> getItems() {
+        return items;
     }
 
-    public List<BlockItemDto> getItems() {
+    public void setItems(List<BlockItemDto> items) {
+        this.items = items;
+    }
 
-        return items;
+    public boolean isRecMath() {
+        return recMath;
+    }
+
+    public void setRecMath(boolean recMath) {
+        this.recMath = recMath;
     }
 
     public String getType() {
         return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

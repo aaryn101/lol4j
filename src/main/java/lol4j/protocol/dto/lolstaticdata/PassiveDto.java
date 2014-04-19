@@ -10,6 +10,7 @@ public class PassiveDto {
     private String description;
     private ImageDto image;
     private String name;
+    private String sanitizedDescription;
 
     public String getDescription() {
         return description;
@@ -33,5 +34,13 @@ public class PassiveDto {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getSanitizedDescription() {
+        return sanitizedDescription;
+    }
+
+    public void setSanitizedDescription(String sanitizedDescription) {
+        this.sanitizedDescription = sanitizedDescription;
     }
 }

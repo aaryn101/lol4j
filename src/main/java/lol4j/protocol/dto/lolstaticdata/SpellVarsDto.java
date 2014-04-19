@@ -14,9 +14,14 @@ public class SpellVarsDto {
     private String dyn;
     private String key;
     private String link;
+    private String ranksWith;
 
     public List<Double> getCoeff() {
         return coeff;
+    }
+
+    public void setCoeff(List<Double> coeff) {
+        this.coeff = coeff;
     }
 
     public String getDyn() {
@@ -41,5 +46,13 @@ public class SpellVarsDto {
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+    public String getRanksWith() {
+        return ranksWith;
+    }
+
+    public void setRanksWith(String ranksWith) {
+        this.ranksWith = ranksWith;
     }
 }
