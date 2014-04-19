@@ -8,19 +8,20 @@ import com.fasterxml.jackson.annotation.JsonValue;
  */
 public enum ChampData {
     ALL ("all"),
-    IMAGE ("image"),
-    SKINS ("skins"),
-    LORE ("lore"),
-    BLURB ("blurb"),
     ALLY_TIPS ("allytips"),
+    ALT_IMAGES ("altimages"),
+    BLURB ("blurb"),
     ENEMY_TIPS ("enemytips"),
-    TAGS ("tags"),
-    PARTYPE ("partype"),
+    IMAGE ("image"),
     INFO ("info"),
-    STATS ("stats"),
-    SPELLS ("spells"),
+    LORE ("lore"),
+    PARTYPE ("partype"),
     PASSIVE ("passive"),
     RECOMMENDED ("recommended"),
+    SKINS ("skins"),
+    SPELLS ("spells"),
+    STATS ("stats"),
+    TAGS ("tags"),
     UNKNOWN ("unknown");
 
     private String champData;
