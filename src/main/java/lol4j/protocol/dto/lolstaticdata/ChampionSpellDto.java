@@ -11,6 +11,8 @@ import java.util.List;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ChampionSpellDto {
+    @JsonProperty(value = "altimages")
+    private List<ImageDto> altImages = new ArrayList<>();
     private List<Integer> cooldown = new ArrayList<>();
     private String cooldownBurn;
     private List<Integer> cost = new ArrayList<>();
@@ -20,6 +22,7 @@ public class ChampionSpellDto {
     private List<List<Integer>> effect = new ArrayList<>();
     private List<String> effectBurn = new ArrayList<>();
     private ImageDto image;
+    private String key;
     @JsonProperty(value = "leveltip")
     private LevelTipDto levelTip;
     @JsonProperty(value = "maxrank")
@@ -28,27 +31,25 @@ public class ChampionSpellDto {
     private Object range;
     private String rangeBurn;
     private String resource;
+    private String sanitizedDescription;
+    private String sanitizedTooltip;
     private String tooltip;
     private List<SpellVarsDto> vars = new ArrayList<>();
+
+    public List<ImageDto> getAltImages() {
+        return altImages;
+    }
+
+    public void setAltImages(List<ImageDto> altImages) {
+        this.altImages = altImages;
+    }
 
     public List<Integer> getCooldown() {
         return cooldown;
     }
 
-    public List<Integer> getCost() {
-        return cost;
-    }
-
-    public List<List<Integer>> getEffect() {
-        return effect;
-    }
-
-    public List<String> getEffectBurn() {
-        return effectBurn;
-    }
-
-    public List<SpellVarsDto> getVars() {
-        return vars;
+    public void setCooldown(List<Integer> cooldown) {
+        this.cooldown = cooldown;
     }
 
     public String getCooldownBurn() {
@@ -57,6 +58,14 @@ public class ChampionSpellDto {
 
     public void setCooldownBurn(String cooldownBurn) {
         this.cooldownBurn = cooldownBurn;
+    }
+
+    public List<Integer> getCost() {
+        return cost;
+    }
+
+    public void setCost(List<Integer> cost) {
+        this.cost = cost;
     }
 
     public String getCostBurn() {
@@ -83,12 +92,44 @@ public class ChampionSpellDto {
         this.description = description;
     }
 
+    public List<List<Integer>> getEffect() {
+        return effect;
+    }
+
+    public void setEffect(List<List<Integer>> effect) {
+        this.effect = effect;
+    }
+
+    public List<String> getEffectBurn() {
+        return effectBurn;
+    }
+
+    public void setEffectBurn(List<String> effectBurn) {
+        this.effectBurn = effectBurn;
+    }
+
     public ImageDto getImage() {
         return image;
     }
 
     public void setImage(ImageDto image) {
         this.image = image;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public LevelTipDto getLevelTip() {
+        return levelTip;
+    }
+
+    public void setLevelTip(LevelTipDto levelTip) {
+        this.levelTip = levelTip;
     }
 
     public int getMaxRank() {
@@ -131,6 +172,22 @@ public class ChampionSpellDto {
         this.resource = resource;
     }
 
+    public String getSanitizedDescription() {
+        return sanitizedDescription;
+    }
+
+    public void setSanitizedDescription(String sanitizedDescription) {
+        this.sanitizedDescription = sanitizedDescription;
+    }
+
+    public String getSanitizedTooltip() {
+        return sanitizedTooltip;
+    }
+
+    public void setSanitizedTooltip(String sanitizedTooltip) {
+        this.sanitizedTooltip = sanitizedTooltip;
+    }
+
     public String getTooltip() {
         return tooltip;
     }
@@ -139,11 +196,11 @@ public class ChampionSpellDto {
         this.tooltip = tooltip;
     }
 
-    public LevelTipDto getLevelTip() {
-        return levelTip;
+    public List<SpellVarsDto> getVars() {
+        return vars;
     }
 
-    public void setLevelTip(LevelTipDto levelTip) {
-        this.levelTip = levelTip;
+    public void setVars(List<SpellVarsDto> vars) {
+        this.vars = vars;
     }
 }
