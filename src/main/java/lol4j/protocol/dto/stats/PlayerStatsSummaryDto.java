@@ -1,22 +1,25 @@
 package lol4j.protocol.dto.stats;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lol4j.util.stats.StatSummaryType;
 
 /**
- * Created by Aaryn101 on 12/11/13.
+ * Created by Aaron Corley on 12/11/13.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class PlayerStatsSummaryDto {
-    private List<AggregatedStatDto> aggregatedStats = new ArrayList<>();
+    private AggregatedStatDto aggregatedStats;
     private int losses;
     private long modifyDate;
-    private Date modifyDateStr;
-    private String playerStatSummaryType;
+    private StatSummaryType playerStatSummaryType;
     private int wins;
 
-    public List<AggregatedStatDto> getAggregatedStats() {
+    public AggregatedStatDto getAggregatedStats() {
         return aggregatedStats;
+    }
+
+    public void setAggregatedStats(AggregatedStatDto aggregatedStats) {
+        this.aggregatedStats = aggregatedStats;
     }
 
     public int getLosses() {
@@ -35,19 +38,11 @@ public class PlayerStatsSummaryDto {
         this.modifyDate = modifyDate;
     }
 
-    public Date getModifyDateStr() {
-        return modifyDateStr;
-    }
-
-    public void setModifyDateStr(Date modifyDateStr) {
-        this.modifyDateStr = modifyDateStr;
-    }
-
-    public String getPlayerStatSummaryType() {
+    public StatSummaryType getPlayerStatSummaryType() {
         return playerStatSummaryType;
     }
 
-    public void setPlayerStatSummaryType(String playerStatSummaryType) {
+    public void setPlayerStatSummaryType(StatSummaryType playerStatSummaryType) {
         this.playerStatSummaryType = playerStatSummaryType;
     }
 

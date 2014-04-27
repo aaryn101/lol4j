@@ -1,35 +1,47 @@
 package lol4j.protocol.dto.game;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lol4j.util.game.GameMap;
+import lol4j.util.game.GameMode;
+import lol4j.util.game.GameType;
+import lol4j.util.game.SubType;
+
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
- * Created by Aaryn101 on 12/10/13.
+ * Created by Aaron Corley on 12/10/13.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class GameDto {
     private int championId;
     private long createDate;
-    private Date createDateStr;
     private List<PlayerDto> fellowPlayers = new ArrayList<>();
     private long gameId;
-    private String gameMode;
-    private String gameType;
+    private GameMode gameMode;
+    private GameType gameType;
     private boolean invalid;
+    private int ipEarned;
     private int level;
-    private int mapId;
+    @JsonProperty("mapId")
+    private GameMap gameMap;
     private int spell1;
     private int spell2;
-    private List<RawStatDto> statistics = new ArrayList<>();
-    private String subType;
+    private RawStatsDto stats;
+    private SubType subType;
     private int teamId;
 
     public List<PlayerDto> getFellowPlayers() {
         return fellowPlayers;
     }
 
-    public List<RawStatDto> getStatistics() {
-        return statistics;
+    public RawStatsDto getStats() {
+        return stats;
+    }
+
+    public void setStats(RawStatsDto stats) {
+        this.stats = stats;
     }
 
     public int getChampionId() {
@@ -48,14 +60,6 @@ public class GameDto {
         this.createDate = createDate;
     }
 
-    public Date getCreateDateStr() {
-        return createDateStr;
-    }
-
-    public void setCreateDateStr(Date createDateStr) {
-        this.createDateStr = createDateStr;
-    }
-
     public long getGameId() {
         return gameId;
     }
@@ -64,19 +68,19 @@ public class GameDto {
         this.gameId = gameId;
     }
 
-    public String getGameMode() {
+    public GameMode getGameMode() {
         return gameMode;
     }
 
-    public void setGameMode(String gameMode) {
+    public void setGameMode(GameMode gameMode) {
         this.gameMode = gameMode;
     }
 
-    public String getGameType() {
+    public GameType getGameType() {
         return gameType;
     }
 
-    public void setGameType(String gameType) {
+    public void setGameType(GameType gameType) {
         this.gameType = gameType;
     }
 
@@ -96,12 +100,12 @@ public class GameDto {
         this.level = level;
     }
 
-    public int getMapId() {
-        return mapId;
+    public GameMap getGameMap() {
+        return gameMap;
     }
 
-    public void setMapId(int mapId) {
-        this.mapId = mapId;
+    public void setGameMap(GameMap gameMap) {
+        this.gameMap = gameMap;
     }
 
     public int getSpell1() {
@@ -120,11 +124,11 @@ public class GameDto {
         this.spell2 = spell2;
     }
 
-    public String getSubType() {
+    public SubType getSubType() {
         return subType;
     }
 
-    public void setSubType(String subType) {
+    public void setSubType(SubType subType) {
         this.subType = subType;
     }
 
@@ -134,5 +138,13 @@ public class GameDto {
 
     public void setTeamId(int teamId) {
         this.teamId = teamId;
+    }
+
+    public int getIpEarned() {
+        return ipEarned;
+    }
+
+    public void setIpEarned(int ipEarned) {
+        this.ipEarned = ipEarned;
     }
 }

@@ -1,8 +1,11 @@
 package lol4j.protocol.dto.game;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
- * Created by Aaryn101 on 12/10/13.
+ * Created by Aaron Corley on 12/10/13.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class PlayerDto {
     private int championId;
     private long summonerId;

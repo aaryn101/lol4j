@@ -1,45 +1,56 @@
 package lol4j.protocol.resource.impl;
 
-import lol4j.exception.InvalidRegionException;
-import lol4j.protocol.dto.game.RecentGamesDto;
 import lol4j.protocol.dto.stats.PlayerStatsSummaryListDto;
+import lol4j.protocol.dto.stats.RankedStatsDto;
 import lol4j.protocol.resource.StatsResource;
-import lol4j.util.Regions;
+import lol4j.util.Region;
+import lol4j.util.stats.Season;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Aaryn101 on 12/11/13.
+ * Compatible with stats-v1.3
  */
 public class StatsResourceImpl extends AbstractResourceImpl implements StatsResource {
     private static final String SLASH = "/";
-    private static final String RESOURCE_VERSION = "v1.1";
+    private static final String RESOURCE_VERSION = "v1.3";
     private static final String RESOURCE_PATH = "stats" + SLASH + "by-summoner";
     private static final String RESOURCE_URI = RESOURCE_VERSION + SLASH + RESOURCE_PATH;
 
     public StatsResourceImpl() {
-        getSupportedRegions().add(Regions.EUW);
-        getSupportedRegions().add(Regions.EUNE);
-        getSupportedRegions().add(Regions.NA);
+        getSupportedRegions().add(Region.BR);
+        getSupportedRegions().add(Region.EUNE);
+        getSupportedRegions().add(Region.EUW);
+        getSupportedRegions().add(Region.LAN);
+        getSupportedRegions().add(Region.LAS);
+        getSupportedRegions().add(Region.NA);
+        getSupportedRegions().add(Region.OCE);
     }
 
     @Override
-    public PlayerStatsSummaryListDto getPlayerStatsSummaries(String region, long summonerId, String season) throws InvalidRegionException {
-        if (isSupportedRegion(region)) {
-            String path = region + SLASH + RESOURCE_URI + SLASH + summonerId + SLASH + "summary";
-            Map<String, Object> queryParams = null;
-            if (season != null && !season.isEmpty()) {
-                queryParams = new HashMap<>();
-                queryParams.put("season", season);
-            }
+    public PlayerStatsSummaryListDto getPlayerStatsSummaries(long summonerId, Region region, Season season) {
+        doSupportedRegionCheck(region);
+        String path = region.getName() + SLASH + RESOURCE_URI + SLASH + summonerId + SLASH + "summary";
+        Map<String, Object> queryParams = null;
+        if (season != null) {
+            queryParams = new HashMap<>();
+            queryParams.put("season", season.getName());
+        }
 
-            return getApiRequestManager().get(getBaseUri(), path, queryParams, PlayerStatsSummaryListDto.class);
+        return getApiRequestManager().get(path, queryParams, false, PlayerStatsSummaryListDto.class);
+    }
+
+    @Override
+    public RankedStatsDto getRankedStats(long summonerId, Region region, Season season) {
+        doSupportedRegionCheck(region);
+        String path = region.getName() + SLASH + RESOURCE_URI + SLASH + summonerId + SLASH + "ranked";
+        Map<String, Object> queryParams = null;
+        if (season != null) {
+            queryParams = new HashMap<>();
+            queryParams.put("season", season.getName());
         }
-        else {
-            throw new InvalidRegionException(region);
-        }
+
+        return getApiRequestManager().get(path, queryParams, false, RankedStatsDto.class);
     }
 }
