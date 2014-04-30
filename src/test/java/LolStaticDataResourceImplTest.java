@@ -15,6 +15,7 @@ import java.util.Map;
  */
 public class LolStaticDataResourceImplTest {
     private static final Region REGION = Region.NA;
+    private static final String RUNE_ID = "5235";
     private static final String CHAMP_ID = "35";
     private static final String ITEM_ID = "1027";
     private static final String MASTERY_ID = "4353";
@@ -32,6 +33,23 @@ public class LolStaticDataResourceImplTest {
         MASTERY_DATA.add(MasteryData.ALL);
         RUNE_DATA.add(RuneData.ALL);
         SUMMONER_SPELL_DATA.add(SummonerSpellData.ALL);
+    }
+
+    @Test(expected = InvalidRegionException.class)
+    public void getRuneWithUnsupportedRegion() {
+        Lol4JTestClient.getClient().getRune(RUNE_ID, Region.UNKNOWN, "en_US", null, RUNE_DATA);
+    }
+
+    @Test(expected = InvalidRegionException.class)
+    public void getRuneWithNullRegion() {
+        Lol4JTestClient.getClient().getRune(RUNE_ID, null, "en_US", null, RUNE_DATA);
+    }
+
+    @Test
+    public void getRune() {
+        BasicDataDto rune = Lol4JTestClient.getClient().getRune(RUNE_ID, REGION, "en_US", null, RUNE_DATA);
+
+        Assert.assertNotNull(rune);
     }
 
     @Test(expected = InvalidRegionException.class)

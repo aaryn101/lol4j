@@ -238,7 +238,7 @@ public class SummonerResourceImplTest {
 
     @Test(expected = InvalidRegionException.class)
     public void getSummonersWithUnsupportedRegion() {
-        Lol4JTestClient.getClient().getSummoners(SUMMONER_IDS, Region.TR);
+        Lol4JTestClient.getClient().getSummoners(SUMMONER_IDS, Region.UNKNOWN);
     }
 
     @Test(expected = InvalidRegionException.class)
@@ -282,7 +282,7 @@ public class SummonerResourceImplTest {
 
     @Test(expected = InvalidRegionException.class)
     public void getSummonerWithUnsupportedRegion() {
-        Lol4JTestClient.getClient().getSummoner(SUMMONER_ID, Region.TR);
+        Lol4JTestClient.getClient().getSummoner(SUMMONER_ID, Region.UNKNOWN);
     }
 
     @Test(expected = InvalidRegionException.class)
@@ -300,7 +300,7 @@ public class SummonerResourceImplTest {
 
     @Test(expected = InvalidRegionException.class)
     public void getSummonerNamesWithUnsupportedRegion() {
-        Lol4JTestClient.getClient().getSummonerNames(SUMMONER_IDS, Region.TR);
+        Lol4JTestClient.getClient().getSummonerNames(SUMMONER_IDS, Region.UNKNOWN);
     }
 
     @Test(expected = InvalidRegionException.class)
@@ -343,7 +343,7 @@ public class SummonerResourceImplTest {
 
     @Test(expected = InvalidRegionException.class)
     public void getSummonerNameWithUnsupportedRegion() {
-        Lol4JTestClient.getClient().getSummonerName(SUMMONER_ID, Region.TR);
+        Lol4JTestClient.getClient().getSummonerName(SUMMONER_ID, Region.UNKNOWN);
     }
 
     @Test(expected = InvalidRegionException.class)
