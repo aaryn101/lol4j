@@ -2,6 +2,7 @@ package lol4j.client.impl;
 
 import lol4j.client.Lol4JClient;
 import lol4j.protocol.dto.champion.ChampionListDto;
+import lol4j.protocol.dto.champion.ChampionDto;
 import lol4j.protocol.dto.game.RecentGamesDto;
 import lol4j.protocol.dto.league.LeagueDto;
 import lol4j.protocol.dto.league.LeagueItemDto;
@@ -62,7 +63,7 @@ public class Lol4JClientImpl implements Lol4JClient {
     }
 
     @Override
-    public lol4j.protocol.dto.champion.ChampionDto getChampion(Region region, int id) {
+    public ChampionDto getChampion(Region region, int id) {
         return championResource.getChampion(region, id);
     }
 
