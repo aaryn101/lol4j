@@ -168,7 +168,7 @@ public class Lol4JClientImpl implements Lol4JClient {
     }
 
     @Override
-    public ChampionDto getChampion(String id, Region region, String locale, String version, List<ChampData> requestedData) {
+    public lol4j.protocol.dto.lolstaticdata.ChampionDto getChampion(String id, Region region, String locale, String version, List<ChampData> requestedData) {
         return lolStaticDataResource.getChampion(id, region, locale, version, requestedData);
     }
 
