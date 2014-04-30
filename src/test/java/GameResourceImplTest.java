@@ -3,6 +3,7 @@ import lol4j.protocol.dto.game.GameDto;
 import lol4j.protocol.dto.game.RecentGamesDto;
 import lol4j.util.Region;
 import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * Created by Aaron Corley on 12/14/13.
@@ -11,7 +12,7 @@ public class GameResourceImplTest {
     private static final long SUMMONER_ID = 19163557;
     private static final Region REGION = Region.NA;
 
-    @org.junit.Test
+    @Test
     public void getRecentGames() {
         RecentGamesDto recentGames = Lol4JTestClient.getClient().getRecentGames(REGION, SUMMONER_ID);
 
@@ -33,31 +34,13 @@ public class GameResourceImplTest {
         }
     }
 
-    @org.junit.Test
+    @Test(expected = InvalidRegionException.class)
     public void getRecentGamesWithUnsupportedRegion() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getRecentGames(Region.UNKNOWN, 0L);
-        }
-        catch(InvalidRegionException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getRecentGames(Region.UNKNOWN, 0L);
     }
 
-    @org.junit.Test
+    @Test(expected = InvalidRegionException.class)
     public void getRecentGamesWithNullRegion() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getRecentGames(null, 0L);
-        }
-        catch(InvalidRegionException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getRecentGames(null, 0L);
     }
 }

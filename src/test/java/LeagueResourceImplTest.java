@@ -17,60 +17,24 @@ public class LeagueResourceImplTest {
     private static final Region REGION = Region.NA;
     private static final SubType GAME_TYPE = SubType.RANKED_SOLO_5X5;
 
-    @Test
+    @Test(expected = SubTypeMismatchException.class)
     public void getChallengerLeagueWithInvalidGameType() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getChallengerLeague(REGION, SubType.NONE);
-        }
-        catch(SubTypeMismatchException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getChallengerLeague(REGION, SubType.NONE);
     }
 
-    @Test
+    @Test(expected = SubTypeMismatchException.class)
     public void getChallengerLeagueWithNullGameType() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getChallengerLeague(REGION, null);
-        }
-        catch(SubTypeMismatchException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getChallengerLeague(REGION, null);
     }
 
-    @Test
+    @Test(expected = InvalidRegionException.class)
     public void getChallengerLeagueWithNullRegion() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getChallengerLeague(null, SubType.NONE);
-        }
-        catch(InvalidRegionException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getChallengerLeague(null, SubType.NONE);
     }
 
-    @Test
+    @Test(expected = InvalidRegionException.class)
     public void getChallengerLeagueWithUnsupportedRegion() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getChallengerLeague(Region.UNKNOWN, SubType.NONE);
-        }
-        catch(InvalidRegionException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getChallengerLeague(Region.UNKNOWN, SubType.NONE);
     }
 
     @Test
@@ -85,32 +49,14 @@ public class LeagueResourceImplTest {
         Assert.assertNotEquals(league.getEntries().size(), 0);
     }
 
-    @Test
+    @Test(expected = InvalidRegionException.class)
     public void getLeaguesEntryDataWithNullRegion() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getLeaguesEntryData(SUMMONER_ID, null);
-        }
-        catch(InvalidRegionException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getLeaguesEntryData(SUMMONER_ID, null);
     }
 
-    @Test
+    @Test(expected = InvalidRegionException.class)
     public void getLeaguesEntryDataWithUnsupportedRegion() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getLeaguesEntryData(SUMMONER_ID, Region.UNKNOWN);
-        }
-        catch(InvalidRegionException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getLeaguesEntryData(SUMMONER_ID, Region.UNKNOWN);
     }
 
     @Test
@@ -120,32 +66,14 @@ public class LeagueResourceImplTest {
         Assert.assertNotNull(leagueItems);
     }
 
-    @Test
+    @Test(expected = InvalidRegionException.class)
     public void getLeaguesDataWithNullRegion() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getLeaguesData(SUMMONER_ID, null);
-        }
-        catch(InvalidRegionException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getLeaguesData(SUMMONER_ID, null);
     }
 
-    @Test
+    @Test(expected = InvalidRegionException.class)
     public void getLeaguesDataWithUnsupportedRegion() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getLeaguesData(SUMMONER_ID, Region.UNKNOWN);
-        }
-        catch(InvalidRegionException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getLeaguesData(SUMMONER_ID, Region.UNKNOWN);
     }
 
     @Test

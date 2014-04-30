@@ -26,80 +26,35 @@ public class SummonerResourceImplTest {
         SUMMONER_NAMES.add(SUMMONER_NAME);
     }
 
-    @Test
+    @Test(expected = InvalidRegionException.class)
     public void getMasteryPagesWithUnsupportedRegion() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getMasteryPages(SUMMONER_IDS, Region.UNKNOWN);
-        }
-        catch(InvalidRegionException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getMasteryPages(SUMMONER_IDS, Region.UNKNOWN);
     }
 
-    @Test
+    @Test(expected = InvalidRegionException.class)
     public void getMasteryPagesWithNullRegion() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getMasteryPages(SUMMONER_IDS, null);
-        }
-        catch(InvalidRegionException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getMasteryPages(SUMMONER_IDS, null);
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void getMasteryPagesWithNullList() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getMasteryPages(null, REGION);
-        }
-        catch(IllegalArgumentException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getMasteryPages(null, REGION);
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void getMasteryPagesWithEmptyList() {
-        boolean exceptionThrown = false;
         List<Long> empty = new ArrayList<>();
-
-        try {
-            Lol4JTestClient.getClient().getMasteryPages(empty, REGION);
-        }
-        catch(IllegalArgumentException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getMasteryPages(empty, REGION);
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void getMasteryPagesWithBigList() {
-        boolean exceptionThrown = false;
         List<Long> big = new ArrayList<>();
 
         for (int i = 0; i < SummonerResourceImpl.MAX_LIST_SIZE + 1; i++) {
             big.add(SUMMONER_ID);
         }
-
-        try {
-            Lol4JTestClient.getClient().getMasteryPages(big, REGION);
-        }
-        catch(IllegalArgumentException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getMasteryPages(big, REGION);
     }
 
     @Test
@@ -121,32 +76,14 @@ public class SummonerResourceImplTest {
         }
     }
 
-    @Test
+    @Test(expected = InvalidRegionException.class)
     public void getMasteryPagesSingleWithUnsupportedRegion() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getMasteryPages(SUMMONER_ID, Region.UNKNOWN);
-        }
-        catch (InvalidRegionException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getMasteryPages(SUMMONER_ID, Region.UNKNOWN);
     }
 
-    @Test
+    @Test(expected = InvalidRegionException.class)
     public void getMasteryPagesSingleWithNullRegion() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getMasteryPages(SUMMONER_ID, null);
-        }
-        catch (InvalidRegionException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getMasteryPages(SUMMONER_ID, null);
     }
 
     @Test
@@ -163,80 +100,35 @@ public class SummonerResourceImplTest {
         }
     }
 
-    @Test
+    @Test(expected = InvalidRegionException.class)
     public void getRunePagesWithUnsupportedRegion() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getRunePages(SUMMONER_IDS, Region.UNKNOWN);
-        }
-        catch(InvalidRegionException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getRunePages(SUMMONER_IDS, Region.UNKNOWN);
     }
 
-    @Test
+    @Test(expected = InvalidRegionException.class)
     public void getRunePagesWithNullRegion() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getRunePages(SUMMONER_IDS, null);
-        }
-        catch(InvalidRegionException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getRunePages(SUMMONER_IDS, null);
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void getRunePagesWithNullList() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getRunePages(null, REGION);
-        }
-        catch(IllegalArgumentException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getRunePages(null, REGION);
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void getRunePagesWithEmptyList() {
-        boolean exceptionThrown = false;
         List<Long> empty = new ArrayList<>();
-
-        try {
-            Lol4JTestClient.getClient().getRunePages(empty, REGION);
-        }
-        catch(IllegalArgumentException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getRunePages(empty, REGION);
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void getRunePagesWithBigList() {
-        boolean exceptionThrown = false;
         List<Long> big = new ArrayList<>();
 
         for (int i = 0; i < SummonerResourceImpl.MAX_LIST_SIZE + 1; i++) {
             big.add(SUMMONER_ID);
         }
-
-        try {
-            Lol4JTestClient.getClient().getRunePages(big, REGION);
-        }
-        catch(IllegalArgumentException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getRunePages(big, REGION);
     }
 
     @Test
@@ -253,32 +145,14 @@ public class SummonerResourceImplTest {
         }
     }
 
-    @Test
+    @Test(expected = InvalidRegionException.class)
     public void getRunePagesSingleWithUnsupportedRegion() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getRunePages(SUMMONER_ID, Region.UNKNOWN);
-        }
-        catch (InvalidRegionException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getRunePages(SUMMONER_ID, Region.UNKNOWN);
     }
 
-    @Test
+    @Test(expected = InvalidRegionException.class)
     public void getRunePagesSingleWithNullRegion() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getRunePages(SUMMONER_ID, null);
-        }
-        catch (InvalidRegionException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getRunePages(SUMMONER_ID, null);
     }
 
     @Test
@@ -290,80 +164,35 @@ public class SummonerResourceImplTest {
         testRunePages(pages);
     }
 
-    @Test
+    @Test(expected = InvalidRegionException.class)
     public void getSummonersByNameWithUnsupportedRegion() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getSummonersByName(SUMMONER_NAMES, Region.UNKNOWN);
-        }
-        catch(InvalidRegionException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getSummonersByName(SUMMONER_NAMES, Region.UNKNOWN);
     }
 
-    @Test
+    @Test(expected = InvalidRegionException.class)
     public void getSummonersByNameWithNullRegion() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getSummonersByName(SUMMONER_NAMES, null);
-        }
-        catch(InvalidRegionException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getSummonersByName(SUMMONER_NAMES, null);
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void getSummonersByNameWithNullList() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getSummonersByName(null, REGION);
-        }
-        catch(IllegalArgumentException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getSummonersByName(null, REGION);
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void getSummonersByNameWithEmptyList() {
-        boolean exceptionThrown = false;
         List<String> empty = new ArrayList<>();
-
-        try {
-            Lol4JTestClient.getClient().getSummonersByName(empty, REGION);
-        }
-        catch(IllegalArgumentException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getSummonersByName(empty, REGION);
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void getSummonersByNameWithBigList() {
-        boolean exceptionThrown = false;
         List<String> big = new ArrayList<>();
 
         for (int i = 0; i < SummonerResourceImpl.MAX_LIST_SIZE + 1; i++) {
             big.add("Aaryn");
         }
-
-        try {
-            Lol4JTestClient.getClient().getSummonersByName(big, REGION);
-        }
-        catch(IllegalArgumentException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getSummonersByName(big, REGION);
     }
 
     @Test
@@ -379,60 +208,24 @@ public class SummonerResourceImplTest {
         }
     }
 
-    @Test
+    @Test(expected = InvalidRegionException.class)
     public void getSummonerByNameWithUnsupportedRegion() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getSummonerByName(SUMMONER_NAME, Region.UNKNOWN);
-        }
-        catch (InvalidRegionException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getSummonerByName(SUMMONER_NAME, Region.UNKNOWN);
     }
 
-    @Test
+    @Test(expected = InvalidRegionException.class)
     public void getSummonerByNameWithNullRegion() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getSummonerByName(SUMMONER_NAME, null);
-        }
-        catch (InvalidRegionException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getSummonerByName(SUMMONER_NAME, null);
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void getSummonerByNameWithNullName() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getSummonerByName(null, REGION);
-        }
-        catch (IllegalArgumentException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getSummonerByName(null, REGION);
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void getSummonerByNameWithEmptyName() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getSummonerByName("", REGION);
-        }
-        catch (IllegalArgumentException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getSummonerByName("", REGION);
     }
 
     @Test
@@ -443,80 +236,35 @@ public class SummonerResourceImplTest {
         Assert.assertNotNull(summoner.getName());
     }
 
-    @Test
+    @Test(expected = InvalidRegionException.class)
     public void getSummonersWithUnsupportedRegion() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getSummoners(SUMMONER_IDS, Region.TR);
-        }
-        catch(InvalidRegionException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getSummoners(SUMMONER_IDS, Region.TR);
     }
 
-    @Test
+    @Test(expected = InvalidRegionException.class)
     public void getSummonersWithNullRegion() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getSummoners(SUMMONER_IDS, null);
-        }
-        catch(InvalidRegionException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getSummoners(SUMMONER_IDS, null);
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void getSummonersWithNullList() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getSummoners(null, REGION);
-        }
-        catch(IllegalArgumentException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getSummoners(null, REGION);
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void getSummonersWithEmptyList() {
-        boolean exceptionThrown = false;
         List<Long> empty = new ArrayList<>();
-
-        try {
-            Lol4JTestClient.getClient().getSummoners(empty, REGION);
-        }
-        catch(IllegalArgumentException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getSummoners(empty, REGION);
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void getSummonersWithBigList() {
-        boolean exceptionThrown = false;
         List<Long> big = new ArrayList<>();
 
         for (int i = 0; i < SummonerResourceImpl.MAX_LIST_SIZE + 1; i++) {
             big.add(SUMMONER_ID);
         }
-
-        try {
-            Lol4JTestClient.getClient().getSummoners(big, REGION);
-        }
-        catch(IllegalArgumentException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getSummoners(big, REGION);
     }
 
     @Test
@@ -532,32 +280,14 @@ public class SummonerResourceImplTest {
         }
     }
 
-    @Test
+    @Test(expected = InvalidRegionException.class)
     public void getSummonerWithUnsupportedRegion() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getSummoner(SUMMONER_ID, Region.TR);
-        }
-        catch (InvalidRegionException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getSummoner(SUMMONER_ID, Region.TR);
     }
 
-    @Test
+    @Test(expected = InvalidRegionException.class)
     public void getSummonerWithNullRegion() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getSummoner(SUMMONER_ID, null);
-        }
-        catch (InvalidRegionException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getSummoner(SUMMONER_ID, null);
     }
 
     @Test
@@ -568,80 +298,35 @@ public class SummonerResourceImplTest {
         Assert.assertNotNull(summoner.getName());
     }
 
-    @Test
+    @Test(expected = InvalidRegionException.class)
     public void getSummonerNamesWithUnsupportedRegion() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getSummonerNames(SUMMONER_IDS, Region.TR);
-        }
-        catch(InvalidRegionException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getSummonerNames(SUMMONER_IDS, Region.TR);
     }
 
-    @Test
+    @Test(expected = InvalidRegionException.class)
     public void getSummonerNamesWithNullRegion() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getSummonerNames(SUMMONER_IDS, null);
-        }
-        catch(InvalidRegionException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getSummonerNames(SUMMONER_IDS, null);
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void getSummonerNamesWithNullList() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getSummonerNames(null, REGION);
-        }
-        catch(IllegalArgumentException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getSummonerNames(null, REGION);
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void getSummonerNamesWithEmptyList() {
-        boolean exceptionThrown = false;
         List<Long> empty = new ArrayList<>();
-
-        try {
-            Lol4JTestClient.getClient().getSummonerNames(empty, REGION);
-        }
-        catch(IllegalArgumentException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getSummonerNames(empty, REGION);
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void getSummonerNamesWithBigList() {
-        boolean exceptionThrown = false;
         List<Long> big = new ArrayList<>();
 
         for (int i = 0; i < SummonerResourceImpl.MAX_LIST_SIZE + 1; i++) {
             big.add(SUMMONER_ID);
         }
-
-        try {
-            Lol4JTestClient.getClient().getSummonerNames(big, REGION);
-        }
-        catch(IllegalArgumentException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getSummonerNames(big, REGION);
     }
 
     @Test
@@ -656,32 +341,14 @@ public class SummonerResourceImplTest {
         }
     }
 
-    @Test
+    @Test(expected = InvalidRegionException.class)
     public void getSummonerNameWithUnsupportedRegion() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getSummonerName(SUMMONER_ID, Region.TR);
-        }
-        catch (InvalidRegionException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getSummonerName(SUMMONER_ID, Region.TR);
     }
 
-    @Test
+    @Test(expected = InvalidRegionException.class)
     public void getSummonerNameWithNullRegion() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getSummonerName(SUMMONER_ID, null);
-        }
-        catch (InvalidRegionException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getSummonerName(SUMMONER_ID, null);
     }
 
     @Test

@@ -27,32 +27,14 @@ public class TeamResourceImplTest {
         TEAM_IDS.add(TEAM_ID);
     }
 
-    @Test
+    @Test(expected = InvalidRegionException.class)
     public void getTeamsBySummonerWithUnsupportedRegion() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getTeams(SUMMONER_ID, Region.UNKNOWN);
-        }
-        catch(InvalidRegionException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getTeams(SUMMONER_ID, Region.UNKNOWN);
     }
 
-    @Test
+    @Test(expected = InvalidRegionException.class)
     public void getTeamsBySummonerWithNullRegion() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getTeams(SUMMONER_ID, null);
-        }
-        catch(InvalidRegionException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getTeams(SUMMONER_ID, null);
     }
 
     @Test
@@ -96,80 +78,35 @@ public class TeamResourceImplTest {
         }
     }
     
-    @Test
+    @Test(expected = InvalidRegionException.class)
      public void getTeamsWithUnsupportedRegion() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getTeams(TEAM_IDS, Region.UNKNOWN);
-        }
-        catch(InvalidRegionException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getTeams(TEAM_IDS, Region.UNKNOWN);
     }
 
-    @Test
+    @Test(expected = InvalidRegionException.class)
     public void getTeamsWithNullRegion() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getTeams(TEAM_IDS, null);
-        }
-        catch(InvalidRegionException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getTeams(TEAM_IDS, null);
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void getTeamsWithNullList() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getTeams(null, REGION);
-        }
-        catch(IllegalArgumentException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getTeams(null, REGION);
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void getTeamsWithEmptyList() {
-        boolean exceptionThrown = false;
         List<String> empty = new ArrayList<>();
-
-        try {
-            Lol4JTestClient.getClient().getTeams(empty, REGION);
-        }
-        catch(IllegalArgumentException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getTeams(empty, REGION);
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void getTeamsWithBigList() {
-        boolean exceptionThrown = false;
         List<String> big = new ArrayList<>();
 
         for (int i = 0; i < TeamResourceImpl.MAX_LIST_SIZE + 1; i++) {
             big.add(TEAM_ID);
         }
-
-        try {
-            Lol4JTestClient.getClient().getTeams(big, REGION);
-        }
-        catch(IllegalArgumentException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getTeams(big, REGION);
     }
 
     @Test
@@ -217,32 +154,14 @@ public class TeamResourceImplTest {
         }
     }
 
-    @Test
+    @Test(expected = InvalidRegionException.class)
     public void getTeamWithUnsupportedRegion() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getTeam(TEAM_ID, Region.UNKNOWN);
-        }
-        catch(InvalidRegionException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getTeam(TEAM_ID, Region.UNKNOWN);
     }
 
-    @Test
+    @Test(expected = InvalidRegionException.class)
     public void getTeamWithNullRegion() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getTeam(TEAM_ID, null);
-        }
-        catch(InvalidRegionException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getTeam(TEAM_ID, null);
     }
 
     @Test

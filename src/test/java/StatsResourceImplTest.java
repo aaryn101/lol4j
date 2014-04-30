@@ -16,32 +16,14 @@ public class StatsResourceImplTest {
     private static final Region REGION = Region.NA;
     private static final Season SEASON = Season.SEASON_3;
 
-    @Test
+    @Test(expected = InvalidRegionException.class)
     public void getPlayerStatsSummariesWithUnsupportedRegion() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getPlayerStatsSummaries(0L, Region.UNKNOWN, SEASON);
-        }
-        catch(InvalidRegionException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getPlayerStatsSummaries(0L, Region.UNKNOWN, SEASON);
     }
 
-    @Test
+    @Test(expected = InvalidRegionException.class)
     public void getPlayerStatsSummariesWithNullRegion() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getPlayerStatsSummaries(0L, null, SEASON);
-        }
-        catch(InvalidRegionException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getPlayerStatsSummaries(0L, null, SEASON);
     }
 
     @Test
@@ -77,32 +59,14 @@ public class StatsResourceImplTest {
         }
     }
 
-    @Test
+    @Test(expected = InvalidRegionException.class)
     public void getRankedStatsWithUnsupportedRegion() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getRankedStats(0L, Region.UNKNOWN, SEASON);
-        }
-        catch(InvalidRegionException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getRankedStats(0L, Region.UNKNOWN, SEASON);
     }
 
-    @Test
+    @Test(expected = InvalidRegionException.class)
     public void getRankedStatsWithNullRegion() {
-        boolean exceptionThrown = false;
-
-        try {
-            Lol4JTestClient.getClient().getRankedStats(0L, null, SEASON);
-        }
-        catch(InvalidRegionException e) {
-            exceptionThrown = true;
-        }
-
-        Assert.assertTrue(exceptionThrown);
+        Lol4JTestClient.getClient().getRankedStats(0L, null, SEASON);
     }
 
     @Test
