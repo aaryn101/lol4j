@@ -26,16 +26,18 @@ public class LolStaticDataResourceImpl extends AbstractResourceImpl implements L
     private static final String SLASH = "/";
 
     public LolStaticDataResourceImpl() {
-        getSupportedRegions().add(Region.BR);
-        getSupportedRegions().add(Region.EUNE);
-        getSupportedRegions().add(Region.EUW);
-        getSupportedRegions().add(Region.KR);
-        getSupportedRegions().add(Region.LAN);
-        getSupportedRegions().add(Region.LAS);
-        getSupportedRegions().add(Region.NA);
-        getSupportedRegions().add(Region.OCE);
-        getSupportedRegions().add(Region.RU);
-        getSupportedRegions().add(Region.TR);
+        super(
+                Region.BR,
+                Region.EUNE,
+                Region.EUW,
+                Region.LAN,
+                Region.LAS,
+                Region.NA,
+                Region.OCE,
+                Region.RU,
+                Region.TR,
+                Region.KR
+        );
     }
 
     @Override
@@ -57,7 +59,7 @@ public class LolStaticDataResourceImpl extends AbstractResourceImpl implements L
             queryParams.put("champData", StringUtils.join(list, ","));
         }
 
-        return getApiRequestManager().get(path, queryParams, true, ChampionListDto.class);
+        return getApiRequestManager(region).get(path, queryParams, true, ChampionListDto.class);
     }
 
     @Override
@@ -82,7 +84,7 @@ public class LolStaticDataResourceImpl extends AbstractResourceImpl implements L
             queryParams.put("champData", StringUtils.join(list, ","));
         }
 
-        return getApiRequestManager().get(path, queryParams, true, ChampionDto.class);
+        return getApiRequestManager(region).get(path, queryParams, true, ChampionDto.class);
     }
 
     @Override
@@ -107,7 +109,7 @@ public class LolStaticDataResourceImpl extends AbstractResourceImpl implements L
             queryParams.put("itemData", StringUtils.join(list, ","));
         }
 
-        return getApiRequestManager().get(path, queryParams, true, BasicDataDto.class);
+        return getApiRequestManager(region).get(path, queryParams, true, BasicDataDto.class);
     }
 
     @Override
@@ -129,7 +131,7 @@ public class LolStaticDataResourceImpl extends AbstractResourceImpl implements L
             queryParams.put("itemData", StringUtils.join(list, ","));
         }
 
-        return getApiRequestManager().get(path, queryParams, true, ItemListDto.class);
+        return getApiRequestManager(region).get(path, queryParams, true, ItemListDto.class);
     }
 
     @Override
@@ -142,7 +144,7 @@ public class LolStaticDataResourceImpl extends AbstractResourceImpl implements L
         Map<String, Object> queryParams = new HashMap<>();
         buildQueryParams(locale, version, requestedData, queryParams);
 
-        return getApiRequestManager().get(path, queryParams, true, MasteryDto.class);
+        return getApiRequestManager(region).get(path, queryParams, true, MasteryDto.class);
     }
 
     private void buildQueryParams(String locale, String version, List<MasteryData> requestedData, Map<String, Object> queryParams) {
@@ -180,7 +182,7 @@ public class LolStaticDataResourceImpl extends AbstractResourceImpl implements L
             queryParams.put("itemData", StringUtils.join(list, ","));
         }
 
-        return getApiRequestManager().get(path, queryParams, true, MasteryListDto.class);
+        return getApiRequestManager(region).get(path, queryParams, true, MasteryListDto.class);
     }
 
     @Override
@@ -188,7 +190,7 @@ public class LolStaticDataResourceImpl extends AbstractResourceImpl implements L
         doSupportedRegionCheck(region);
         String path = RESOURCE_PATH + SLASH + region.getName() + SLASH + RESOURCE_VERSION + SLASH + REALM;
 
-        return getApiRequestManager().get(path, null, true, RealmDto.class);
+        return getApiRequestManager(region).get(path, null, true, RealmDto.class);
     }
 
     @Override
@@ -210,7 +212,7 @@ public class LolStaticDataResourceImpl extends AbstractResourceImpl implements L
             queryParams.put("itemData", StringUtils.join(list, ","));
         }
 
-        return getApiRequestManager().get(path, queryParams, true, RuneListDto.class);
+        return getApiRequestManager(region).get(path, queryParams, true, RuneListDto.class);
     }
 
     @Override
@@ -232,7 +234,7 @@ public class LolStaticDataResourceImpl extends AbstractResourceImpl implements L
             queryParams.put("itemData", StringUtils.join(list, ","));
         }
 
-        return getApiRequestManager().get(path, queryParams, true, BasicDataDto.class);
+        return getApiRequestManager(region).get(path, queryParams, true, BasicDataDto.class);
     }
 
     @Override
@@ -254,7 +256,7 @@ public class LolStaticDataResourceImpl extends AbstractResourceImpl implements L
             queryParams.put("itemData", StringUtils.join(list, ","));
         }
 
-        return getApiRequestManager().get(path, queryParams, true, SummonerSpellListDto.class);
+        return getApiRequestManager(region).get(path, queryParams, true, SummonerSpellListDto.class);
     }
 
     @Override
@@ -276,6 +278,6 @@ public class LolStaticDataResourceImpl extends AbstractResourceImpl implements L
             queryParams.put("itemData", StringUtils.join(list, ","));
         }
 
-        return getApiRequestManager().get(path, queryParams, true, SummonerSpellDto.class);
+        return getApiRequestManager(region).get(path, queryParams, true, SummonerSpellDto.class);
     }
 }

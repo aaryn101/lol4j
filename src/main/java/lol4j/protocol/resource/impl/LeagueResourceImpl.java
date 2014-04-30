@@ -23,15 +23,18 @@ public class LeagueResourceImpl extends AbstractResourceImpl implements LeagueRe
     private static final String ENTRY = "entry";
 
     public LeagueResourceImpl() {
-        getSupportedRegions().add(Region.BR);
-        getSupportedRegions().add(Region.EUNE);
-        getSupportedRegions().add(Region.EUW);
-        getSupportedRegions().add(Region.LAN);
-        getSupportedRegions().add(Region.LAS);
-        getSupportedRegions().add(Region.NA);
-        getSupportedRegions().add(Region.OCE);
-        getSupportedRegions().add(Region.RU);
-        getSupportedRegions().add(Region.TR);
+        super(
+                Region.BR,
+                Region.EUNE,
+                Region.EUW,
+                Region.LAN,
+                Region.LAS,
+                Region.NA,
+                Region.OCE,
+                Region.RU,
+                Region.TR,
+                Region.KR
+        );
     }
 
     @Override
@@ -44,7 +47,7 @@ public class LeagueResourceImpl extends AbstractResourceImpl implements LeagueRe
         Map<String, Object> queryParams = new HashMap<>();
         queryParams.put("type", gameType.getSubType());
 
-        return getApiRequestManager().get(path, queryParams, false, LeagueDto.class);
+        return getApiRequestManager(region).get(path, queryParams, false, LeagueDto.class);
     }
 
     @Override
@@ -52,7 +55,7 @@ public class LeagueResourceImpl extends AbstractResourceImpl implements LeagueRe
         doSupportedRegionCheck(region);
         String path = region.getName() + SLASH + LEAGUE_URI + SLASH + summonerId;
 
-        return getApiRequestManager().getList(path, null, false, LeagueDto.class);
+        return getApiRequestManager(region).getList(path, null, false, LeagueDto.class);
     }
 
     @Override
@@ -60,6 +63,6 @@ public class LeagueResourceImpl extends AbstractResourceImpl implements LeagueRe
         doSupportedRegionCheck(region);
         String path = region.getName() + SLASH + LEAGUE_URI + SLASH + summonerId + SLASH + ENTRY;
 
-        return getApiRequestManager().getList(path, null, false, LeagueItemDto.class);
+        return getApiRequestManager(region).getList(path, null, false, LeagueItemDto.class);
     }
 }

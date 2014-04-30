@@ -27,7 +27,9 @@ import java.util.Map;
  * Created by Aaron Corley on 12/10/13.
  */
 public class Lol4JClientImpl implements Lol4JClient {
-    private static final String LOL_BASE = "https://prod.api.pvp.net/api/lol";
+    private static final String PROD_BASE = "https://prod.api.pvp.net/api/lol";
+    private static final String EU_BASE = "https://eu.api.pvp.net/api/lol";
+    private static final String ASIA_BASE = "https://asia.api.pvp.net/api/lol";
     private ChampionResource championResource;
     private GameResource gameResource;
     private LeagueResource leagueResource;
@@ -35,11 +37,15 @@ public class Lol4JClientImpl implements Lol4JClient {
     private SummonerResource summonerResource;
     private TeamResource teamResource;
     private LolStaticDataResource lolStaticDataResource;
-    private ApiRequestManager apiRequestManager;
+    private ApiRequestManager prodApiRequestManager;
+    private ApiRequestManager euApiRequestManager;
+    private ApiRequestManager asiaApiRequestManager;
 
     public Lol4JClientImpl(String apiKey) {
-        apiRequestManager = new ApiRequestManager(apiKey, LOL_BASE);
-        ResourceFactory resourceFactory = new ResourceFactory(apiRequestManager);
+        prodApiRequestManager = new ApiRequestManager(apiKey, PROD_BASE);
+        euApiRequestManager = new ApiRequestManager(apiKey, EU_BASE);
+        asiaApiRequestManager = new ApiRequestManager(apiKey, ASIA_BASE);
+        ResourceFactory resourceFactory = new ResourceFactory(prodApiRequestManager, euApiRequestManager, asiaApiRequestManager);
 
         championResource = resourceFactory.createChampionResource();
         gameResource = resourceFactory.createGameResource();
@@ -212,6 +218,7 @@ public class Lol4JClientImpl implements Lol4JClient {
 
     @Override
     public void setRateLimit(int perTenSeconds, int perTenMinutes) {
-        apiRequestManager.setRateLimit(perTenSeconds, perTenMinutes);
+        prodApiRequestManager.setRateLimit(perTenSeconds, perTenMinutes);
+        euApiRequestManager.setRateLimit(perTenSeconds, perTenMinutes);
     }
 }

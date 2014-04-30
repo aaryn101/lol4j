@@ -20,15 +20,18 @@ public class TeamResourceImpl extends AbstractResourceImpl implements TeamResour
     public static final int MAX_LIST_SIZE = 40;
 
     public TeamResourceImpl() {
-        getSupportedRegions().add(Region.BR);
-        getSupportedRegions().add(Region.EUNE);
-        getSupportedRegions().add(Region.EUW);
-        getSupportedRegions().add(Region.LAN);
-        getSupportedRegions().add(Region.LAS);
-        getSupportedRegions().add(Region.NA);
-        getSupportedRegions().add(Region.OCE);
-        getSupportedRegions().add(Region.RU);
-        getSupportedRegions().add(Region.TR);
+        super(
+                Region.BR,
+                Region.EUW,
+                Region.EUNE,
+                Region.LAN,
+                Region.LAS,
+                Region.NA,
+                Region.OCE,
+                Region.RU,
+                Region.TR,
+                Region.KR
+        );
     }
 
     @Override
@@ -36,7 +39,7 @@ public class TeamResourceImpl extends AbstractResourceImpl implements TeamResour
         doSupportedRegionCheck(region);
         String path = region.getName() + SLASH + RESOURCE_URI + SLASH + BY_SUMMONER + SLASH + summonerId;
 
-        return getApiRequestManager().getList(path, null, false, TeamDto.class);
+        return getApiRequestManager(region).getList(path, null, false, TeamDto.class);
     }
 
     @Override
@@ -47,7 +50,7 @@ public class TeamResourceImpl extends AbstractResourceImpl implements TeamResour
         }
         String path = region.getName() + SLASH + RESOURCE_URI + SLASH + teamId;
         Map<String, TeamDto> result =
-                getApiRequestManager().getMap(path, null, false, String.class, TeamDto.class);
+                getApiRequestManager(region).getMap(path, null, false, String.class, TeamDto.class);
 
         return result.get(teamId);
     }
@@ -61,6 +64,6 @@ public class TeamResourceImpl extends AbstractResourceImpl implements TeamResour
         }
         String path = region.getName() + SLASH + RESOURCE_URI + SLASH + StringUtils.join(teamIds, ',');
 
-        return getApiRequestManager().getMap(path, null, false, String.class, TeamDto.class);
+        return getApiRequestManager(region).getMap(path, null, false, String.class, TeamDto.class);
     }
 }

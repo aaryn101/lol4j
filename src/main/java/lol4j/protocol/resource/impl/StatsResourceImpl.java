@@ -19,13 +19,18 @@ public class StatsResourceImpl extends AbstractResourceImpl implements StatsReso
     private static final String RESOURCE_URI = RESOURCE_VERSION + SLASH + RESOURCE_PATH;
 
     public StatsResourceImpl() {
-        getSupportedRegions().add(Region.BR);
-        getSupportedRegions().add(Region.EUNE);
-        getSupportedRegions().add(Region.EUW);
-        getSupportedRegions().add(Region.LAN);
-        getSupportedRegions().add(Region.LAS);
-        getSupportedRegions().add(Region.NA);
-        getSupportedRegions().add(Region.OCE);
+        super(
+                Region.BR,
+                Region.EUW,
+                Region.EUNE,
+                Region.LAN,
+                Region.LAS,
+                Region.NA,
+                Region.OCE,
+                Region.RU,
+                Region.TR,
+                Region.KR
+        );
     }
 
     @Override
@@ -38,7 +43,7 @@ public class StatsResourceImpl extends AbstractResourceImpl implements StatsReso
             queryParams.put("season", season.getName());
         }
 
-        return getApiRequestManager().get(path, queryParams, false, PlayerStatsSummaryListDto.class);
+        return getApiRequestManager(region).get(path, queryParams, false, PlayerStatsSummaryListDto.class);
     }
 
     @Override
@@ -51,6 +56,6 @@ public class StatsResourceImpl extends AbstractResourceImpl implements StatsReso
             queryParams.put("season", season.getName());
         }
 
-        return getApiRequestManager().get(path, queryParams, false, RankedStatsDto.class);
+        return getApiRequestManager(region).get(path, queryParams, false, RankedStatsDto.class);
     }
 }

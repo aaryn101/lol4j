@@ -5,6 +5,7 @@ import lol4j.service.impl.ApiRequestManager;
 import lol4j.util.Region;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -12,7 +13,13 @@ import java.util.List;
  */
 public abstract class AbstractResourceImpl {
     private List<Region> supportedRegions = new ArrayList<>();
-    private ApiRequestManager apiRequestManager;
+    private ApiRequestManager prodApiRequestManager;
+    private ApiRequestManager euApiRequestManager;
+    private ApiRequestManager asiaApiRequestManager;
+
+    public AbstractResourceImpl(Region... regions) {
+        supportedRegions.addAll(Arrays.asList(regions));
+    }
 
     public void doSupportedRegionCheck(Region region) {
         if (region == null || !supportedRegions.contains(region)) {
@@ -24,11 +31,43 @@ public abstract class AbstractResourceImpl {
         return supportedRegions;
     }
 
-    public ApiRequestManager getApiRequestManager() {
-        return apiRequestManager;
+    public ApiRequestManager getApiRequestManager(Region region) {
+        ApiRequestManager requestManager = null;
+
+        switch(region) {
+            case BR:
+            case EUNE:
+            case EUW:
+            case LAN:
+            case LAS:
+            case NA:
+            case OCE:
+                requestManager = prodApiRequestManager;
+                break;
+            case RU:
+            case TR:
+                requestManager = euApiRequestManager;
+                break;
+            case KR:
+                requestManager = asiaApiRequestManager;
+                break;
+            default:
+                requestManager = prodApiRequestManager;
+                break;
+        }
+
+        return requestManager;
     }
 
-    public void setApiRequestManager(ApiRequestManager apiRequestManager) {
-        this.apiRequestManager = apiRequestManager;
+    public void setProdApiRequestManager(ApiRequestManager prodApiRequestManager) {
+        this.prodApiRequestManager = prodApiRequestManager;
+    }
+
+    public void setEuApiRequestManager(ApiRequestManager euApiRequestManager) {
+        this.euApiRequestManager = euApiRequestManager;
+    }
+
+    public void setAsiaApiRequestManager(ApiRequestManager asiaApiRequestManager) {
+        this.asiaApiRequestManager = asiaApiRequestManager;
     }
 }

@@ -28,13 +28,18 @@ public class SummonerResourceImpl extends AbstractResourceImpl implements Summon
     public static final int MAX_LIST_SIZE = 40;
 
     public SummonerResourceImpl() {
-        getSupportedRegions().add(Region.BR);
-        getSupportedRegions().add(Region.EUNE);
-        getSupportedRegions().add(Region.EUW);
-        getSupportedRegions().add(Region.LAN);
-        getSupportedRegions().add(Region.LAS);
-        getSupportedRegions().add(Region.NA);
-        getSupportedRegions().add(Region.OCE);
+        super(
+                Region.BR,
+                Region.EUW,
+                Region.EUNE,
+                Region.LAN,
+                Region.LAS,
+                Region.NA,
+                Region.OCE,
+                Region.RU,
+                Region.TR,
+                Region.KR
+        );
     }
 
     @Override
@@ -47,7 +52,7 @@ public class SummonerResourceImpl extends AbstractResourceImpl implements Summon
         String summonerIdList = StringUtils.join(summonerIds, ",");
         String path = region.getName() + SLASH + RESOURCE_URI + SLASH + summonerIdList + SLASH + MASTERIES;
 
-        return getApiRequestManager().getMap(path, null, false, String.class, MasteryPagesDto.class);
+        return getApiRequestManager(region).getMap(path, null, false, String.class, MasteryPagesDto.class);
     }
 
     @Override
@@ -55,7 +60,7 @@ public class SummonerResourceImpl extends AbstractResourceImpl implements Summon
         doSupportedRegionCheck(region);
         String path = region.getName() + SLASH + RESOURCE_URI + SLASH + summonerId + SLASH + MASTERIES;
         Map<String, MasteryPagesDto> result =
-                getApiRequestManager().getMap(path, null, false, String.class, MasteryPagesDto.class);
+                getApiRequestManager(region).getMap(path, null, false, String.class, MasteryPagesDto.class);
 
         return result.get(Long.toString(summonerId));
     }
@@ -70,7 +75,7 @@ public class SummonerResourceImpl extends AbstractResourceImpl implements Summon
         String summonerIdList = StringUtils.join(summonerIds, ",");
         String path = region.getName() + SLASH + RESOURCE_URI + SLASH + summonerIdList + SLASH + RUNES;
 
-        return getApiRequestManager().getMap(path, null, false, String.class, RunePagesDto.class);
+        return getApiRequestManager(region).getMap(path, null, false, String.class, RunePagesDto.class);
     }
 
     @Override
@@ -78,7 +83,7 @@ public class SummonerResourceImpl extends AbstractResourceImpl implements Summon
         doSupportedRegionCheck(region);
         String path = region.getName() + SLASH + RESOURCE_URI + SLASH + summonerId + SLASH + RUNES;
         Map<String, RunePagesDto> result =
-                getApiRequestManager().getMap(path, null, false, String.class, RunePagesDto.class);
+                getApiRequestManager(region).getMap(path, null, false, String.class, RunePagesDto.class);
 
         return result.get(Long.toString(summonerId));
     }
@@ -99,7 +104,7 @@ public class SummonerResourceImpl extends AbstractResourceImpl implements Summon
             throw new RuntimeException("Unsupported encoding: " + ApiRequestManager.ENCODING);
         }
 
-        return getApiRequestManager().getMap(path, null, false, String.class, SummonerDto.class);
+        return getApiRequestManager(region).getMap(path, null, false, String.class, SummonerDto.class);
     }
 
     @Override
@@ -116,7 +121,7 @@ public class SummonerResourceImpl extends AbstractResourceImpl implements Summon
             throw new RuntimeException("Unsupported encoding: " + ApiRequestManager.ENCODING);
         }
         Map<String, SummonerDto> result =
-                getApiRequestManager().getMap(path, null, false, String.class, SummonerDto.class);
+                getApiRequestManager(region).getMap(path, null, false, String.class, SummonerDto.class);
 
         return result.get(name.toLowerCase());
     }
@@ -131,7 +136,7 @@ public class SummonerResourceImpl extends AbstractResourceImpl implements Summon
         String summonerIdList = StringUtils.join(summonerIds, ",");
         String path = region.getName() + SLASH + RESOURCE_URI + SLASH + summonerIdList;
 
-        return getApiRequestManager().getMap(path, null, false, String.class, SummonerDto.class);
+        return getApiRequestManager(region).getMap(path, null, false, String.class, SummonerDto.class);
     }
 
     @Override
@@ -139,7 +144,7 @@ public class SummonerResourceImpl extends AbstractResourceImpl implements Summon
         doSupportedRegionCheck(region);
         String path = region.getName() + SLASH + RESOURCE_URI + SLASH + summonerId;
         Map<String, SummonerDto> result =
-                getApiRequestManager().getMap(path, null, false, String.class, SummonerDto.class);
+                getApiRequestManager(region).getMap(path, null, false, String.class, SummonerDto.class);
 
         return result.get(Long.toString(summonerId));
     }
@@ -154,14 +159,14 @@ public class SummonerResourceImpl extends AbstractResourceImpl implements Summon
         String summonerIdList = StringUtils.join(summonerIds, ",");
         String path = region.getName() + SLASH + RESOURCE_URI + SLASH + summonerIdList + SLASH + NAME;
 
-        return getApiRequestManager().getMap(path, null, false, String.class, String.class);
+        return getApiRequestManager(region).getMap(path, null, false, String.class, String.class);
     }
 
     @Override
     public String getSummonerName(long summonerId, Region region) {
         doSupportedRegionCheck(region);
         String path = region.getName() + SLASH + RESOURCE_URI + SLASH + summonerId + SLASH + NAME;
-        Map<String, String> result = getApiRequestManager().getMap(path, null, false, String.class, String.class);
+        Map<String, String> result = getApiRequestManager(region).getMap(path, null, false, String.class, String.class);
 
         return result.get(Long.toString(summonerId));
     }

@@ -18,13 +18,18 @@ public class ChampionResourceImpl extends AbstractResourceImpl implements Champi
     private static final String RESOURCE_URI = RESOURCE_VERSION + SLASH + RESOURCE_PATH;
 
     public ChampionResourceImpl() {
-        getSupportedRegions().add(Region.BR);
-        getSupportedRegions().add(Region.EUW);
-        getSupportedRegions().add(Region.EUNE);
-        getSupportedRegions().add(Region.LAN);
-        getSupportedRegions().add(Region.LAS);
-        getSupportedRegions().add(Region.NA);
-        getSupportedRegions().add(Region.OCE);
+        super(
+                Region.BR,
+                Region.EUW,
+                Region.EUNE,
+                Region.LAN,
+                Region.LAS,
+                Region.NA,
+                Region.OCE,
+                Region.RU,
+                Region.TR,
+                Region.KR
+        );
     }
 
     @Override
@@ -34,7 +39,7 @@ public class ChampionResourceImpl extends AbstractResourceImpl implements Champi
         Map<String, Object> queryParams = new HashMap<>();
         queryParams.put("freeToPlay", freeToPlay);
 
-        return getApiRequestManager().get(path, queryParams, false, ChampionListDto.class);
+        return getApiRequestManager(region).get(path, queryParams, false, ChampionListDto.class);
     }
 
     @Override
@@ -42,6 +47,6 @@ public class ChampionResourceImpl extends AbstractResourceImpl implements Champi
         doSupportedRegionCheck(region);
         String path = region.getName() + SLASH + RESOURCE_URI + SLASH + String.valueOf(id);
 
-        return getApiRequestManager().get(path, null, false, ChampionDto.class);
+        return getApiRequestManager(region).get(path, null, false, ChampionDto.class);
     }
 }

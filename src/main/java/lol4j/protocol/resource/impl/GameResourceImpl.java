@@ -14,13 +14,18 @@ public class GameResourceImpl extends AbstractResourceImpl implements GameResour
     private static final String RESOURCE_URI = RESOURCE_VERSION + SLASH + RESOURCE_PATH;
 
     public GameResourceImpl() {
-        getSupportedRegions().add(Region.BR);
-        getSupportedRegions().add(Region.EUNE);
-        getSupportedRegions().add(Region.EUW);
-        getSupportedRegions().add(Region.LAN);
-        getSupportedRegions().add(Region.LAS);
-        getSupportedRegions().add(Region.NA);
-        getSupportedRegions().add(Region.OCE);
+        super(
+                Region.BR,
+                Region.EUNE,
+                Region.EUW,
+                Region.LAN,
+                Region.LAS,
+                Region.NA,
+                Region.OCE,
+                Region.RU,
+                Region.TR,
+                Region.KR
+        );
     }
 
     @Override
@@ -28,6 +33,6 @@ public class GameResourceImpl extends AbstractResourceImpl implements GameResour
         doSupportedRegionCheck(region);
         String path = region.getName() + SLASH + RESOURCE_URI + SLASH + summonerId + SLASH + "recent";
 
-        return getApiRequestManager().get(path, null, false, RecentGamesDto.class);
+        return getApiRequestManager(region).get(path, null, false, RecentGamesDto.class);
     }
 }

@@ -7,58 +7,58 @@ import lol4j.service.impl.ApiRequestManager;
  * Created by Aaron Corley on 12/10/13.
  */
 public class ResourceFactory {
-    private ApiRequestManager apiRequestManager;
+    private ApiRequestManager prodApiRequestManager;
+    private ApiRequestManager euApiRequestManager;
+    private ApiRequestManager asiaApiRequestManager;
 
-    public ResourceFactory(ApiRequestManager apiRequestManager) {
-        this.apiRequestManager = apiRequestManager;
+    public ResourceFactory(ApiRequestManager prodApiRequestManager, ApiRequestManager euApiRequestManager, ApiRequestManager asiaApiRequestManager) {
+        this.prodApiRequestManager = prodApiRequestManager;
+        this.euApiRequestManager = euApiRequestManager;
+        this.asiaApiRequestManager = asiaApiRequestManager;
     }
 
     public ChampionResource createChampionResource() {
-        ChampionResourceImpl championResource = new ChampionResourceImpl();
-        championResource.setApiRequestManager(apiRequestManager);
-
-        return championResource;
+        return (ChampionResource) createAbstractResourceImpl(ChampionResourceImpl.class);
     }
 
     public GameResource createGameResource() {
-        GameResourceImpl gameResource = new GameResourceImpl();
-        gameResource.setApiRequestManager(apiRequestManager);
-
-        return gameResource;
+        return (GameResource) createAbstractResourceImpl(GameResourceImpl.class);
     }
 
     public LeagueResource createLeagueResource() {
-        LeagueResourceImpl leagueResource = new LeagueResourceImpl();
-        leagueResource.setApiRequestManager(apiRequestManager);
-
-        return leagueResource;
+        return (LeagueResource) createAbstractResourceImpl(LeagueResourceImpl.class);
     }
 
     public StatsResource createStatsResource() {
-        StatsResourceImpl statsResource = new StatsResourceImpl();
-        statsResource.setApiRequestManager(apiRequestManager);
-
-        return statsResource;
+        return (StatsResource) createAbstractResourceImpl(StatsResourceImpl.class);
     }
 
     public SummonerResource createSummonerResource() {
-        SummonerResourceImpl summonerResource = new SummonerResourceImpl();
-        summonerResource.setApiRequestManager(apiRequestManager);
-
-        return summonerResource;
+        return (SummonerResource) createAbstractResourceImpl(SummonerResourceImpl.class);
     }
 
     public TeamResource createTeamResource() {
-        TeamResourceImpl teamResource = new TeamResourceImpl();
-        teamResource.setApiRequestManager(apiRequestManager);
-
-        return teamResource;
+        return (TeamResource) createAbstractResourceImpl(TeamResourceImpl.class);
     }
 
     public LolStaticDataResource createLolStaticDataResource() {
-        LolStaticDataResourceImpl lolStaticDataResource = new LolStaticDataResourceImpl();
-        lolStaticDataResource.setApiRequestManager(apiRequestManager);
+        return (LolStaticDataResource) createAbstractResourceImpl(LolStaticDataResourceImpl.class);
+    }
 
-        return lolStaticDataResource;
+    private <T extends AbstractResourceImpl> T createAbstractResourceImpl(Class<? extends AbstractResourceImpl> T) {
+        AbstractResourceImpl impl = null;
+
+        try {
+            impl = T.newInstance();
+            impl.setProdApiRequestManager(prodApiRequestManager);
+            impl.setEuApiRequestManager(euApiRequestManager);
+            impl.setAsiaApiRequestManager(asiaApiRequestManager);
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        return (T)impl;
     }
 }
