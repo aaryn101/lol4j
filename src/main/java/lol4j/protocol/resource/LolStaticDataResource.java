@@ -30,5 +30,5 @@ public interface LolStaticDataResource {
 
     SummonerSpellListDto getSummonerSpellList(Region region, String locale, String version, List<SummonerSpellData> requestedData);
 
-    SummonerSpellDto getSummonerSpell(String id, Region region, String locale, String version, List<SummonerSpellData> requestedData);
+    SummonerSpellDto getSummonerSpell(int id, Region region, String locale, String version, List<SummonerSpellData> requestedData);
 }

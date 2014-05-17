@@ -12,7 +12,6 @@ import java.util.Properties;
 public class Lol4JTestClient {
     private static Lol4JTestClient instance;
 
-    private String apiKey = null;
     private int numPerTenSeconds;
     private int numPerTenMinutes;
     private Lol4JClientImpl client = null;
@@ -21,7 +20,7 @@ public class Lol4JTestClient {
         Properties p = new Properties();
         try {
             p.load(new FileReader(new File("junit.properties")));
-            apiKey = p.getProperty("api.key");
+            String apiKey = p.getProperty("api.key");
             numPerTenMinutes = Integer.parseInt(p.getProperty("rate.per10minutes"));
             numPerTenSeconds = Integer.parseInt(p.getProperty("rate.per10seconds"));
             client = new Lol4JClientImpl(apiKey);

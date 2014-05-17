@@ -1,5 +1,6 @@
 package lol4j.service.impl;
 
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import lol4j.exception.TooManyRequestsException;
@@ -77,6 +78,22 @@ public class ApiRequestManager {
 
         try {
             returnObj = objectMapper.readValue(json, typeFactory.constructMapType(Map.class, keyClass, valueClass));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return returnObj;
+    }
+
+    public <K, V> Map<K, List<V>> getMapOfLists(String path, Map<String, Object> queryParams, boolean ignoreRateLimiter, Class<K> keyClass, Class<V> valueClass) {
+        String json = doRequest(path, queryParams, ignoreRateLimiter);
+        TypeFactory typeFactory = TypeFactory.defaultInstance();
+        JavaType keyType = typeFactory.constructType(keyClass);
+        JavaType valueType = typeFactory.constructCollectionType(List.class, valueClass);
+        Map<K, List<V>> returnObj = null;
+
+        try {
+            returnObj = objectMapper.readValue(json, typeFactory.constructMapType(Map.class, keyType, valueType));
         } catch (IOException e) {
             e.printStackTrace();
         }

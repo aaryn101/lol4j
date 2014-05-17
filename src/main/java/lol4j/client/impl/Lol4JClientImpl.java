@@ -5,7 +5,7 @@ import lol4j.protocol.dto.champion.ChampionListDto;
 import lol4j.protocol.dto.champion.ChampionDto;
 import lol4j.protocol.dto.game.RecentGamesDto;
 import lol4j.protocol.dto.league.LeagueDto;
-import lol4j.protocol.dto.league.LeagueItemDto;
+import lol4j.protocol.dto.league.LeagueEntryDto;
 import lol4j.protocol.dto.lolstaticdata.*;
 import lol4j.protocol.dto.stats.PlayerStatsSummaryListDto;
 import lol4j.protocol.dto.stats.RankedStatsDto;
@@ -31,6 +31,7 @@ public class Lol4JClientImpl implements Lol4JClient {
     private static final String PROD_BASE = "https://prod.api.pvp.net/api/lol";
     private static final String EU_BASE = "https://eu.api.pvp.net/api/lol";
     private static final String ASIA_BASE = "https://asia.api.pvp.net/api/lol";
+    private static final String STATIC_DATA_BASE = "https://prod.api.pvp.net/api/lol/static-data";
     private ChampionResource championResource;
     private GameResource gameResource;
     private LeagueResource leagueResource;
@@ -46,7 +47,8 @@ public class Lol4JClientImpl implements Lol4JClient {
         prodApiRequestManager = new ApiRequestManager(apiKey, PROD_BASE);
         euApiRequestManager = new ApiRequestManager(apiKey, EU_BASE);
         asiaApiRequestManager = new ApiRequestManager(apiKey, ASIA_BASE);
-        ResourceFactory resourceFactory = new ResourceFactory(prodApiRequestManager, euApiRequestManager, asiaApiRequestManager);
+        ApiRequestManager staticDataApiRequestManager = new ApiRequestManager(apiKey, STATIC_DATA_BASE);
+        ResourceFactory resourceFactory = new ResourceFactory(prodApiRequestManager, euApiRequestManager, asiaApiRequestManager, staticDataApiRequestManager);
 
         championResource = resourceFactory.createChampionResource();
         gameResource = resourceFactory.createGameResource();
@@ -83,13 +85,38 @@ public class Lol4JClientImpl implements Lol4JClient {
     }
 
     @Override
-    public List<LeagueItemDto> getLeaguesEntryData(long summonerId, Region region) {
+    public Map<String, List<LeagueDto>> getLeaguesData(List<Long> summonerIds, Region region) {
+        return leagueResource.getLeaguesData(summonerIds, region);
+    }
+
+    @Override
+    public List<LeagueEntryDto> getLeaguesEntryData(long summonerId, Region region) {
         return leagueResource.getLeaguesEntryData(summonerId, region);
     }
 
     @Override
-    public PlayerStatsSummaryListDto getPlayerStatsSummaries(long summonerId, Region region, Season season) {
-        return statsResource.getPlayerStatsSummaries(summonerId, region, season);
+    public Map<String, List<LeagueEntryDto>> getLeaguesEntryData(List<Long> summonerIds, Region region) {
+        return leagueResource.getLeaguesEntryData(summonerIds, region);
+    }
+
+    @Override
+    public List<LeagueDto> getLeaguesDataByTeam(String teamId, Region region) {
+        return leagueResource.getLeaguesDataByTeam(teamId, region);
+    }
+
+    @Override
+    public Map<String, List<LeagueDto>> getLeaguesDataByTeam(List<String> teamIds, Region region) {
+        return leagueResource.getLeaguesDataByTeam(teamIds, region);
+    }
+
+    @Override
+    public List<LeagueEntryDto> getLeaguesEntryDataByTeam(String teamId, Region region) {
+        return leagueResource.getLeaguesEntryDataByTeam(teamId, region);
+    }
+
+    @Override
+    public Map<String, List<LeagueEntryDto>> getLeaguesEntryDataByTeam(List<String> teamIds, Region region) {
+        return leagueResource.getLeaguesEntryDataByTeam(teamIds, region);
     }
 
     @Override
@@ -100,6 +127,11 @@ public class Lol4JClientImpl implements Lol4JClient {
     @Override
     public Map<String, MasteryPagesDto> getMasteryPages(List<Long> summonerIds, Region region) {
         return summonerResource.getMasteryPages(summonerIds, region);
+    }
+
+    @Override
+    public PlayerStatsSummaryListDto getPlayerStatsSummaries(long summonerId, Region region, Season season) {
+        return statsResource.getPlayerStatsSummaries(summonerId, region, season);
     }
 
     @Override
@@ -148,8 +180,13 @@ public class Lol4JClientImpl implements Lol4JClient {
     }
 
     @Override
-    public List<TeamDto> getTeams(long summonerId, Region region) {
-        return teamResource.getTeams(summonerId, region);
+    public List<TeamDto> getTeamsBySummonerId(long summonerId, Region region) {
+        return teamResource.getTeamsBySummonerId(summonerId, region);
+    }
+
+    @Override
+    public Map<String, List<TeamDto>> getTeamsBySummonerId(List<Long> summonerIds, Region region) {
+        return teamResource.getTeamsBySummonerId(summonerIds, region);
     }
 
     @Override
@@ -213,7 +250,7 @@ public class Lol4JClientImpl implements Lol4JClient {
     }
 
     @Override
-    public SummonerSpellDto getSummonerSpell(String id, Region region, String locale, String version, List<SummonerSpellData> requestedData) {
+    public SummonerSpellDto getSummonerSpell(int id, Region region, String locale, String version, List<SummonerSpellData> requestedData) {
         return lolStaticDataResource.getSummonerSpell(id, region, locale, version, requestedData);
     }
 
@@ -221,5 +258,6 @@ public class Lol4JClientImpl implements Lol4JClient {
     public void setRateLimit(int perTenSeconds, int perTenMinutes) {
         prodApiRequestManager.setRateLimit(perTenSeconds, perTenMinutes);
         euApiRequestManager.setRateLimit(perTenSeconds, perTenMinutes);
+        asiaApiRequestManager.setRateLimit(perTenSeconds, perTenMinutes);
     }
 }

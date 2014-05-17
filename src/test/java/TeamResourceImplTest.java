@@ -1,4 +1,3 @@
-import lol4j.exception.InvalidRegionException;
 import lol4j.protocol.dto.team.MatchHistorySummaryDto;
 import lol4j.protocol.dto.team.TeamDto;
 import lol4j.protocol.dto.team.TeamMemberInfoDto;
@@ -12,34 +11,29 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * Created by Aaron Corley on 12/16/13.
  */
 public class TeamResourceImplTest {
     private static final long SUMMONER_ID = 19163557;
+    private static final long SUMMONER_ID_TWO = 20295494;
     private static final String TEAM_ID = "TEAM-898cb9e0-e9e5-11e2-ab2b-782bcb4d0bb2";
     private static final Region REGION = Region.NA;
     private static final List<String> TEAM_IDS = new ArrayList<>();
+    private static final List<Long> SUMMONER_IDS = new ArrayList<>();
 
     @BeforeClass
     public static void initializeTest() {
         TEAM_IDS.add(TEAM_ID);
-    }
-
-    @Test(expected = InvalidRegionException.class)
-    public void getTeamsBySummonerWithUnsupportedRegion() {
-        Lol4JTestClient.getClient().getTeams(SUMMONER_ID, Region.UNKNOWN);
-    }
-
-    @Test(expected = InvalidRegionException.class)
-    public void getTeamsBySummonerWithNullRegion() {
-        Lol4JTestClient.getClient().getTeams(SUMMONER_ID, null);
+        SUMMONER_IDS.add(SUMMONER_ID);
+        SUMMONER_IDS.add(SUMMONER_ID_TWO);
     }
 
     @Test
     public void getTeamsBySummoner() {
-        List<TeamDto> teams = Lol4JTestClient.getClient().getTeams(SUMMONER_ID, REGION);
+        List<TeamDto> teams = Lol4JTestClient.getClient().getTeamsBySummonerId(SUMMONER_ID, REGION);
         Assert.assertNotNull(teams);
 
         for (TeamDto team : teams) {
@@ -54,9 +48,6 @@ public class TeamResourceImplTest {
                 Assert.assertNotNull(summary.getMap());
                 Assert.assertNotNull(summary.getOpposingTeamName());
             }
-            if (team.getMessageOfDay() != null) {
-                Assert.assertNotNull(team.getMessageOfDay().getMessage());
-            }
             Assert.assertNotNull(team.getModifyDate());
             Assert.assertNotNull(team.getName());
             Assert.assertNotNull(team.getRoster());
@@ -68,24 +59,37 @@ public class TeamResourceImplTest {
             Assert.assertNotNull(team.getSecondLastJoinDate());
             Assert.assertNotNull(team.getStatus());
             Assert.assertNotNull(team.getTag());
-            Assert.assertNotNull(team.getTeamStatSummary());
-            Assert.assertNotNull(team.getTeamStatSummary().getFullId());
-            for (TeamStatDetailDto stat : team.getTeamStatSummary().getTeamStatDetails()) {
-                Assert.assertNotNull(stat.getFullId());
-                Assert.assertNotNull(stat.getTeamStatType());
-            }
             Assert.assertNotNull(team.getThirdLastJoinDate());
         }
     }
-    
-    @Test(expected = InvalidRegionException.class)
-     public void getTeamsWithUnsupportedRegion() {
-        Lol4JTestClient.getClient().getTeams(TEAM_IDS, Region.UNKNOWN);
+
+    @Test(expected = IllegalArgumentException.class)
+    public void getTeamsMapBySummonerWithNullList() {
+        Lol4JTestClient.getClient().getTeamsBySummonerId(null, REGION);
     }
 
-    @Test(expected = InvalidRegionException.class)
-    public void getTeamsWithNullRegion() {
-        Lol4JTestClient.getClient().getTeams(TEAM_IDS, null);
+    @Test(expected = IllegalArgumentException.class)
+    public void getTeamsMapBySummonerWithEmptyList() {
+        Lol4JTestClient.getClient().getTeamsBySummonerId(new ArrayList<Long>(), REGION);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void getTeamsMapBySummonerWithBigList() {
+        List<Long> big = new ArrayList<>();
+        Random random = new Random();
+
+        for (int i = 0; i < TeamResourceImpl.MAX_LIST_SIZE + 1; i++) {
+            big.add(random.nextLong());
+        }
+        Lol4JTestClient.getClient().getTeamsBySummonerId(big, REGION);
+    }
+
+    @Test
+    public void getTeamsMapBySummoner() {
+        Map<String, List<TeamDto>> map = Lol4JTestClient.getClient().getTeamsBySummonerId(SUMMONER_IDS, REGION);
+
+        Assert.assertNotNull(map);
+        Assert.assertNotNull(map.get(Long.toString(SUMMONER_ID)));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -130,9 +134,6 @@ public class TeamResourceImplTest {
                 Assert.assertNotNull(summary.getMap());
                 Assert.assertNotNull(summary.getOpposingTeamName());
             }
-            if (team.getMessageOfDay() != null) {
-                Assert.assertNotNull(team.getMessageOfDay().getMessage());
-            }
             Assert.assertNotNull(team.getModifyDate());
             Assert.assertNotNull(team.getName());
             Assert.assertNotNull(team.getRoster());
@@ -144,24 +145,8 @@ public class TeamResourceImplTest {
             Assert.assertNotNull(team.getSecondLastJoinDate());
             Assert.assertNotNull(team.getStatus());
             Assert.assertNotNull(team.getTag());
-            Assert.assertNotNull(team.getTeamStatSummary());
-            Assert.assertNotNull(team.getTeamStatSummary().getFullId());
-            for (TeamStatDetailDto stat : team.getTeamStatSummary().getTeamStatDetails()) {
-                Assert.assertNotNull(stat.getFullId());
-                Assert.assertNotNull(stat.getTeamStatType());
-            }
             Assert.assertNotNull(team.getThirdLastJoinDate());
         }
-    }
-
-    @Test(expected = InvalidRegionException.class)
-    public void getTeamWithUnsupportedRegion() {
-        Lol4JTestClient.getClient().getTeam(TEAM_ID, Region.UNKNOWN);
-    }
-
-    @Test(expected = InvalidRegionException.class)
-    public void getTeamWithNullRegion() {
-        Lol4JTestClient.getClient().getTeam(TEAM_ID, null);
     }
 
     @Test
@@ -180,9 +165,6 @@ public class TeamResourceImplTest {
             Assert.assertNotNull(summary.getMap());
             Assert.assertNotNull(summary.getOpposingTeamName());
         }
-        if (team.getMessageOfDay() != null) {
-            Assert.assertNotNull(team.getMessageOfDay().getMessage());
-        }
         Assert.assertNotNull(team.getModifyDate());
         Assert.assertNotNull(team.getName());
         Assert.assertNotNull(team.getRoster());
@@ -194,12 +176,6 @@ public class TeamResourceImplTest {
         Assert.assertNotNull(team.getSecondLastJoinDate());
         Assert.assertNotNull(team.getStatus());
         Assert.assertNotNull(team.getTag());
-        Assert.assertNotNull(team.getTeamStatSummary());
-        Assert.assertNotNull(team.getTeamStatSummary().getFullId());
-        for (TeamStatDetailDto stat : team.getTeamStatSummary().getTeamStatDetails()) {
-            Assert.assertNotNull(stat.getFullId());
-            Assert.assertNotNull(stat.getTeamStatType());
-        }
         Assert.assertNotNull(team.getThirdLastJoinDate());
     }
 }

@@ -3,6 +3,7 @@ package lol4j.protocol.resource.impl;
 import lol4j.protocol.dto.champion.ChampionDto;
 import lol4j.protocol.dto.champion.ChampionListDto;
 import lol4j.protocol.resource.ChampionResource;
+import lol4j.service.impl.ApiRequestManager;
 import lol4j.util.Region;
 
 import java.util.HashMap;
@@ -34,19 +35,17 @@ public class ChampionResourceImpl extends AbstractResourceImpl implements Champi
 
     @Override
     public ChampionListDto getAllChampions(Region region, boolean freeToPlay) {
-        doSupportedRegionCheck(region);
-        String path = region.getName() + SLASH + RESOURCE_URI;
+        String path = RESOURCE_URI;
         Map<String, Object> queryParams = new HashMap<>();
         queryParams.put("freeToPlay", freeToPlay);
 
-        return getApiRequestManager(region).get(path, queryParams, false, ChampionListDto.class);
+        return get(region, path, queryParams, false, ChampionListDto.class);
     }
 
     @Override
-    public ChampionDto getChampion(Region region, int id) {
-        doSupportedRegionCheck(region);
-        String path = region.getName() + SLASH + RESOURCE_URI + SLASH + String.valueOf(id);
+    public ChampionDto getChampion(Region region, int championId) {
+        String path = RESOURCE_URI + SLASH + String.valueOf(championId);
 
-        return getApiRequestManager(region).get(path, null, false, ChampionDto.class);
+        return get(region, path, null, false, ChampionDto.class);
     }
 }

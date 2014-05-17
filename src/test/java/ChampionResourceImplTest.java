@@ -1,4 +1,3 @@
-import lol4j.exception.InvalidRegionException;
 import lol4j.protocol.dto.champion.ChampionDto;
 import lol4j.protocol.dto.champion.ChampionListDto;
 import lol4j.util.Region;
@@ -29,25 +28,5 @@ public class ChampionResourceImplTest {
         ChampionDto champion = Lol4JTestClient.getClient().getChampion(REGION, CHAMPION_ID);
 
         Assert.assertEquals(CHAMPION_ID, champion.getId());
-    }
-
-    @Test(expected = InvalidRegionException.class)
-    public void getChampionWithUnsupportedRegion() {
-        Lol4JTestClient.getClient().getChampion(Region.UNKNOWN, CHAMPION_ID);
-    }
-
-    @Test(expected = InvalidRegionException.class)
-    public void getChampionWithNullRegion() {
-        Lol4JTestClient.getClient().getChampion(null, CHAMPION_ID);
-    }
-
-    @Test(expected = InvalidRegionException.class)
-    public void getAllChampionsWithUnsupportedRegion() {
-        Lol4JTestClient.getClient().getAllChampions(Region.UNKNOWN, false);
-    }
-
-    @Test(expected = InvalidRegionException.class)
-    public void getAllChampionsWithNullRegion() {
-        Lol4JTestClient.getClient().getAllChampions(null, false);
     }
 }

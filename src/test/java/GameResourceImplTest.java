@@ -1,4 +1,3 @@
-import lol4j.exception.InvalidRegionException;
 import lol4j.protocol.dto.game.GameDto;
 import lol4j.protocol.dto.game.RecentGamesDto;
 import lol4j.util.Region;
@@ -32,15 +31,5 @@ public class GameResourceImplTest {
             Assert.assertNotEquals(game.getFellowPlayers().size(), 0);
             Assert.assertTrue(game.getIpEarned() >= 0);
         }
-    }
-
-    @Test(expected = InvalidRegionException.class)
-    public void getRecentGamesWithUnsupportedRegion() {
-        Lol4JTestClient.getClient().getRecentGames(Region.UNKNOWN, 0L);
-    }
-
-    @Test(expected = InvalidRegionException.class)
-    public void getRecentGamesWithNullRegion() {
-        Lol4JTestClient.getClient().getRecentGames(null, 0L);
     }
 }

@@ -44,53 +44,46 @@ public class SummonerResourceImpl extends AbstractResourceImpl implements Summon
 
     @Override
     public Map<String, MasteryPagesDto> getMasteryPages(List<Long> summonerIds, Region region) {
-        doSupportedRegionCheck(region);
         if (summonerIds == null || summonerIds.size() > MAX_LIST_SIZE || summonerIds.size() == 0) {
             throw new IllegalArgumentException("summonerIds list must have at least one entry and no more than " +
                     MAX_LIST_SIZE + " entries");
         }
         String summonerIdList = StringUtils.join(summonerIds, ",");
-        String path = region.getName() + SLASH + RESOURCE_URI + SLASH + summonerIdList + SLASH + MASTERIES;
+        String path = RESOURCE_URI + SLASH + summonerIdList + SLASH + MASTERIES;
 
-        return getApiRequestManager(region).getMap(path, null, false, String.class, MasteryPagesDto.class);
+        return getMap(region, path, null, false, String.class, MasteryPagesDto.class);
     }
 
     @Override
     public MasteryPagesDto getMasteryPages(long summonerId, Region region) {
-        doSupportedRegionCheck(region);
-        String path = region.getName() + SLASH + RESOURCE_URI + SLASH + summonerId + SLASH + MASTERIES;
-        Map<String, MasteryPagesDto> result =
-                getApiRequestManager(region).getMap(path, null, false, String.class, MasteryPagesDto.class);
+        String path = RESOURCE_URI + SLASH + summonerId + SLASH + MASTERIES;
+        Map<String, MasteryPagesDto> result = getMap(region, path, null, false, String.class, MasteryPagesDto.class);
 
         return result.get(Long.toString(summonerId));
     }
 
     @Override
     public Map<String, RunePagesDto> getRunePages(List<Long> summonerIds, Region region) {
-        doSupportedRegionCheck(region);
         if (summonerIds == null || summonerIds.size() > MAX_LIST_SIZE || summonerIds.size() == 0) {
             throw new IllegalArgumentException("summonerIds list must have at least one entry and no more than " +
                     MAX_LIST_SIZE + " entries");
         }
         String summonerIdList = StringUtils.join(summonerIds, ",");
-        String path = region.getName() + SLASH + RESOURCE_URI + SLASH + summonerIdList + SLASH + RUNES;
+        String path = RESOURCE_URI + SLASH + summonerIdList + SLASH + RUNES;
 
-        return getApiRequestManager(region).getMap(path, null, false, String.class, RunePagesDto.class);
+        return getMap(region, path, null, false, String.class, RunePagesDto.class);
     }
 
     @Override
     public RunePagesDto getRunePages(long summonerId, Region region) {
-        doSupportedRegionCheck(region);
-        String path = region.getName() + SLASH + RESOURCE_URI + SLASH + summonerId + SLASH + RUNES;
-        Map<String, RunePagesDto> result =
-                getApiRequestManager(region).getMap(path, null, false, String.class, RunePagesDto.class);
+        String path = RESOURCE_URI + SLASH + summonerId + SLASH + RUNES;
+        Map<String, RunePagesDto> result = getMap(region, path, null, false, String.class, RunePagesDto.class);
 
         return result.get(Long.toString(summonerId));
     }
 
     @Override
     public Map<String, SummonerDto> getSummonersByName(List<String> names, Region region) {
-        doSupportedRegionCheck(region);
         if (names == null || names.size() > MAX_LIST_SIZE || names.size() == 0) {
             throw new IllegalArgumentException("summonerIds list must have at least one entry and no more than " +
                     MAX_LIST_SIZE + " entries");
@@ -98,75 +91,66 @@ public class SummonerResourceImpl extends AbstractResourceImpl implements Summon
         String summonerNameList = StringUtils.join(names, ",");
         String path;
         try {
-            path = region.getName() + SLASH + RESOURCE_URI + SLASH + BY_NAME + SLASH +
-                    URLEncoder.encode(summonerNameList, ApiRequestManager.ENCODING);
+            path = RESOURCE_URI + SLASH + BY_NAME + SLASH + URLEncoder.encode(summonerNameList, ApiRequestManager.ENCODING);
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException("Unsupported encoding: " + ApiRequestManager.ENCODING);
         }
 
-        return getApiRequestManager(region).getMap(path, null, false, String.class, SummonerDto.class);
+        return getMap(region, path, null, false, String.class, SummonerDto.class);
     }
 
     @Override
     public SummonerDto getSummonerByName(String name, Region region) {
-        doSupportedRegionCheck(region);
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("name must not be null or empty");
         }
         String path;
         try {
-            path = region.getName() + SLASH + RESOURCE_URI + SLASH + BY_NAME + SLASH +
-                    URLEncoder.encode(name, ApiRequestManager.ENCODING);
+            path = RESOURCE_URI + SLASH + BY_NAME + SLASH + URLEncoder.encode(name, ApiRequestManager.ENCODING);
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException("Unsupported encoding: " + ApiRequestManager.ENCODING);
         }
-        Map<String, SummonerDto> result =
-                getApiRequestManager(region).getMap(path, null, false, String.class, SummonerDto.class);
+        Map<String, SummonerDto> result = getMap(region, path, null, false, String.class, SummonerDto.class);
 
         return result.get(name.toLowerCase());
     }
 
     @Override
     public Map<String, SummonerDto> getSummoners(List<Long> summonerIds, Region region) {
-        doSupportedRegionCheck(region);
         if (summonerIds == null || summonerIds.size() > MAX_LIST_SIZE || summonerIds.size() == 0) {
             throw new IllegalArgumentException("summonerIds list must have at least one entry and no more than " +
                     MAX_LIST_SIZE + " entries");
         }
         String summonerIdList = StringUtils.join(summonerIds, ",");
-        String path = region.getName() + SLASH + RESOURCE_URI + SLASH + summonerIdList;
+        String path = RESOURCE_URI + SLASH + summonerIdList;
 
-        return getApiRequestManager(region).getMap(path, null, false, String.class, SummonerDto.class);
+        return getMap(region, path, null, false, String.class, SummonerDto.class);
     }
 
     @Override
     public SummonerDto getSummoner(long summonerId, Region region) {
-        doSupportedRegionCheck(region);
-        String path = region.getName() + SLASH + RESOURCE_URI + SLASH + summonerId;
-        Map<String, SummonerDto> result =
-                getApiRequestManager(region).getMap(path, null, false, String.class, SummonerDto.class);
+        String path = RESOURCE_URI + SLASH + summonerId;
+        Map<String, SummonerDto> result = getMap(region, path, null, false, String.class, SummonerDto.class);
 
         return result.get(Long.toString(summonerId));
     }
 
     @Override
     public Map<String, String> getSummonerNames(List<Long> summonerIds, Region region) {
-        doSupportedRegionCheck(region);
         if (summonerIds == null || summonerIds.size() > MAX_LIST_SIZE || summonerIds.size() == 0) {
             throw new IllegalArgumentException("summonerIds list must have at least one entry and no more than " +
                     MAX_LIST_SIZE + " entries");
         }
         String summonerIdList = StringUtils.join(summonerIds, ",");
-        String path = region.getName() + SLASH + RESOURCE_URI + SLASH + summonerIdList + SLASH + NAME;
+        String path = RESOURCE_URI + SLASH + summonerIdList + SLASH + NAME;
 
-        return getApiRequestManager(region).getMap(path, null, false, String.class, String.class);
+        return getMap(region, path, null, false, String.class, String.class);
     }
 
     @Override
     public String getSummonerName(long summonerId, Region region) {
-        doSupportedRegionCheck(region);
-        String path = region.getName() + SLASH + RESOURCE_URI + SLASH + summonerId + SLASH + NAME;
-        Map<String, String> result = getApiRequestManager(region).getMap(path, null, false, String.class, String.class);
+        String path = RESOURCE_URI + SLASH + summonerId + SLASH + NAME;
+        Map<String, String> result = getMap(region, path, null, false, String.class, String.class);
 
         return result.get(Long.toString(summonerId));
     }

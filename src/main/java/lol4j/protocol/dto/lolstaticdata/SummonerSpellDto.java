@@ -11,7 +11,7 @@ import java.util.List;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SummonerSpellDto {
-    private List<Integer> cooldown = new ArrayList<>();
+    private List<Double> cooldown = new ArrayList<>();
     private String cooldownBurn;
     private List<Integer> cost = new ArrayList<>();
     private String costBurn;
@@ -37,7 +37,7 @@ public class SummonerSpellDto {
     private String tooltip;
     private List<SpellVarsDto> vars = new ArrayList<>();
 
-    public List<Integer> getCooldown() {
+    public List<Double> getCooldown() {
         return cooldown;
     }
 

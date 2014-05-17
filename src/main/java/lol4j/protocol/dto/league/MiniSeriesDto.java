@@ -8,9 +8,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MiniSeriesDto {
     private int losses;
-    private char[] progress;
+    private String progress;
     private int target;
-    private long timeLeftToPlayMillis;
     private int wins;
 
     public int getLosses() {
@@ -21,11 +20,11 @@ public class MiniSeriesDto {
         this.losses = losses;
     }
 
-    public char[] getProgress() {
+    public String getProgress() {
         return progress;
     }
 
-    public void setProgress(char[] progress) {
+    public void setProgress(String progress) {
         this.progress = progress;
     }
 
@@ -35,14 +34,6 @@ public class MiniSeriesDto {
 
     public void setTarget(int target) {
         this.target = target;
-    }
-
-    public long getTimeLeftToPlayMillis() {
-        return timeLeftToPlayMillis;
-    }
-
-    public void setTimeLeftToPlayMillis(long timeLeftToPlayMillis) {
-        this.timeLeftToPlayMillis = timeLeftToPlayMillis;
     }
 
     public int getWins() {

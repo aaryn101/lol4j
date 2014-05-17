@@ -12,13 +12,13 @@ import java.util.List;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class LeagueDto {
-    private List<LeagueItemDto> entries = new ArrayList<>();
+    private List<LeagueEntryDto> entries = new ArrayList<>();
     private String name;
     private Queue queue;
     private Tier tier;
-    private long timestamp;
+    private String participantId;
 
-    public List<LeagueItemDto> getEntries() {
+    public List<LeagueEntryDto> getEntries() {
         return entries;
     }
 
@@ -46,11 +46,11 @@ public class LeagueDto {
         this.tier = tier;
     }
 
-    public long getTimestamp() {
-        return timestamp;
+    public String getParticipantId() {
+        return participantId;
     }
 
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
+    public void setParticipantId(String participantId) {
+        this.participantId = participantId;
     }
 }

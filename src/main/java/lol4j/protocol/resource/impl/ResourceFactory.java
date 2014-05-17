@@ -10,11 +10,16 @@ public class ResourceFactory {
     private ApiRequestManager prodApiRequestManager;
     private ApiRequestManager euApiRequestManager;
     private ApiRequestManager asiaApiRequestManager;
+    private ApiRequestManager staticDataApiRequestManager;
 
-    public ResourceFactory(ApiRequestManager prodApiRequestManager, ApiRequestManager euApiRequestManager, ApiRequestManager asiaApiRequestManager) {
+    public ResourceFactory(ApiRequestManager prodApiRequestManager,
+                           ApiRequestManager euApiRequestManager,
+                           ApiRequestManager asiaApiRequestManager,
+                           ApiRequestManager staticDataApiRequestManager) {
         this.prodApiRequestManager = prodApiRequestManager;
         this.euApiRequestManager = euApiRequestManager;
         this.asiaApiRequestManager = asiaApiRequestManager;
+        this.staticDataApiRequestManager = staticDataApiRequestManager;
     }
 
     public ChampionResource createChampionResource() {
@@ -42,7 +47,10 @@ public class ResourceFactory {
     }
 
     public LolStaticDataResource createLolStaticDataResource() {
-        return (LolStaticDataResource) createAbstractResourceImpl(LolStaticDataResourceImpl.class);
+        LolStaticDataResourceImpl impl = createAbstractResourceImpl(LolStaticDataResourceImpl.class);
+        impl.setApiRequestManager(staticDataApiRequestManager);
+
+        return impl;
     }
 
     private <T extends AbstractResourceImpl> T createAbstractResourceImpl(Class<? extends AbstractResourceImpl> T) {
@@ -53,9 +61,7 @@ public class ResourceFactory {
             impl.setProdApiRequestManager(prodApiRequestManager);
             impl.setEuApiRequestManager(euApiRequestManager);
             impl.setAsiaApiRequestManager(asiaApiRequestManager);
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+        } catch (InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
         }
 

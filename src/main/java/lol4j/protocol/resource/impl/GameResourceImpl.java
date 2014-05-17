@@ -2,6 +2,7 @@ package lol4j.protocol.resource.impl;
 
 import lol4j.protocol.dto.game.RecentGamesDto;
 import lol4j.protocol.resource.GameResource;
+import lol4j.service.impl.ApiRequestManager;
 import lol4j.util.Region;
 
 /**
@@ -29,10 +30,10 @@ public class GameResourceImpl extends AbstractResourceImpl implements GameResour
     }
 
     @Override
-    public RecentGamesDto getRecentGames(Region region, long summonerId) {
-        doSupportedRegionCheck(region);
-        String path = region.getName() + SLASH + RESOURCE_URI + SLASH + summonerId + SLASH + "recent";
 
-        return getApiRequestManager(region).get(path, null, false, RecentGamesDto.class);
+    public RecentGamesDto getRecentGames(Region region, long summonerId) {
+        String path = RESOURCE_URI + SLASH + summonerId + SLASH + "recent";
+
+        return get(region, path, null, false, RecentGamesDto.class);
     }
 }

@@ -1,4 +1,3 @@
-import lol4j.exception.InvalidRegionException;
 import lol4j.protocol.dto.stats.ChampionStatsDto;
 import lol4j.protocol.dto.stats.PlayerStatsSummaryDto;
 import lol4j.protocol.dto.stats.PlayerStatsSummaryListDto;
@@ -15,16 +14,6 @@ public class StatsResourceImplTest {
     private static final long SUMMONER_ID = 19163557;
     private static final Region REGION = Region.NA;
     private static final Season SEASON = Season.SEASON_3;
-
-    @Test(expected = InvalidRegionException.class)
-    public void getPlayerStatsSummariesWithUnsupportedRegion() {
-        Lol4JTestClient.getClient().getPlayerStatsSummaries(0L, Region.UNKNOWN, SEASON);
-    }
-
-    @Test(expected = InvalidRegionException.class)
-    public void getPlayerStatsSummariesWithNullRegion() {
-        Lol4JTestClient.getClient().getPlayerStatsSummaries(0L, null, SEASON);
-    }
 
     @Test
     public void getPlayerStatsSummaries() {
@@ -57,16 +46,6 @@ public class StatsResourceImplTest {
             Assert.assertTrue(statSummary.getLosses() >= 0);
             Assert.assertTrue(statSummary.getWins() >= 0);
         }
-    }
-
-    @Test(expected = InvalidRegionException.class)
-    public void getRankedStatsWithUnsupportedRegion() {
-        Lol4JTestClient.getClient().getRankedStats(0L, Region.UNKNOWN, SEASON);
-    }
-
-    @Test(expected = InvalidRegionException.class)
-    public void getRankedStatsWithNullRegion() {
-        Lol4JTestClient.getClient().getRankedStats(0L, null, SEASON);
     }
 
     @Test

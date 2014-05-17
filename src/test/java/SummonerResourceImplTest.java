@@ -1,4 +1,3 @@
-import lol4j.exception.InvalidRegionException;
 import lol4j.protocol.dto.summoner.*;
 import lol4j.protocol.resource.impl.SummonerResourceImpl;
 import lol4j.util.Region;
@@ -24,16 +23,6 @@ public class SummonerResourceImplTest {
     public static void initializeTest() {
         SUMMONER_IDS.add(SUMMONER_ID);
         SUMMONER_NAMES.add(SUMMONER_NAME);
-    }
-
-    @Test(expected = InvalidRegionException.class)
-    public void getMasteryPagesWithUnsupportedRegion() {
-        Lol4JTestClient.getClient().getMasteryPages(SUMMONER_IDS, Region.UNKNOWN);
-    }
-
-    @Test(expected = InvalidRegionException.class)
-    public void getMasteryPagesWithNullRegion() {
-        Lol4JTestClient.getClient().getMasteryPages(SUMMONER_IDS, null);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -76,16 +65,6 @@ public class SummonerResourceImplTest {
         }
     }
 
-    @Test(expected = InvalidRegionException.class)
-    public void getMasteryPagesSingleWithUnsupportedRegion() {
-        Lol4JTestClient.getClient().getMasteryPages(SUMMONER_ID, Region.UNKNOWN);
-    }
-
-    @Test(expected = InvalidRegionException.class)
-    public void getMasteryPagesSingleWithNullRegion() {
-        Lol4JTestClient.getClient().getMasteryPages(SUMMONER_ID, null);
-    }
-
     @Test
     public void getMasteryPagesSingle() {
         MasteryPagesDto pages = Lol4JTestClient.getClient().getMasteryPages(SUMMONER_ID, REGION);
@@ -98,16 +77,6 @@ public class SummonerResourceImplTest {
 
             testMasteryPage(page);
         }
-    }
-
-    @Test(expected = InvalidRegionException.class)
-    public void getRunePagesWithUnsupportedRegion() {
-        Lol4JTestClient.getClient().getRunePages(SUMMONER_IDS, Region.UNKNOWN);
-    }
-
-    @Test(expected = InvalidRegionException.class)
-    public void getRunePagesWithNullRegion() {
-        Lol4JTestClient.getClient().getRunePages(SUMMONER_IDS, null);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -145,16 +114,6 @@ public class SummonerResourceImplTest {
         }
     }
 
-    @Test(expected = InvalidRegionException.class)
-    public void getRunePagesSingleWithUnsupportedRegion() {
-        Lol4JTestClient.getClient().getRunePages(SUMMONER_ID, Region.UNKNOWN);
-    }
-
-    @Test(expected = InvalidRegionException.class)
-    public void getRunePagesSingleWithNullRegion() {
-        Lol4JTestClient.getClient().getRunePages(SUMMONER_ID, null);
-    }
-
     @Test
     public void getRunePagesSingle() {
         RunePagesDto pages = Lol4JTestClient.getClient().getRunePages(SUMMONER_ID, REGION);
@@ -162,16 +121,6 @@ public class SummonerResourceImplTest {
         Assert.assertNotNull(pages);
 
         testRunePages(pages);
-    }
-
-    @Test(expected = InvalidRegionException.class)
-    public void getSummonersByNameWithUnsupportedRegion() {
-        Lol4JTestClient.getClient().getSummonersByName(SUMMONER_NAMES, Region.UNKNOWN);
-    }
-
-    @Test(expected = InvalidRegionException.class)
-    public void getSummonersByNameWithNullRegion() {
-        Lol4JTestClient.getClient().getSummonersByName(SUMMONER_NAMES, null);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -208,16 +157,6 @@ public class SummonerResourceImplTest {
         }
     }
 
-    @Test(expected = InvalidRegionException.class)
-    public void getSummonerByNameWithUnsupportedRegion() {
-        Lol4JTestClient.getClient().getSummonerByName(SUMMONER_NAME, Region.UNKNOWN);
-    }
-
-    @Test(expected = InvalidRegionException.class)
-    public void getSummonerByNameWithNullRegion() {
-        Lol4JTestClient.getClient().getSummonerByName(SUMMONER_NAME, null);
-    }
-
     @Test(expected = IllegalArgumentException.class)
     public void getSummonerByNameWithNullName() {
         Lol4JTestClient.getClient().getSummonerByName(null, REGION);
@@ -234,16 +173,6 @@ public class SummonerResourceImplTest {
 
         Assert.assertNotNull(summoner);
         Assert.assertNotNull(summoner.getName());
-    }
-
-    @Test(expected = InvalidRegionException.class)
-    public void getSummonersWithUnsupportedRegion() {
-        Lol4JTestClient.getClient().getSummoners(SUMMONER_IDS, Region.UNKNOWN);
-    }
-
-    @Test(expected = InvalidRegionException.class)
-    public void getSummonersWithNullRegion() {
-        Lol4JTestClient.getClient().getSummoners(SUMMONER_IDS, null);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -280,32 +209,12 @@ public class SummonerResourceImplTest {
         }
     }
 
-    @Test(expected = InvalidRegionException.class)
-    public void getSummonerWithUnsupportedRegion() {
-        Lol4JTestClient.getClient().getSummoner(SUMMONER_ID, Region.UNKNOWN);
-    }
-
-    @Test(expected = InvalidRegionException.class)
-    public void getSummonerWithNullRegion() {
-        Lol4JTestClient.getClient().getSummoner(SUMMONER_ID, null);
-    }
-
     @Test
     public void getSummoner() {
         SummonerDto summoner = Lol4JTestClient.getClient().getSummoner(SUMMONER_ID, REGION);
 
         Assert.assertNotNull(summoner);
         Assert.assertNotNull(summoner.getName());
-    }
-
-    @Test(expected = InvalidRegionException.class)
-    public void getSummonerNamesWithUnsupportedRegion() {
-        Lol4JTestClient.getClient().getSummonerNames(SUMMONER_IDS, Region.UNKNOWN);
-    }
-
-    @Test(expected = InvalidRegionException.class)
-    public void getSummonerNamesWithNullRegion() {
-        Lol4JTestClient.getClient().getSummonerNames(SUMMONER_IDS, null);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -339,16 +248,6 @@ public class SummonerResourceImplTest {
             Assert.assertNotNull(entry.getKey());
             Assert.assertNotNull(entry.getValue());
         }
-    }
-
-    @Test(expected = InvalidRegionException.class)
-    public void getSummonerNameWithUnsupportedRegion() {
-        Lol4JTestClient.getClient().getSummonerName(SUMMONER_ID, Region.UNKNOWN);
-    }
-
-    @Test(expected = InvalidRegionException.class)
-    public void getSummonerNameWithNullRegion() {
-        Lol4JTestClient.getClient().getSummonerName(SUMMONER_ID, null);
     }
 
     @Test

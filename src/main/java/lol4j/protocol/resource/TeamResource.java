@@ -10,7 +10,9 @@ import java.util.Map;
  * Created by Aaron Corley on 12/13/13.
  */
 public interface TeamResource {
-    List<TeamDto> getTeams(long summonerId, Region region);
+    List<TeamDto> getTeamsBySummonerId(long summonerId, Region region);
+
+    Map<String, List<TeamDto>> getTeamsBySummonerId(List<Long> summonerIds, Region region);
 
     TeamDto getTeam(String teamId, Region region);
 

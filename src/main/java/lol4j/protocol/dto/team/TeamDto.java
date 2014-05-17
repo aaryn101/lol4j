@@ -17,14 +17,13 @@ public class TeamDto {
     private Date lastJoinDate;
     private Date lastJoinedRankedTeamQueueDate;
     private List<MatchHistorySummaryDto> matchHistory = new ArrayList<>();
-    private MessageOfDayDto messageOfDay;
     private Date modifyDate;
     private String name;
     private RosterDto roster;
     private Date secondLastJoinDate;
     private String status;
     private String tag;
-    private TeamStatSummaryDto teamStatSummary;
+    private List<TeamStatDetailDto> teamStatDetails = new ArrayList<>();
     private Date thirdLastJoinDate;
 
     public String getFullId() {
@@ -49,15 +48,6 @@ public class TeamDto {
 
     public List<MatchHistorySummaryDto> getMatchHistory() {
         return matchHistory;
-    }
-
-    public MessageOfDayDto getMessageOfDay() {
-
-        return messageOfDay;
-    }
-
-    public void setMessageOfDay(MessageOfDayDto messageOfDay) {
-        this.messageOfDay = messageOfDay;
     }
 
     public Date getModifyDate() {
@@ -99,12 +89,9 @@ public class TeamDto {
     public void setStatus(String status) {
         this.status = status;
     }
-    public TeamStatSummaryDto getTeamStatSummary() {
-        return teamStatSummary;
-    }
 
-    public void setTeamStatSummary(TeamStatSummaryDto teamStatSummary) {
-        this.teamStatSummary = teamStatSummary;
+    public List<TeamStatDetailDto> getTeamStatDetails() {
+        return teamStatDetails;
     }
 
     public Date getThirdLastJoinDate() {

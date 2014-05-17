@@ -2,7 +2,7 @@ apply plugin: 'java'
 apply plugin: 'jacoco'
 
 sourceCompatibility = 1.7
-version = '2.0'
+version = '2.1'
 
 repositories {
     mavenCentral()
