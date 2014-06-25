@@ -21,6 +21,7 @@ import lol4j.util.game.SubType;
 import lol4j.util.lolstaticdata.*;
 import lol4j.util.stats.Season;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,10 +29,14 @@ import java.util.Map;
  * Created by Aaron Corley on 12/10/13.
  */
 public class Lol4JClientImpl implements Lol4JClient {
-    private static final String PROD_BASE = "https://prod.api.pvp.net/api/lol";
-    private static final String EU_BASE = "https://eu.api.pvp.net/api/lol";
-    private static final String ASIA_BASE = "https://asia.api.pvp.net/api/lol";
-    private static final String STATIC_DATA_BASE = "https://prod.api.pvp.net/api/lol/static-data";
+    private final Map<Region, ApiRequestManager> requestManagers = new HashMap<>();
+
+    private static final String URL_SCHEME = "https://";
+    private static final String SERVER_SUFFIX = ".api.pvp.net";
+    private static final String URL_SUFFIX = "/api/lol";
+    private static final String STATIC_DATA = "/static-data";
+
+    private static final String STATIC_DATA_BASE = URL_SCHEME + "global" + SERVER_SUFFIX + URL_SUFFIX + STATIC_DATA;
     private ChampionResource championResource;
     private GameResource gameResource;
     private LeagueResource leagueResource;
@@ -39,16 +44,23 @@ public class Lol4JClientImpl implements Lol4JClient {
     private SummonerResource summonerResource;
     private TeamResource teamResource;
     private LolStaticDataResource lolStaticDataResource;
-    private ApiRequestManager prodApiRequestManager;
-    private ApiRequestManager euApiRequestManager;
-    private ApiRequestManager asiaApiRequestManager;
 
     public Lol4JClientImpl(String apiKey) {
-        prodApiRequestManager = new ApiRequestManager(apiKey, PROD_BASE);
-        euApiRequestManager = new ApiRequestManager(apiKey, EU_BASE);
-        asiaApiRequestManager = new ApiRequestManager(apiKey, ASIA_BASE);
+        for (Region region : Region.values()) {
+            if (region == Region.UNKNOWN) {
+                continue;
+            }
+
+            requestManagers.put(region, new ApiRequestManager(
+                    apiKey,
+                    URL_SCHEME + region.getName() + SERVER_SUFFIX + URL_SUFFIX
+            ));
+        }
+
         ApiRequestManager staticDataApiRequestManager = new ApiRequestManager(apiKey, STATIC_DATA_BASE);
-        ResourceFactory resourceFactory = new ResourceFactory(prodApiRequestManager, euApiRequestManager, asiaApiRequestManager, staticDataApiRequestManager);
+        ResourceFactory resourceFactory = new ResourceFactory(
+                requestManagers,
+                staticDataApiRequestManager);
 
         championResource = resourceFactory.createChampionResource();
         gameResource = resourceFactory.createGameResource();
@@ -256,8 +268,12 @@ public class Lol4JClientImpl implements Lol4JClient {
 
     @Override
     public void setRateLimit(int perTenSeconds, int perTenMinutes) {
-        prodApiRequestManager.setRateLimit(perTenSeconds, perTenMinutes);
-        euApiRequestManager.setRateLimit(perTenSeconds, perTenMinutes);
-        asiaApiRequestManager.setRateLimit(perTenSeconds, perTenMinutes);
+        for (Region region : Region.values()) {
+            if (region == Region.UNKNOWN) {
+                continue;
+            }
+
+            requestManagers.get(region).setRateLimit(perTenSeconds, perTenMinutes);
+        }
     }
 }
