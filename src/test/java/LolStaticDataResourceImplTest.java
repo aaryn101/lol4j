@@ -262,6 +262,18 @@ public class LolStaticDataResourceImplTest {
     }
 
     @Test
+    public void testAllRegions() {
+        for (Region region : Region.values()) {
+            if (region == Region.UNKNOWN) {
+                continue;
+            }
+
+            RuneListDto runes = Lol4JTestClient.getClient().getRuneList(region, null, null, RUNE_DATA);
+            Assert.assertNotNull(runes);
+        }
+    }
+
+    @Test
     public void getSummonerSpells() {
         SummonerSpellListDto summonerSpells = Lol4JTestClient.getClient().getSummonerSpellList(REGION, null, null, SUMMONER_SPELL_DATA);
 

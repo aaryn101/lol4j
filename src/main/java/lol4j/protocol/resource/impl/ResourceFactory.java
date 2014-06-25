@@ -2,23 +2,20 @@ package lol4j.protocol.resource.impl;
 
 import lol4j.protocol.resource.*;
 import lol4j.service.impl.ApiRequestManager;
+import lol4j.util.Region;
+
+import java.util.Map;
 
 /**
  * Created by Aaron Corley on 12/10/13.
  */
 public class ResourceFactory {
-    private ApiRequestManager prodApiRequestManager;
-    private ApiRequestManager euApiRequestManager;
-    private ApiRequestManager asiaApiRequestManager;
     private ApiRequestManager staticDataApiRequestManager;
+    private Map<Region, ApiRequestManager> requestManagers;
 
-    public ResourceFactory(ApiRequestManager prodApiRequestManager,
-                           ApiRequestManager euApiRequestManager,
-                           ApiRequestManager asiaApiRequestManager,
-                           ApiRequestManager staticDataApiRequestManager) {
-        this.prodApiRequestManager = prodApiRequestManager;
-        this.euApiRequestManager = euApiRequestManager;
-        this.asiaApiRequestManager = asiaApiRequestManager;
+
+    public ResourceFactory(Map<Region, ApiRequestManager> requestManagers, ApiRequestManager staticDataApiRequestManager) {
+        this.requestManagers = requestManagers;
         this.staticDataApiRequestManager = staticDataApiRequestManager;
     }
 
@@ -58,9 +55,7 @@ public class ResourceFactory {
 
         try {
             impl = T.newInstance();
-            impl.setProdApiRequestManager(prodApiRequestManager);
-            impl.setEuApiRequestManager(euApiRequestManager);
-            impl.setAsiaApiRequestManager(asiaApiRequestManager);
+            impl.setRequestManagers(requestManagers);
         } catch (InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
         }

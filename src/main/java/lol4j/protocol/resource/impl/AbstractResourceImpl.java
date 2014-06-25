@@ -14,9 +14,7 @@ import java.util.Map;
  */
 public abstract class AbstractResourceImpl {
     private List<Region> supportedRegions = new ArrayList<>();
-    private ApiRequestManager prodApiRequestManager;
-    private ApiRequestManager euApiRequestManager;
-    private ApiRequestManager asiaApiRequestManager;
+    private Map<Region, ApiRequestManager> requestManagers;
 
     public AbstractResourceImpl(Region... regions) {
         supportedRegions.addAll(Arrays.asList(regions));
@@ -61,42 +59,10 @@ public abstract class AbstractResourceImpl {
     }
 
     public ApiRequestManager getApiRequestManager(Region region) {
-        ApiRequestManager requestManager = null;
-
-        switch(region) {
-            case BR:
-            case EUNE:
-            case EUW:
-            case LAN:
-            case LAS:
-            case NA:
-            case OCE:
-                requestManager = prodApiRequestManager;
-                break;
-            case RU:
-            case TR:
-                requestManager = euApiRequestManager;
-                break;
-            case KR:
-                requestManager = asiaApiRequestManager;
-                break;
-            default:
-                requestManager = prodApiRequestManager;
-                break;
-        }
-
-        return requestManager;
+        return requestManagers.get(region);
     }
 
-    public void setProdApiRequestManager(ApiRequestManager prodApiRequestManager) {
-        this.prodApiRequestManager = prodApiRequestManager;
-    }
-
-    public void setEuApiRequestManager(ApiRequestManager euApiRequestManager) {
-        this.euApiRequestManager = euApiRequestManager;
-    }
-
-    public void setAsiaApiRequestManager(ApiRequestManager asiaApiRequestManager) {
-        this.asiaApiRequestManager = asiaApiRequestManager;
+    public void setRequestManagers(Map<Region, ApiRequestManager> requestManagers) {
+        this.requestManagers = requestManagers;
     }
 }
