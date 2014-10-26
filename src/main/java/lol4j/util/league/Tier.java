@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
  */
 public enum Tier {
     CHALLENGER ("CHALLENGER"),
+    MASTER ("MASTER"),
     DIAMOND ("DIAMOND"),
     PLATINUM ("PLATINUM"),
     GOLD ("GOLD"),
