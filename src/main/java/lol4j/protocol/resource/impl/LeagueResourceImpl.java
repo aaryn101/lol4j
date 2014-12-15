@@ -13,11 +13,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Compatible with league-v2.4
+ * Compatible with league-v2.5
  */
 public class LeagueResourceImpl extends AbstractResourceImpl implements LeagueResource {
     private static final String SLASH = "/";
-    private static final String RESOURCE_VERSION = "v2.4";
+    private static final String RESOURCE_VERSION = "v2.5";
     private static final String CHALLENGER_URI = RESOURCE_VERSION + SLASH + "league" + SLASH + "challenger";
     private static final String LEAGUE = "league" + SLASH + "by-summoner";
     private static final String LEAGUE_URI = RESOURCE_VERSION + SLASH + LEAGUE;
