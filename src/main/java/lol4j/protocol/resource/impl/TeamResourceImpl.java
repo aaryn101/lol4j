@@ -2,7 +2,6 @@ package lol4j.protocol.resource.impl;
 
 import lol4j.protocol.dto.team.TeamDto;
 import lol4j.protocol.resource.TeamResource;
-import lol4j.service.impl.ApiRequestManager;
 import lol4j.util.Region;
 import org.apache.commons.lang3.StringUtils;
 
@@ -10,10 +9,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Compatible with team-v2.3
+ * Compatible with team-v2.4
  */
 public class TeamResourceImpl extends AbstractResourceImpl implements TeamResource {
-    private static final String RESOURCE_VERSION = "v2.3";
+    private static final String RESOURCE_VERSION = "v2.4";
     private static final String RESOURCE_PATH = "team";
     private static final String SLASH = "/";
     private static final String RESOURCE_URI = RESOURCE_VERSION + SLASH + RESOURCE_PATH;
