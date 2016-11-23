@@ -22,15 +22,16 @@ public class StatsResourceImpl extends AbstractResourceImpl implements StatsReso
     public StatsResourceImpl() {
         super(
                 Region.BR,
-                Region.EUW,
                 Region.EUNE,
+                Region.EUW,
+                Region.JP,
+                Region.KR,
                 Region.LAN,
                 Region.LAS,
                 Region.NA,
                 Region.OCE,
                 Region.RU,
-                Region.TR,
-                Region.KR
+                Region.TR
         );
     }
 

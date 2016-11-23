@@ -37,13 +37,14 @@ public class LolStaticDataResourceImpl extends AbstractResourceImpl implements L
                 Region.BR,
                 Region.EUNE,
                 Region.EUW,
+                Region.JP,
+                Region.KR,
                 Region.LAN,
                 Region.LAS,
                 Region.NA,
                 Region.OCE,
                 Region.RU,
-                Region.TR,
-                Region.KR
+                Region.TR
         );
     }
 

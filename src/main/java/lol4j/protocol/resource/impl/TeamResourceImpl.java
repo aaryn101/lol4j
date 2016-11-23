@@ -5,6 +5,7 @@ import lol4j.protocol.resource.TeamResource;
 import lol4j.util.Region;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.ws.rs.core.GenericType;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +23,7 @@ public class TeamResourceImpl extends AbstractResourceImpl implements TeamResour
     public TeamResourceImpl() {
         super(
                 Region.BR,
+                Region.EUNE,
                 Region.EUW,
                 Region.EUNE,
                 Region.LAN,
@@ -29,15 +31,14 @@ public class TeamResourceImpl extends AbstractResourceImpl implements TeamResour
                 Region.NA,
                 Region.OCE,
                 Region.RU,
-                Region.TR,
-                Region.KR
+                Region.TR
         );
     }
 
     @Override
     public List<TeamDto> getTeamsBySummonerId(long summonerId, Region region) {
         String path = RESOURCE_URI + SLASH + BY_SUMMONER + SLASH + summonerId;
-        Map<String, List<TeamDto>> map = getMapOfLists(region, path, null, false, String.class, TeamDto.class);
+        Map<String, List<TeamDto>> map = get(region, path, null, false, new GenericType<Map<String, List<TeamDto>>>() {});
 
         return map.get(Long.toString(summonerId));
     }
@@ -50,7 +51,7 @@ public class TeamResourceImpl extends AbstractResourceImpl implements TeamResour
         }
         String path = RESOURCE_URI + SLASH + BY_SUMMONER + SLASH + StringUtils.join(summonerIds, ',');
 
-        return getMapOfLists(region, path, null, false, String.class, TeamDto.class);
+        return get(region, path, null, false, new GenericType<Map<String, List<TeamDto>>>() {});
     }
 
     @Override
@@ -59,7 +60,7 @@ public class TeamResourceImpl extends AbstractResourceImpl implements TeamResour
             throw new IllegalArgumentException("team must not be null or empty");
         }
         String path = RESOURCE_URI + SLASH + teamId;
-        Map<String, TeamDto> result = getMap(region, path, null, false, String.class, TeamDto.class);
+        Map<String, TeamDto> result = get(region, path, null, false, new GenericType<Map<String, TeamDto>>() {});
 
         return result.get(teamId);
     }
@@ -72,6 +73,6 @@ public class TeamResourceImpl extends AbstractResourceImpl implements TeamResour
         }
         String path = RESOURCE_URI + SLASH + StringUtils.join(teamIds, ',');
 
-        return getMap(region, path, null, false, String.class, TeamDto.class);
+        return get(region, path, null, false, new GenericType<Map<String, TeamDto>>() {});
     }
 }

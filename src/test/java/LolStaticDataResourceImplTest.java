@@ -17,7 +17,7 @@ public class LolStaticDataResourceImplTest {
     private static final String RUNE_ID = "5235";
     private static final String CHAMP_ID = "35";
     private static final String ITEM_ID = "1027";
-    private static final String MASTERY_ID = "4353";
+    private static final String MASTERY_ID = "6121"; // Fresh Blood
     private static final int SUMMONER_SPELL_ID = 11; // SummonerSmite
     private static final List<ChampData> CHAMP_DATA = new ArrayList<>();
     private static final List<ItemData> ITEM_DATA = new ArrayList<>();
@@ -67,12 +67,12 @@ public class LolStaticDataResourceImplTest {
             Assert.assertNotNull(champion.getPassive().getDescription());
             Assert.assertNotNull(champion.getPassive().getImage());
             Assert.assertNotNull(champion.getPassive().getName());
+
             for (RecommendedDto recommended : champion.getRecommended()) {
                 for (BlockDto block : recommended.getBlocks()) {
                     for (BlockItemDto blockItem : block.getItems()) {
                         Assert.assertNotNull(blockItem.getId());
                     }
-                    Assert.assertNotNull(block.getType());
                 }
                 Assert.assertNotNull(recommended.getChampion());
                 Assert.assertNotNull(recommended.getMap());
@@ -80,10 +80,12 @@ public class LolStaticDataResourceImplTest {
                 Assert.assertNotNull(recommended.getTitle());
                 Assert.assertNotNull(recommended.getType());
             }
+
             for (SkinDto skin : champion.getSkins()) {
                 Assert.assertNotNull(skin.getId());
                 Assert.assertNotNull(skin.getName());
             }
+
             for (ChampionSpellDto spell : champion.getSpells()) {
                 Assert.assertNotNull(spell.getCooldownBurn());
                 Assert.assertNotNull(spell.getCostBurn());
@@ -95,15 +97,17 @@ public class LolStaticDataResourceImplTest {
                 Assert.assertNotNull(spell.getRange());
                 Assert.assertNotNull(spell.getRangeBurn());
                 Assert.assertNotNull(spell.getTooltip());
+
                 for (SpellVarsDto spellVar : spell.getVars()) {
                     Assert.assertNotNull(spellVar.getCoeff());
                     Assert.assertNotNull(spellVar.getKey());
-                    Assert.assertNotNull(spellVar.getLink());
                 }
             }
+
             Assert.assertNotNull(champion.getStats());
             Assert.assertNotNull(champion.getTitle());
         }
+
         Assert.assertNotNull(championList.getFormat());
         Assert.assertNotNull(championList.getType());
         Assert.assertNotNull(championList.getVersion());

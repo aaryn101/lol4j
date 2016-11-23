@@ -8,6 +8,7 @@ import lol4j.service.impl.ApiRequestManager;
 import lol4j.util.Region;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.ws.rs.core.GenericType;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
@@ -30,15 +31,11 @@ public class SummonerResourceImpl extends AbstractResourceImpl implements Summon
     public SummonerResourceImpl() {
         super(
                 Region.BR,
-                Region.EUW,
                 Region.EUNE,
+                Region.EUW,
                 Region.LAN,
                 Region.LAS,
-                Region.NA,
-                Region.OCE,
-                Region.RU,
-                Region.TR,
-                Region.KR
+                Region.NA
         );
     }
 
@@ -51,13 +48,13 @@ public class SummonerResourceImpl extends AbstractResourceImpl implements Summon
         String summonerIdList = StringUtils.join(summonerIds, ",");
         String path = RESOURCE_URI + SLASH + summonerIdList + SLASH + MASTERIES;
 
-        return getMap(region, path, null, false, String.class, MasteryPagesDto.class);
+        return get(region, path, null, false, new GenericType<Map<String, MasteryPagesDto>>() {});
     }
 
     @Override
     public MasteryPagesDto getMasteryPages(long summonerId, Region region) {
         String path = RESOURCE_URI + SLASH + summonerId + SLASH + MASTERIES;
-        Map<String, MasteryPagesDto> result = getMap(region, path, null, false, String.class, MasteryPagesDto.class);
+        Map<String, MasteryPagesDto> result = get(region, path, null, false, new GenericType<Map<String, MasteryPagesDto>>() {});
 
         return result.get(Long.toString(summonerId));
     }
@@ -71,13 +68,13 @@ public class SummonerResourceImpl extends AbstractResourceImpl implements Summon
         String summonerIdList = StringUtils.join(summonerIds, ",");
         String path = RESOURCE_URI + SLASH + summonerIdList + SLASH + RUNES;
 
-        return getMap(region, path, null, false, String.class, RunePagesDto.class);
+        return get(region, path, null, false, new GenericType<Map<String, RunePagesDto>>() {});
     }
 
     @Override
     public RunePagesDto getRunePages(long summonerId, Region region) {
         String path = RESOURCE_URI + SLASH + summonerId + SLASH + RUNES;
-        Map<String, RunePagesDto> result = getMap(region, path, null, false, String.class, RunePagesDto.class);
+        Map<String, RunePagesDto> result = get(region, path, null, false, new GenericType<Map<String, RunePagesDto>>() {});
 
         return result.get(Long.toString(summonerId));
     }
@@ -96,7 +93,7 @@ public class SummonerResourceImpl extends AbstractResourceImpl implements Summon
             throw new RuntimeException("Unsupported encoding: " + ApiRequestManager.ENCODING);
         }
 
-        return getMap(region, path, null, false, String.class, SummonerDto.class);
+        return get(region, path, null, false, new GenericType<Map<String, SummonerDto>>() {});
     }
 
     @Override
@@ -110,7 +107,7 @@ public class SummonerResourceImpl extends AbstractResourceImpl implements Summon
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException("Unsupported encoding: " + ApiRequestManager.ENCODING);
         }
-        Map<String, SummonerDto> result = getMap(region, path, null, false, String.class, SummonerDto.class);
+        Map<String, SummonerDto> result = get(region, path, null, false, new GenericType<Map<String, SummonerDto>>() {});
 
         return result.get(name.toLowerCase());
     }
@@ -124,13 +121,13 @@ public class SummonerResourceImpl extends AbstractResourceImpl implements Summon
         String summonerIdList = StringUtils.join(summonerIds, ",");
         String path = RESOURCE_URI + SLASH + summonerIdList;
 
-        return getMap(region, path, null, false, String.class, SummonerDto.class);
+        return get(region, path, null, false, new GenericType<Map<String, SummonerDto>>() {});
     }
 
     @Override
     public SummonerDto getSummoner(long summonerId, Region region) {
         String path = RESOURCE_URI + SLASH + summonerId;
-        Map<String, SummonerDto> result = getMap(region, path, null, false, String.class, SummonerDto.class);
+        Map<String, SummonerDto> result = get(region, path, null, false, new GenericType<Map<String, SummonerDto>>() {});
 
         return result.get(Long.toString(summonerId));
     }
@@ -144,13 +141,13 @@ public class SummonerResourceImpl extends AbstractResourceImpl implements Summon
         String summonerIdList = StringUtils.join(summonerIds, ",");
         String path = RESOURCE_URI + SLASH + summonerIdList + SLASH + NAME;
 
-        return getMap(region, path, null, false, String.class, String.class);
+        return get(region, path, null, false, new GenericType<Map<String, String>>() {});
     }
 
     @Override
     public String getSummonerName(long summonerId, Region region) {
         String path = RESOURCE_URI + SLASH + summonerId + SLASH + NAME;
-        Map<String, String> result = getMap(region, path, null, false, String.class, String.class);
+        Map<String, String> result = get(region, path, null, false, new GenericType<Map<String, String>>() {});
 
         return result.get(Long.toString(summonerId));
     }

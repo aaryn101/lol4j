@@ -19,6 +19,8 @@ public class GameResourceImpl extends AbstractResourceImpl implements GameResour
                 Region.BR,
                 Region.EUNE,
                 Region.EUW,
+                Region.JP,
+                Region.KR,
                 Region.LAN,
                 Region.LAS,
                 Region.NA,

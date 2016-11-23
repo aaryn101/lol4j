@@ -4,6 +4,7 @@ import lol4j.exception.InvalidRegionException;
 import lol4j.service.impl.ApiRequestManager;
 import lol4j.util.Region;
 
+import javax.ws.rs.core.GenericType;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -28,28 +29,12 @@ public abstract class AbstractResourceImpl {
         return requestManager.get(fullPath, queryParams, ignoreRateLimiter, clazz);
     }
 
-    public final <K, V> Map<K, List<V>> getMapOfLists(Region region, String path, Map<String, Object> queryParams, boolean ignoreRateLimiter, Class<K> keyClass, Class<V> listValueClass) {
+    public final <T> T get(Region region, String path, Map<String, Object> queryParams, boolean ignoreRateLimiter, GenericType<T> genericType) {
         doSupportedRegionCheck(region);
         ApiRequestManager requestManager = getApiRequestManager(region);
         String fullPath = region.getName() + '/' + path;
 
-        return requestManager.getMapOfLists(fullPath, queryParams, ignoreRateLimiter, keyClass, listValueClass);
-    }
-
-    public final <K, V> Map<K, V> getMap(Region region, String path, Map<String, Object> queryParams, boolean ignoreRateLimiter, Class<K> keyClass, Class<V> valueClass) {
-        doSupportedRegionCheck(region);
-        ApiRequestManager requestManager = getApiRequestManager(region);
-        String fullPath = region.getName() + '/' + path;
-
-        return requestManager.getMap(fullPath, queryParams, ignoreRateLimiter, keyClass, valueClass);
-    }
-
-    public final <T> List<T> getList(Region region, String path, Map<String, Object> queryParams, boolean ignoreRateLimiter, Class<T> clazz) {
-        doSupportedRegionCheck(region);
-        ApiRequestManager requestManager = getApiRequestManager(region);
-        String fullPath = region.getName() + '/' + path;
-
-        return requestManager.getList(fullPath, queryParams, ignoreRateLimiter, clazz);
+        return requestManager.get(fullPath, queryParams, ignoreRateLimiter, genericType);
     }
 
     public final void doSupportedRegionCheck(Region region) {

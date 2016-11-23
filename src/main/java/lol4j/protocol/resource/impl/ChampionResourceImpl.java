@@ -21,15 +21,16 @@ public class ChampionResourceImpl extends AbstractResourceImpl implements Champi
     public ChampionResourceImpl() {
         super(
                 Region.BR,
-                Region.EUW,
                 Region.EUNE,
+                Region.EUW,
+                Region.JP,
+                Region.KR,
                 Region.LAN,
                 Region.LAS,
                 Region.NA,
                 Region.OCE,
                 Region.RU,
-                Region.TR,
-                Region.KR
+                Region.TR
         );
     }
 

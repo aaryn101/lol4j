@@ -10,6 +10,7 @@ public enum Region {
     BR ("br"),
     EUNE ("eune"),
     EUW ("euw"),
+    JP ("jp"),
     KR ("kr"),
     LAN ("lan"),
     LAS ("las"),

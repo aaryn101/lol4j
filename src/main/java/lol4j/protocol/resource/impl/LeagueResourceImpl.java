@@ -8,6 +8,7 @@ import lol4j.util.Region;
 import lol4j.util.game.SubType;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.ws.rs.core.GenericType;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,13 +32,14 @@ public class LeagueResourceImpl extends AbstractResourceImpl implements LeagueRe
                 Region.BR,
                 Region.EUNE,
                 Region.EUW,
+                Region.JP,
+                Region.KR,
                 Region.LAN,
                 Region.LAS,
                 Region.NA,
                 Region.OCE,
                 Region.RU,
-                Region.TR,
-                Region.KR
+                Region.TR
         );
     }
 
@@ -56,7 +58,7 @@ public class LeagueResourceImpl extends AbstractResourceImpl implements LeagueRe
     @Override
     public List<LeagueDto> getLeaguesData(long summonerId, Region region) {
         String path = LEAGUE_URI + SLASH + summonerId;
-        Map<String, List<LeagueDto>> map = getMapOfLists(region, path, null, false, String.class, LeagueDto.class);
+        Map<String, List<LeagueDto>> map = get(region, path, null, false, new GenericType<Map<String, List<LeagueDto>>>() {});
 
         return map.get(Long.toString(summonerId));
     }
@@ -70,13 +72,13 @@ public class LeagueResourceImpl extends AbstractResourceImpl implements LeagueRe
         String summonerIdList = StringUtils.join(summonerIds, ",");
         String path = LEAGUE_URI + SLASH + summonerIdList;
 
-        return getMapOfLists(region, path, null, false, String.class, LeagueDto.class);
+        return get(region, path, null, false, new GenericType<Map<String, List<LeagueDto>>>() {});
     }
 
     @Override
     public List<LeagueEntryDto> getLeaguesEntryData(long summonerId, Region region) {
         String path = LEAGUE_URI + SLASH + summonerId + SLASH + ENTRY;
-        Map<String, List<LeagueEntryDto>> map = getMapOfLists(region, path, null, false, String.class, LeagueEntryDto.class);
+        Map<String, List<LeagueEntryDto>> map = get(region, path, null, false, new GenericType<Map<String, List<LeagueEntryDto>>>() {});
 
         return map.get(Long.toString(summonerId));
     }
@@ -90,7 +92,7 @@ public class LeagueResourceImpl extends AbstractResourceImpl implements LeagueRe
         String summonerIdList = StringUtils.join(summonerIds, ",");
         String path = LEAGUE_URI + SLASH + summonerIdList + SLASH + ENTRY;
 
-        return getMapOfLists(region, path, null, false, String.class, LeagueEntryDto.class);
+        return get(region, path, null, false, new GenericType<Map<String, List<LeagueEntryDto>>>() {});
     }
 
     @Override
@@ -99,7 +101,7 @@ public class LeagueResourceImpl extends AbstractResourceImpl implements LeagueRe
             throw new IllegalArgumentException("teamId must provided");
         }
         String path = LEAGUE_BY_TEAM_URI + SLASH + teamId + SLASH + ENTRY;
-        Map<String, List<LeagueEntryDto>> map = getMapOfLists(region, path, null, false, String.class, LeagueEntryDto.class);
+        Map<String, List<LeagueEntryDto>> map = get(region, path, null, false, new GenericType<Map<String, List<LeagueEntryDto>>>() {});
 
         return map.get(teamId);
     }
@@ -113,7 +115,7 @@ public class LeagueResourceImpl extends AbstractResourceImpl implements LeagueRe
         String teamIdList = StringUtils.join(teamIds, ",");
         String path = LEAGUE_BY_TEAM_URI + SLASH + teamIdList + SLASH + ENTRY;
 
-        return getMapOfLists(region, path, null, false, String.class, LeagueEntryDto.class);
+        return get(region, path, null, false, new GenericType<Map<String, List<LeagueEntryDto>>>() {});
     }
 
     @Override
@@ -122,7 +124,7 @@ public class LeagueResourceImpl extends AbstractResourceImpl implements LeagueRe
             throw new IllegalArgumentException("teamId must provided");
         }
         String path = LEAGUE_BY_TEAM_URI + SLASH + teamId;
-        Map<String, List<LeagueDto>> map = getMapOfLists(region, path, null, false, String.class, LeagueDto.class);
+        Map<String, List<LeagueDto>> map = get(region, path, null, false, new GenericType<Map<String, List<LeagueDto>>>() {});
 
         return map.get(teamId);
     }
@@ -136,6 +138,6 @@ public class LeagueResourceImpl extends AbstractResourceImpl implements LeagueRe
         String teamIdList = StringUtils.join(teamIds, ",");
         String path = LEAGUE_BY_TEAM_URI + SLASH + teamIdList;
 
-        return getMapOfLists(region, path, null, false, String.class, LeagueDto.class);
+        return get(region, path, null, false, new GenericType<Map<String, List<LeagueDto>>>() {});
     }
 }

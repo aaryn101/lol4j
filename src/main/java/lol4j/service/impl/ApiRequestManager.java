@@ -1,6 +1,5 @@
 package lol4j.service.impl;
 
-import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import lol4j.exception.TooManyRequestsException;
@@ -13,10 +12,10 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.DelayQueue;
 import java.util.concurrent.Delayed;
@@ -57,43 +56,13 @@ public class ApiRequestManager {
         return returnObj;
     }
 
-    public <T> List<T> getList(String path, Map<String, Object> queryParams, boolean ignoreRateLimiter, Class<T> clazz) {
+    public <T> T get(String path, Map<String, Object> queryParams, boolean ignoreRateLimiter, GenericType<T> genericType) {
         String json = doRequest(path, queryParams, ignoreRateLimiter);
         TypeFactory typeFactory = TypeFactory.defaultInstance();
-        List<T> returnObj = null;
+        T returnObj = null;
 
         try {
-            returnObj = objectMapper.readValue(json, typeFactory.constructCollectionType(List.class, clazz));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return returnObj;
-    }
-
-    public <K, V> Map<K, V> getMap(String path, Map<String, Object> queryParams, boolean ignoreRateLimiter, Class<K> keyClass, Class<V> valueClass) {
-        String json = doRequest(path, queryParams, ignoreRateLimiter);
-        TypeFactory typeFactory = TypeFactory.defaultInstance();
-        Map<K, V> returnObj = null;
-
-        try {
-            returnObj = objectMapper.readValue(json, typeFactory.constructMapType(Map.class, keyClass, valueClass));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return returnObj;
-    }
-
-    public <K, V> Map<K, List<V>> getMapOfLists(String path, Map<String, Object> queryParams, boolean ignoreRateLimiter, Class<K> keyClass, Class<V> valueClass) {
-        String json = doRequest(path, queryParams, ignoreRateLimiter);
-        TypeFactory typeFactory = TypeFactory.defaultInstance();
-        JavaType keyType = typeFactory.constructType(keyClass);
-        JavaType valueType = typeFactory.constructCollectionType(List.class, valueClass);
-        Map<K, List<V>> returnObj = null;
-
-        try {
-            returnObj = objectMapper.readValue(json, typeFactory.constructMapType(Map.class, keyType, valueType));
+            returnObj = objectMapper.readValue(json, typeFactory.constructType(genericType.getType()));
         } catch (IOException e) {
             e.printStackTrace();
         }
