@@ -16,19 +16,19 @@ import java.util.Map;
 /**
  * Compatible with league-v2.5
  */
-public class LeagueResourceImpl extends AbstractResourceImpl implements LeagueResource {
-    private static final String SLASH = "/";
-    private static final String RESOURCE_VERSION = "v2.5";
-    private static final String CHALLENGER_URI = RESOURCE_VERSION + SLASH + "league" + SLASH + "challenger";
-    private static final String LEAGUE = "league" + SLASH + "by-summoner";
-    private static final String LEAGUE_URI = RESOURCE_VERSION + SLASH + LEAGUE;
-    private static final String LEAGUE_BY_TEAM = "league" + SLASH + "by-team";
-    private static final String LEAGUE_BY_TEAM_URI = RESOURCE_VERSION + SLASH + LEAGUE_BY_TEAM;
+public class LeagueResourceImpl extends ApiResource implements LeagueResource {
+    private static final String VERSION = "v2.5";
+    private static final String NAME = "league";
+    private static final String CHALLENGER_URI = "challenger";
+    private static final String LEAGUE_URI = "by-summoner";
+    private static final String LEAGUE_BY_TEAM_URI = "by-team";
     private static final String ENTRY = "entry";
     public static final int MAX_LIST_SIZE = 40;
 
     public LeagueResourceImpl() {
         super(
+                NAME,
+                VERSION,
                 Region.BR,
                 Region.EUNE,
                 Region.EUW,
@@ -48,11 +48,10 @@ public class LeagueResourceImpl extends AbstractResourceImpl implements LeagueRe
         if (gameType == null || !SubType.getChallengerSubTypes().contains(gameType)) {
             throw new SubTypeMismatchException(gameType);
         }
-        String path = CHALLENGER_URI;
         Map<String, Object> queryParams = new HashMap<>();
         queryParams.put("type", gameType.getSubType());
 
-        return get(region, path, queryParams, false, LeagueDto.class);
+        return get(region, CHALLENGER_URI, queryParams, false, LeagueDto.class);
     }
 
     @Override

@@ -12,16 +12,16 @@ import java.util.Map;
 /**
  * Compatible with team-v2.4
  */
-public class TeamResourceImpl extends AbstractResourceImpl implements TeamResource {
-    private static final String RESOURCE_VERSION = "v2.4";
-    private static final String RESOURCE_PATH = "team";
-    private static final String SLASH = "/";
-    private static final String RESOURCE_URI = RESOURCE_VERSION + SLASH + RESOURCE_PATH;
+public class TeamResourceImpl extends ApiResource implements TeamResource {
+    private static final String VERSION = "v2.4";
+    private static final String NAME = "team";
     private static final String BY_SUMMONER = "by-summoner";
     public static final int MAX_LIST_SIZE = 40;
 
     public TeamResourceImpl() {
         super(
+                NAME,
+                VERSION,
                 Region.BR,
                 Region.EUNE,
                 Region.EUW,
@@ -37,7 +37,7 @@ public class TeamResourceImpl extends AbstractResourceImpl implements TeamResour
 
     @Override
     public List<TeamDto> getTeamsBySummonerId(long summonerId, Region region) {
-        String path = RESOURCE_URI + SLASH + BY_SUMMONER + SLASH + summonerId;
+        String path = BY_SUMMONER + SLASH + summonerId;
         Map<String, List<TeamDto>> map = get(region, path, null, false, new GenericType<Map<String, List<TeamDto>>>() {});
 
         return map.get(Long.toString(summonerId));
@@ -49,18 +49,18 @@ public class TeamResourceImpl extends AbstractResourceImpl implements TeamResour
             throw new IllegalArgumentException("summonerIds list must have at least one entry and no more than " +
                     MAX_LIST_SIZE + " entries");
         }
-        String path = RESOURCE_URI + SLASH + BY_SUMMONER + SLASH + StringUtils.join(summonerIds, ',');
+        String path = BY_SUMMONER + SLASH + StringUtils.join(summonerIds, ',');
 
         return get(region, path, null, false, new GenericType<Map<String, List<TeamDto>>>() {});
     }
 
     @Override
     public TeamDto getTeam(String teamId, Region region) {
-        if (teamId == null || teamId.isEmpty()) {
+        if (StringUtils.isEmpty(teamId)) {
             throw new IllegalArgumentException("team must not be null or empty");
         }
-        String path = RESOURCE_URI + SLASH + teamId;
-        Map<String, TeamDto> result = get(region, path, null, false, new GenericType<Map<String, TeamDto>>() {});
+
+        Map<String, TeamDto> result = get(region, teamId, null, false, new GenericType<Map<String, TeamDto>>() {});
 
         return result.get(teamId);
     }
@@ -71,7 +71,8 @@ public class TeamResourceImpl extends AbstractResourceImpl implements TeamResour
             throw new IllegalArgumentException("teamIds list must have at least one entry and no more than " +
                     MAX_LIST_SIZE + " entries");
         }
-        String path = RESOURCE_URI + SLASH + StringUtils.join(teamIds, ',');
+
+        String path = StringUtils.join(teamIds, ',');
 
         return get(region, path, null, false, new GenericType<Map<String, TeamDto>>() {});
     }

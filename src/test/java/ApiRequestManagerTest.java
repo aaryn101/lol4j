@@ -25,7 +25,7 @@ public class ApiRequestManagerTest {
     public void rateLimiterWithMultipleRegions() {
         try {
             for (Region region : Region.values()) {
-                if (region == Region.UNKNOWN) {
+                if (region == Region.UNKNOWN || region == Region.PBE) {
                     continue;
                 }
                 Lol4JTestClient.getClient().getAllChampions(region, false);
@@ -39,7 +39,7 @@ public class ApiRequestManagerTest {
     @Test
     public void allRegions() {
         for (Region region : Region.values()) {
-            if (region == Region.UNKNOWN) {
+            if (region == Region.UNKNOWN || region == Region.PBE) {
                 continue;
             }
 

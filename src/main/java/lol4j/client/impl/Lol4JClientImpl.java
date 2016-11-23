@@ -3,6 +3,7 @@ package lol4j.client.impl;
 import lol4j.client.Lol4JClient;
 import lol4j.protocol.dto.champion.ChampionListDto;
 import lol4j.protocol.dto.champion.ChampionDto;
+import lol4j.protocol.dto.champion.ChampionMasteryDto;
 import lol4j.protocol.dto.game.RecentGamesDto;
 import lol4j.protocol.dto.league.LeagueDto;
 import lol4j.protocol.dto.league.LeagueEntryDto;
@@ -32,18 +33,17 @@ public class Lol4JClientImpl implements Lol4JClient {
     private final Map<Region, ApiRequestManager> requestManagers = new HashMap<>();
 
     private static final String URL_SCHEME = "https://";
-    private static final String SERVER_SUFFIX = ".api.pvp.net";
-    private static final String URL_SUFFIX = "/api/lol";
-    private static final String STATIC_DATA = "/static-data";
+    private static final String SERVER_SUFFIX = ".api.pvp.net/";
 
-    private static final String STATIC_DATA_BASE = URL_SCHEME + "global" + SERVER_SUFFIX + URL_SUFFIX + STATIC_DATA;
-    private ChampionResource championResource;
-    private GameResource gameResource;
-    private LeagueResource leagueResource;
-    private StatsResource statsResource;
-    private SummonerResource summonerResource;
-    private TeamResource teamResource;
-    private LolStaticDataResource lolStaticDataResource;
+    private static final String STATIC_DATA_BASE = URL_SCHEME + "global" + SERVER_SUFFIX;
+    private final ChampionMasteryResource championMasteryResource;
+    private final ChampionResource championResource;
+    private final GameResource gameResource;
+    private final LeagueResource leagueResource;
+    private final StatsResource statsResource;
+    private final SummonerResource summonerResource;
+    private final TeamResource teamResource;
+    private final LolStaticDataResource lolStaticDataResource;
 
     public Lol4JClientImpl(String apiKey) {
         for (Region region : Region.values()) {
@@ -53,15 +53,14 @@ public class Lol4JClientImpl implements Lol4JClient {
 
             requestManagers.put(region, new ApiRequestManager(
                     apiKey,
-                    URL_SCHEME + region.getName() + SERVER_SUFFIX + URL_SUFFIX
+                    URL_SCHEME + region.getName() + SERVER_SUFFIX
             ));
         }
 
         ApiRequestManager staticDataApiRequestManager = new ApiRequestManager(apiKey, STATIC_DATA_BASE);
-        ResourceFactory resourceFactory = new ResourceFactory(
-                requestManagers,
-                staticDataApiRequestManager);
+        ResourceFactory resourceFactory = new ResourceFactory(requestManagers, staticDataApiRequestManager);
 
+        championMasteryResource = resourceFactory.createChampionMasteryResource();
         championResource = resourceFactory.createChampionResource();
         gameResource = resourceFactory.createGameResource();
         leagueResource = resourceFactory.createLeagueResource();
@@ -69,6 +68,26 @@ public class Lol4JClientImpl implements Lol4JClient {
         summonerResource = resourceFactory.createSummonerResource();
         teamResource = resourceFactory.createTeamResource();
         lolStaticDataResource = resourceFactory.createLolStaticDataResource();
+    }
+
+    @Override
+    public ChampionMasteryDto getChampionMastery(Region region, long summonerId, long championId) {
+        return championMasteryResource.getChampionMastery(region, summonerId, championId);
+    }
+
+    @Override
+    public List<ChampionMasteryDto> getChampionMasteries(Region region, long summonerId) {
+        return championMasteryResource.getChampionMasteries(region, summonerId);
+    }
+
+    @Override
+    public int getChampionMasteryScore(Region region, long summonerId) {
+        return championMasteryResource.getChampionMasteryScore(region, summonerId);
+    }
+
+    @Override
+    public List<ChampionMasteryDto> getTopChampions(Region region, long summonerId) {
+        return championMasteryResource.getTopChampions(region, summonerId);
     }
 
     @Override

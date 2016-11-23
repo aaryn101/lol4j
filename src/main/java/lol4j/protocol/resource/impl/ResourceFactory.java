@@ -19,28 +19,32 @@ public class ResourceFactory {
         this.staticDataApiRequestManager = staticDataApiRequestManager;
     }
 
+    public ChampionMasteryResource createChampionMasteryResource() {
+        return createAbstractResourceImpl(ChampionMasteryResourceImpl.class);
+    }
+
     public ChampionResource createChampionResource() {
-        return (ChampionResource) createAbstractResourceImpl(ChampionResourceImpl.class);
+        return createAbstractResourceImpl(ChampionResourceImpl.class);
     }
 
     public GameResource createGameResource() {
-        return (GameResource) createAbstractResourceImpl(GameResourceImpl.class);
+        return createAbstractResourceImpl(GameResourceImpl.class);
     }
 
     public LeagueResource createLeagueResource() {
-        return (LeagueResource) createAbstractResourceImpl(LeagueResourceImpl.class);
+        return createAbstractResourceImpl(LeagueResourceImpl.class);
     }
 
     public StatsResource createStatsResource() {
-        return (StatsResource) createAbstractResourceImpl(StatsResourceImpl.class);
+        return createAbstractResourceImpl(StatsResourceImpl.class);
     }
 
     public SummonerResource createSummonerResource() {
-        return (SummonerResource) createAbstractResourceImpl(SummonerResourceImpl.class);
+        return createAbstractResourceImpl(SummonerResourceImpl.class);
     }
 
     public TeamResource createTeamResource() {
-        return (TeamResource) createAbstractResourceImpl(TeamResourceImpl.class);
+        return createAbstractResourceImpl(TeamResourceImpl.class);
     }
 
     public LolStaticDataResource createLolStaticDataResource() {
@@ -50,8 +54,8 @@ public class ResourceFactory {
         return impl;
     }
 
-    private <T extends AbstractResourceImpl> T createAbstractResourceImpl(Class<? extends AbstractResourceImpl> T) {
-        AbstractResourceImpl impl = null;
+    private <T extends AbstractResource> T createAbstractResourceImpl(Class<? extends AbstractResource> T) {
+        AbstractResource impl = null;
 
         try {
             impl = T.newInstance();
