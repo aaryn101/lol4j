@@ -86,8 +86,8 @@ public class Lol4JClientImpl implements Lol4JClient {
     }
 
     @Override
-    public List<ChampionMasteryDto> getTopChampions(Region region, long summonerId) {
-        return championMasteryResource.getTopChampions(region, summonerId);
+    public List<ChampionMasteryDto> getTopChampions(Region region, long summonerId, int count) {
+        return championMasteryResource.getTopChampions(region, summonerId, count);
     }
 
     @Override

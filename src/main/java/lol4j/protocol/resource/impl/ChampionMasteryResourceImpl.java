@@ -5,7 +5,9 @@ import lol4j.protocol.resource.ChampionMasteryResource;
 import lol4j.util.Region;
 
 import javax.ws.rs.core.GenericType;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by aaryn on 11/23/16.
@@ -57,10 +59,12 @@ public class ChampionMasteryResourceImpl extends LocationResource implements Cha
     }
 
     @Override
-    public List<ChampionMasteryDto> getTopChampions(Region region, long summonerId) {
+    public List<ChampionMasteryDto> getTopChampions(Region region, long summonerId, int count) {
         String path = getSummonerPath(summonerId) + SLASH + TOP_CHAMPIONS;
+        Map<String, Object> queryParams = new HashMap<>();
+        queryParams.put("count", count);
 
-        return get(region, path, null, false, new GenericType<List<ChampionMasteryDto>>() {});
+        return get(region, path, queryParams, false, new GenericType<List<ChampionMasteryDto>>() {});
     }
 
     private String getChampionPath(long championId) {

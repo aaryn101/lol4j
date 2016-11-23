@@ -1,4 +1,3 @@
-import com.sun.org.apache.regexp.internal.RE;
 import lol4j.protocol.dto.champion.ChampionMasteryDto;
 import lol4j.util.Region;
 import org.junit.Assert;
@@ -45,7 +44,7 @@ public class ChampionMasteryResourceImplTest {
 
     @Test
     public void getTopChampions() {
-        List<ChampionMasteryDto> championMasteries = Lol4JTestClient.getClient().getTopChampions(REGION, SUMMONER_ID);
+        List<ChampionMasteryDto> championMasteries = Lol4JTestClient.getClient().getTopChampions(REGION, SUMMONER_ID, 3);
 
         Assert.assertTrue(championMasteries.size() > 0);
     }
